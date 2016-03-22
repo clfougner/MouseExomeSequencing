@@ -52,25 +52,27 @@ In order to use the burrows wheeler aligner, the reference genome must be indexe
 In order to run MuTect, an index file for the reference FASTA must be created. This is done using Samtools. A simple script for this is found in `CreateFastaFileIndex.sh`.
 
 
+##Call Variants
+####1)Raw reads to FASTQ file
+First off, raw reads must be turned into a FASTQ file. In my case, this was done for me by the sequencing service, and will not be mentioned further
 
+####2)Map reads to produce BAM file 
+Second, the reads must be mapped to the reference genome:
+* Script:		MapReadsWithBWAmem.sh
+* Reference file:	mm10.fa
+* Using Framework:	Burrows Wheeler Aligner (BWA)
+* Using method:		mem
+* [Documentation](http://bio-bwa.sourceforge.net/bwa.shtml)
 
+####3) Realign BAM file by coordinate
+In order to remove duplicates, the BAM file must be sorted by coordinate:
+* Script:		SortSam.sh
+* Using Framework:	Picard
+* Using Method:		SortSam
+* [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#SortSam)
 
+####4) Remove duplicates from BAM files
 
-
-
-1) Raw reads FASTQ file -> Cutadapt/Sickle
-	DONE BY THERAGEN
-
-2) Map reads to produce BAM file 
-	DONE BY USING:		./Scripts/MapReadsWithBWAmem.sh
-	REFERENCE FILE: 	./ReferenceFiles/mm10.fa
-	WITH FRAMEWORK:		./Frameworks/bwa-0.7.12/	:	mem
-
-3 Realign BAM file by coordinate
-	DONE BY USING: 		./Scripts/SortSam.sh
-	With Framework:		./Frameworks/Picard/		:	SortSam
-
-4) Dedup files using MarkDuplicates
 	DONE BY USING:		./Scripts/MarkDuplicatesPicard.sh
 	WITH FRAMEWORK:		./Frameworks/Picard/		:	MarkDuplicates
 
