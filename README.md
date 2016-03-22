@@ -116,7 +116,7 @@ Script: 				MuTect.sh
 Reference file:			mm10.fa
 SNP file:		    	2012-0612-snps+indels_FVBNJ_annotated.vcf
 Using framework:		Genome Analysis Toolkit
-Method:		  	  	     MuTect2
+Method:		  	  	   MuTect2
 ````
 * [Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/org_broadinstitute_gatk_tools_walkers_cancer_m2_MuTect2.php)
 
