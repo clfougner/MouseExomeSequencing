@@ -123,7 +123,7 @@ Method:		  	  	MuTect2
 ####9) Annotate variants
 ```
 Script:					SnpEff.sh
-Reference:		  	   GRCm38.82
+Reference:		   	    GRCm38.82
 Using framework:		SnpEff
 Using method:			SnpEff.jar
 ````
@@ -143,7 +143,7 @@ Using method			SnpSift.jar
 Reorder BAM to reference file
 ```
 Script:					reorderBamToReference.sh
-Reference:		               	mm10.fa
+Reference:		              mm10.fa
 Using framework:		Picard
 Using method:			ReorderSam
 ```
