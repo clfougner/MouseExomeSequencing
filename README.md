@@ -53,28 +53,36 @@ In order to run MuTect, an index file for the reference FASTA must be created. T
 
 
 ##Call Variants
-####1)Raw reads to FASTQ file
+####1) Raw reads to FASTQ file
 First off, raw reads must be turned into a FASTQ file. In my case, this was done for me by the sequencing service, and will not be mentioned further
 
-####2)Map reads to produce BAM file 
+####2) Map reads to produce BAM file 
 Second, the reads must be mapped to the reference genome:
-* Script:		MapReadsWithBWAmem.sh
-* Reference file:	mm10.fa
-* Using Framework:	Burrows Wheeler Aligner (BWA)
-* Using method:		mem
+```
+Script:			MapReadsWithBWAmem.sh
+Reference file:		mm10.fa
+Using framework:	Burrows Wheeler Aligner (BWA)
+Using method:		mem
+```
 * [Documentation](http://bio-bwa.sourceforge.net/bwa.shtml)
 
 ####3) Realign BAM file by coordinate
-In order to remove duplicates, the BAM file must be sorted by coordinate:
-* Script:		SortSam.sh
-* Using Framework:	Picard
-* Using Method:		SortSam
+In order to remove duplicates (dedup), the BAM file must be sorted by coordinate:
+```
+Script:			SortSam.sh
+Using framework:	Picard
+Using method:		SortSam
+```
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#SortSam)
 
 ####4) Remove duplicates from BAM files
-
-	DONE BY USING:		./Scripts/MarkDuplicatesPicard.sh
-	WITH FRAMEWORK:		./Frameworks/Picard/		:	MarkDuplicates
+during the sequencing process, the same DNA fragments may be sequenced several times. The resulting duplicate reads are not informative and should not be counted as additional evidence for or against a putative variant. The duplicate marking process (sometimes called **dedupping** in bioinformatics slang) does not remove the reads, but identifies them as duplicates by adding a flag in the read's SAM record. Most GATK tools will then ignore these duplicate reads by default, through the internal application of a read filter [(1)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
+```
+Script:			MarkDuplicatesPicard.sh
+Using framework:	Picard
+Using method:		MarkDuplicates
+```
+* [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
 
 5) Create Realigner Target 		- not tested
 	DONE BY USING:		./Scripts/RealignerTargetCreator.sh
