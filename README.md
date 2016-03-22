@@ -1,6 +1,6 @@
 #Mouse Exome Sequencing
 
-This is a repository to document my work in setting up a pipeline for mouse exome sequencing. It is for my research use, but may act as a guideline for anyone looking to do accomplish the same goal. Most documents here are simple bash implementations of existing frameworks. The pipeline is mostly an implementation of the Broad Institutes's best practices for variant calling as presented [here](https://www.broadinstitute.org/gatk/guide/best-practices.php).
+This is a repository to document my work in setting up a pipeline for mouse exome sequencing. It is for my research use, but may act as a guideline for anyone looking to do accomplish the same goal. Most documents here are simple bash implementations of existing frameworks. The pipeline is mostly an implementation of the Broad Institutes's best practices for variant calling as presented [here](https://www.broadinstitute.org/gatk/guide/best-practices.php). Everything presented here is a working progress, and there is no guarantee that any of the included scripts will work.
 
 The exome sequencing data used for this project was generated at the TheragenEtex Insitute in South Korea, using an Illumina HiSeq and the Agilent SureSelect All Mouse All Exon Kit. The tissue used was collected from FVB/N mice, which is reflected in the choice of SNP and indel files.
 
@@ -59,7 +59,7 @@ First off, raw reads must be turned into a FASTQ file. In my case, this was done
 ####2) Map reads to produce BAM file 
 Second, the reads must be mapped to the reference genome:
 ```
-Script:			MapReadsWithBWAmem.sh
+Script:				MapReadsWithBWAmem.sh
 Reference file:		mm10.fa
 Using framework:	Burrows Wheeler Aligner (BWA)
 Using method:		mem
@@ -69,7 +69,7 @@ Using method:		mem
 ####3) Realign BAM file by coordinate
 In order to remove duplicates (dedup), the BAM file must be sorted by coordinate:
 ```
-Script:			SortSam.sh
+Script:				SortSam.sh
 Using framework:	Picard
 Using method:		SortSam
 ```
@@ -78,48 +78,73 @@ Using method:		SortSam
 ####4) Remove duplicates from BAM files
 during the sequencing process, the same DNA fragments may be sequenced several times. The resulting duplicate reads are not informative and should not be counted as additional evidence for or against a putative variant. The duplicate marking process (sometimes called **dedupping** in bioinformatics slang) does not remove the reads, but identifies them as duplicates by adding a flag in the read's SAM record. Most GATK tools will then ignore these duplicate reads by default, through the internal application of a read filter [(1)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 ```
-Script:			MarkDuplicatesPicard.sh
+Script:				MarkDuplicatesPicard.sh
 Using framework:	Picard
 Using method:		MarkDuplicates
 ```
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
 
-5) Create Realigner Target 		- not tested
-	DONE BY USING:		./Scripts/RealignerTargetCreator.sh
-	REFERENCE FILE: 	./ReferenceFiles/mm10.fa
-	SNP FILE: 		./RefeferenceFiles/2012-0612-snps+indels_FVBNJ_annotated_reordered.vcf
-	WITH FRAMEWORK:		./Frameworks/GenomeAnalysisTK-3.5 : GenomeAnalysisTK.jar	-T RealignerTargetCreator
+****5) Create Realigner Target
+The algorithms that are used in the initial mapping step tend to produce various types of artifacts. For example, reads that align on the edges of indels often get mapped with mismatching bases that might look like evidence for SNPs, but are actually mapping artifacts. The realignment process identifies the most consistent placement of the reads relative to the indel in order to clean up these artifacts. It occurs in two steps: first the program identifies intervals that need to be realigned, then in the second step it determines the optimal consensus sequence and performs the actual realignment of reads.
 
-6) Realign around indels		- not tested
-	DONE BY USING:		./Scripts/IndelRealigner.sh
-	REFERENCE FILE: 	./ReferenceFiles/mm10.fa
-	SNP FILE: 		./RefeferenceFiles/2012-0612-snps+indels_FVBNJ_annotated_reordered.vcf
-	WITH FRAMEWORK:		./Frameworks/GenomeAnalysisTK-3.5 : GenomeAnalysisTK.jar	-T IndelRealigner
+This step used to be very important when the the variant callers were position-based (such as UnifiedGenotyper) but now that we have assembly-based variant callers (such as HaplotypeCaller) it is less important. We still perform indel realignment because we think it may improve the accuracy of the base recalibration model in the next step, but this step may be made obsolete in the near future.[(2)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
+```
+Script:				RealignerTargetCreator.sh
+Reference file: 	mm10.fa
+Known indels: 		2012-0612-snps+indels_FVBNJ_annotated.vcf
+Using framework:	Genome Analysis Toolkit	
+Using method:		RealignerTargetCreator
+```
+* [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
-7) Call variants
-	DONE BY USING: 		./Scripts/muTectScript.sh
-	REFERENCE FILE:		./ReferenceFiles/mm10.fa
-	SNP FILE: 		./RefeferenceFiles/2012-0612-snps+indels_FVBNJ_annotated_reordered.vcf
-	WITH FRAMEWORK:		./Frameworks/GenomeAnalysisTK-3.5 : GenomeAnalysisTK.jar	-T MuTect2
+****6) Realign around indels
+This is a continuation of the previous step:
+```
+Script:					IndelRealigner.sh
+Reference file:			mm10.fa
+Known indels: 			2012-0612-snps+indels_FVBNJ_annotated.vcf
+Using framework:		Genome Analysis Toolkit
+Using method:			IndelRealigner
+```
+* [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
-8) Annotate VCF
-	DONE BY USING:		./Scripts/annotateWithSnpEff.sh
-	REFERENCE:		GRCm38.82
-	WITH FRAMEWORK:		./Frameworks/SnpEff/		:	snpEff.jar
+****7) Recalibrate bases: COMING SOON
 
-9) Filter VCF
-	DONE BY USING: 		./Scripts/SnpSiftForPass.sh
-	WITH FRAMEWORK:		./Frameworks/SnpEff/		:	SnpSift.jar
+****8) Call variants
+```
+Script: 				MuTect.sh
+Reference file:			mm10.fa
+SNP file:			2012-0612-snps+indels_FVBNJ_annotated.vcf
+Using framework:		Genome Analysis Toolkit
+Method:				MuTect2
+````
+* [Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/org_broadinstitute_gatk_tools_walkers_cancer_m2_MuTect2.php)
+
+####9) Annotate variants
+```
+Script:					SnpEff.sh
+Reference:			GRCm38.82
+Using framework:		SnpEff
+Using method:			SnpEff.jar
+````
+* [Documentation](http://snpeff.sourceforge.net/SnpEff_manual.html#run)
+
+####10) Filter variants for passing MuTect filters
+```
+Script:					SnpSiftForPass.sh
+Using framework:		SnpEff
+Using method			SnpSift.jar
+```
+*[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
 
 
+Other:
 
-
-
-
-
-
-If necessary:
 Reorder BAM to reference file
-	DONE BY USING:		./Scripts/reorderBamToReference.sh
-	REFERENCE FILE:		./ReferenceFiles/mm10.fa
-	WITH FRAMEWORK:		./Frameworks/Picard/	:	dist/picard.jar			-ReorderSam
+```
+Script:					reorderBamToReference.sh
+Reference:			mm10.fa
+Using framework:		Picard
+Using method:			ReorderSam
+```
+* [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#ReorderSam)
