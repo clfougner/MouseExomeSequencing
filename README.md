@@ -95,7 +95,7 @@ Known indels: 		2012-0612-snps+indels_FVBNJ_annotated.vcf
 Using framework:	Genome Analysis Toolkit	
 Using method:		RealignerTargetCreator
 ```
-* [Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/org_broadinstitute_gatk_tools_walkers_indels_RealignerTargetCreator.php)
+* [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=2800)
 
 ####6) Realign around indels
 This is a continuation of the previous step:
