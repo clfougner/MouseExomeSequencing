@@ -8,15 +8,24 @@ The exome sequencing data used for this project was generated at the TheragenEte
 ##Required Frameworks
 
 ###Genome Analysis Toolkit
-As the name implies, the Genome Analysis Toolkit (GATK) is a framework for analysing sequencing data, including exome sequencing. The primary use of GATK in this pipeline is for the mutation calling itself, using the MuTect command. GATK is created by the Broad Institute, and can be downloaded [here](https://www.broadinstitute.org/gatk/download/) (note: login is required). This pipeline uses the version 3.5, the currently most up to date version as of March 2016. 
+As the name implies, the Genome Analysis Toolkit (GATK) is a framework for analysing sequencing data, including exome sequencing. The primary use of GATK in this pipeline is for the mutation calling itself, using the MuTect command. GATK is created by the Broad Institute, and can be downloaded [here](https://www.broadinstitute.org/gatk/download/). Login is required to download. All work presented here is using the Genome Analysis Toolkit version 3.5
+
+###Java
+Java is required for almost all frameworks listed, and can be downloaded [here](https://java.com/en/download/). All work presented here is running Java build 1.8.
+
+###Burrows-Wheeler Aligner
+Burrows-Wheeler Aligner is a framework which allows us to align reads in the FASTQ format to .bam files. It can be downloaded from [here](http://bio-bwa.sourceforge.net/). All work presented here is using BWA version 0.7.12.
 
 ###Picard
-Picard is a toolkit for manipulating sequence data formats, including BAM/SAM/CRAM and VCF. It is also created by the Broad Institute, and can be downloaded (here)[http://broadinstitute.github.io/picard/].
-
+Picard is a toolkit for manipulating sequence data formats, including BAM/SAM/CRAM and VCF. It is also created by the Broad Institute, and can be downloaded [here](http://broadinstitute.github.io/picard/). All work presented here is using Picard version 2.0.1.
 
 ###Samtools
+Samtools is another toolkit for manipulating and viewing sequence data formats, and can be downloaded [here](http://www.htslib.org/). All work presented here is using Samtools version 1.3.
 
 ###TwoBitToFa
+Framework for converting .2bit files to .fa (fasta) files, created by UCSC, and can be downloaded for Mac/OSX [here](http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/) (filename twoBitToFa).
+
+
 
 1) Raw reads FASTQ file -> Cutadapt/Sickle
 	DONE BY THERAGEN
