@@ -84,7 +84,7 @@ Using method:		MarkDuplicates
 ```
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
 
-****5) Create Realigner Target
+####5) Create Realigner Target
 The algorithms that are used in the initial mapping step tend to produce various types of artifacts. For example, reads that align on the edges of indels often get mapped with mismatching bases that might look like evidence for SNPs, but are actually mapping artifacts. The realignment process identifies the most consistent placement of the reads relative to the indel in order to clean up these artifacts. It occurs in two steps: first the program identifies intervals that need to be realigned, then in the second step it determines the optimal consensus sequence and performs the actual realignment of reads.
 
 This step used to be very important when the the variant callers were position-based (such as UnifiedGenotyper) but now that we have assembly-based variant callers (such as HaplotypeCaller) it is less important. We still perform indel realignment because we think it may improve the accuracy of the base recalibration model in the next step, but this step may be made obsolete in the near future.[(2)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
@@ -97,7 +97,7 @@ Using method:		RealignerTargetCreator
 ```
 * [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
-****6) Realign around indels
+####6) Realign around indels
 This is a continuation of the previous step:
 ```
 Script:					IndelRealigner.sh
@@ -108,9 +108,9 @@ Using method:			IndelRealigner
 ```
 * [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
-****7) Recalibrate bases: COMING SOON
+####7) Recalibrate bases: COMING SOON
 
-****8) Call variants
+####8) Call variants
 ```
 Script: 				MuTect.sh
 Reference file:			mm10.fa
@@ -138,7 +138,7 @@ Using method			SnpSift.jar
 *[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
 
 
-Other:
+######Other:
 
 Reorder BAM to reference file
 ```
