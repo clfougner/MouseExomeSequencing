@@ -5,7 +5,7 @@ This is a repository to document my work in setting up a pipeline for mouse exom
 The exome sequencing data used for this project was generated at the TheragenEtex Insitute in South Korea, using an Illumina HiSeq and the Agilent SureSelect All Mouse All Exon Kit. The tissue used was collected from FVB/N mice, which is reflected in the choice of SNP and indel files.
 
 
-##Required Frameworks
+##Frameworks
 
 ####Genome Analysis Toolkit
 As the name implies, the Genome Analysis Toolkit (GATK) is a framework for analysing sequencing data, including exome sequencing. The primary use of GATK in this pipeline is for the mutation calling itself, using the MuTect command. GATK is created by the Broad Institute, and can be downloaded [here](https://www.broadinstitute.org/gatk/download/). Login is required to download. Java (see below) is required to run GATK. All work presented here is using the Genome Analysis Toolkit version 3.5
@@ -32,7 +32,7 @@ High Throughput Sequencing Java Development Kit (HTSJDK) is is a Java API for hi
 Ant is required for building HTSJDK, and can be downloaded [here](http://ant.apache.org/). All work presented here is using Ant version 1.9.6.
 
 
-##Necessary Reference Files
+##Reference Files
 
 ####Mouse Reference Genome: mm10.2bit
 The mouse reference genome is maintained by UCSC, and can be downloaded from [here](http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/), filename `mm10.2bit`. In order to actually use this file, we'll need to convert it to the FASTA file format, but we'll get to that in a bit (see header "Manipulating the Reference Files").The latest version of the reference genome, mm10, will be used here. Note that the Genome Reference Consortium (GRC) maintains an almost identical reference genome, GRCm38.
@@ -40,16 +40,23 @@ The mouse reference genome is maintained by UCSC, and can be downloaded from [he
 ####Indels and SNPs
 The Sanger Institute maintains a list of SNPs and Indels for mice, which can be found through their FTP (`ftp://ftp-mouse.sanger.ac.uk/`). My work is using mice bred on a pure FVB/N background, and I will consequently be using the list of SNPs and indels found through their FTP (`ftp://ftp-mouse.sanger.ac.uk/REL-1206-FVBNJ/`), filename `2012-0612-snps+indels_FVBNJ_annotated.vcf.gz`.
 
-###Manipulating the reference files
+###Preparing the reference files
 
 ####Mouse reference genome FASTA
 As mentioned, the reference genome needs to be in the FASTA file format (.fa or .fasta) to be used in the analyses. The reference genome was downloaded in the .2bit file format, so the `TwoBitToFa` tool must be used. A simple script for this is found in `TwoBitToFa.sh`.
+* [Documentation](https://genome.ucsc.edu/goldenpath/help/twoBit.html)
 
 ####Reference genome BWA-index
 In order to use the burrows wheeler aligner, the reference genome must be indexed using the BWA-framework. A simple script for this is found in `BWAIndex.sh`.
+* [Documentation](http://bio-bwa.sourceforge.net/bwa.shtml)
 
-####Create refence FASTA-index
-In order to run MuTect, an index file for the reference FASTA must be created. This is done using Samtools. A simple script for this is found in `CreateFastaFileIndex.sh`.
+####Create reference FASTA-index
+In order to use GATK, an index file for the reference FASTA must be created. This is done using Samtools. A simple script for this is found in `CreateFastaFileIndex.sh`.
+* [Documentation](http://gatkforums.broadinstitute.org/gatk/discussion/1601/how-can-i-prepare-a-fasta-file-to-use-as-reference)
+
+####Create reference FASTA dictionary
+In order to use GATK, an dictionary file for the reference FASTA must be created. This is done using Picard. A simple script for this is found in `CreateSequenceDictionary.sh`.
+* [Documentation](http://gatkforums.broadinstitute.org/gatk/discussion/1601/how-can-i-prepare-a-fasta-file-to-use-as-reference)
 
 
 ##Call Variants
