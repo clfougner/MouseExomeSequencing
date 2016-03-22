@@ -1,4 +1,22 @@
-Sequencing plan
+#Mouse Exome Sequencing
+
+This is a repository to document my work in setting up a pipeline for mouse exome sequencing. It is for my research use, but may act as a guideline for anyone looking to do accomplish the same goal. Most documents here are simple bash implementations of existing frameworks. The pipeline is mostly an implementation of the Broad Institutes's best practices for variant calling as presented [here](https://www.broadinstitute.org/gatk/guide/best-practices.php).
+
+The exome sequencing data used for this project was generated at the TheragenEtex Insitute in South Korea, using an Illumina HiSeq and the Agilent SureSelect All Mouse All Exon Kit. 
+
+
+##Required Frameworks
+
+###Genome Analysis Toolkit
+As the name implies, the Genome Analysis Toolkit (GATK) is a framework for analysing sequencing data, including exome sequencing. The primary use of GATK in this pipeline is for the mutation calling itself, using the MuTect command. GATK is created by the Broad Institute, and can be downloaded [here](https://www.broadinstitute.org/gatk/download/) (note: login is required). This pipeline uses the version 3.5, the currently most up to date version as of March 2016. 
+
+###Picard
+Picard is a toolkit for manipulating sequence data formats, including BAM/SAM/CRAM and VCF. It is also created by the Broad Institute, and can be downloaded (here)[http://broadinstitute.github.io/picard/].
+
+
+###Samtools
+
+###TwoBitToFa
 
 1) Raw reads FASTQ file -> Cutadapt/Sickle
 	DONE BY THERAGEN
