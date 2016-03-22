@@ -20,7 +20,7 @@ Picard is a toolkit for manipulating sequence data formats, including BAM/SAM/CR
 Samtools is another toolkit for manipulating and viewing sequence data formats, and can be downloaded [here](http://www.htslib.org/). Java (see below) is required to run Samtools. All work presented here is using Samtools version 1.3.
 
 ####TwoBitToFa
-Framework for converting .2bit files to .fa (fasta) files, created by UCSC, and can be downloaded for Mac/OSX [here](http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/) (filename twoBitToFa).
+Framework for converting .2bit files to .fa (fasta) files, created by UCSC, and can be downloaded for Mac/OSX [here](http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/) (filename `twoBitToFa`).
 
 ####Java
 Java is required for almost all frameworks listed, and can be downloaded [here](https://java.com/en/download/). All work presented here is running Java build 1.8.
@@ -30,6 +30,19 @@ High Throughput Sequencing Java Development Kit (HTSJDK) is is a Java API for hi
 
 ####Apache Ant
 Ant is required for building HTSJDK, and can be downloaded [here](http://ant.apache.org/). All work presented here is using Ant version 1.9.6.
+
+
+##Necessary Reference Files
+
+####Mouse Reference Genome: mm10.2bit
+The mouse reference genome is maintained by UCSC, and can be downloaded from [here](http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/), filename `mm10.2bit`. In order to actually use this file, we'll need to convert it to the fasta file format, but we'll get to that in a bit (see header "Manipulating the Reference Files").The latest version of the reference genome, mm10, will be used here. Note that the Genome Reference Consortium (GRC) maintains an almost identical reference genome, GRCm38.
+
+####
+
+
+
+
+
 
 1) Raw reads FASTQ file -> Cutadapt/Sickle
 	DONE BY THERAGEN
