@@ -114,16 +114,16 @@ Using method:			IndelRealigner
 ```
 Script: 				MuTect.sh
 Reference file:			mm10.fa
-SNP file:		  	2012-0612-snps+indels_FVBNJ_annotated.vcf
+SNP file:		    	2012-0612-snps+indels_FVBNJ_annotated.vcf
 Using framework:		Genome Analysis Toolkit
-Method:		  		MuTect2
+Method:		  	  	MuTect2
 ````
 * [Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/org_broadinstitute_gatk_tools_walkers_cancer_m2_MuTect2.php)
 
 ####9) Annotate variants
 ```
 Script:					SnpEff.sh
-Reference:		  	GRCm38.82
+Reference:		  	   GRCm38.82
 Using framework:		SnpEff
 Using method:			SnpEff.jar
 ````
@@ -143,7 +143,7 @@ Using method			SnpSift.jar
 Reorder BAM to reference file
 ```
 Script:					reorderBamToReference.sh
-Reference:		  	mm10.fa
+Reference:		               	mm10.fa
 Using framework:		Picard
 Using method:			ReorderSam
 ```
