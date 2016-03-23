@@ -37,8 +37,8 @@ Ant is required for building HTSJDK, and can be downloaded [here](http://ant.apa
 ####Mouse Reference Genome: mm10.2bit
 The mouse reference genome is maintained by UCSC, and can be downloaded from [here](http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/), filename `mm10.2bit`. In order to actually use this file, we'll need to convert it to the FASTA file format, but we'll get to that in a bit (see header "Manipulating the Reference Files").The latest version of the reference genome, mm10, will be used here. Note that the Genome Reference Consortium (GRC) maintains an almost identical reference genome, GRCm38.
 
-####Indels and SNPs
-The Sanger Institute maintains a list of SNPs and Indels for mice, which can be found through their FTP (`ftp://ftp-mouse.sanger.ac.uk/`). My work is using mice bred on a pure FVB/N background, and I will consequently be using the list of SNPs and indels found through their FTP (`ftp://ftp-mouse.sanger.ac.uk/REL-1206-FVBNJ/`), filename `2012-0612-snps+indels_FVBNJ_annotated.vcf.gz`.
+####Indels
+The Sanger Institute maintains a list of SNPs and Indels for mice, which can be found through their FTP (`ftp://ftp-mouse.sanger.ac.uk/`). My work is using mice bred on a pure FVB/N background, and I will consequently be using the list of SNPs and indels found for this specific strain [here](`ftp://ftp-mouse.sanger.ac.uk/current_indels/strain_specific_vcfs/FVB_NJ.mgp.v5.indels.dbSNP142.normed.vcf.gz`).
 
 ###Preparing the reference files
 
@@ -57,6 +57,9 @@ In order to use GATK, an index file for the reference FASTA must be created. Thi
 ####Create reference FASTA dictionary
 In order to use GATK, an dictionary file for the reference FASTA must be created. This is done using Picard. A simple script for this is found in `CreateSequenceDictionary.sh`.
 * [Documentation](http://gatkforums.broadinstitute.org/gatk/discussion/1601/how-can-i-prepare-a-fasta-file-to-use-as-reference)
+
+####Correctly format the indels
+When realigning around indels, a list of known indels is used; this list must be correctly formatted to match the reference FASTA used for the alignment. This can be done using the script `FormatKnownIndels.sh`. Thanks to [John Longinotto](https://www.biostars.org/p/182917/#183000) for help with this!
 
 
 ##Call Variants
