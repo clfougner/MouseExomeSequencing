@@ -11,7 +11,7 @@ OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/
 FASTA='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.fa'
 
 bwa mem \
--R '@RG\tID:foo\tSM:bar' \
+-R '@RG\tID:foo\tSM:bar\tPL:Illumina' \
 $FASTA \
 $INPUT1 $INPUT2 > \
 $OUTPUT

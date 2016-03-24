@@ -13,7 +13,7 @@ INPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Referenc
 OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.INDELS.vcf'
 
 #Format known indel file be compatible with mm10.fa
-awk '{ if($0 !~ /^#/) print "chr"$0; else if(match($0,/(##contig=<ID=)(.*)/,m)) print m[1]"chr"m[2]; else print $0 }' $INPUT > $OUTPUT
+gawk '{ if($0 !~ /^#/) print "chr"$0; else if(match($0,/(##contig=<ID=)(.*)/,m)) print m[1]"chr"m[2]; else print $0 }' $INPUT > $OUTPUT
 
 
 #Thanks to John Longinotto for help with this issue: https://www.biostars.org/p/182917/#183000

@@ -6,10 +6,10 @@ cd /Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/P
 REFERENCE='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.fa'
 
 #path to input file to be reordered
-INPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mgp.v3.indels.rsIDdbSNPv137.vcf'
+INPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/outputfile.vcf'
 
 #path to output/reordered file
-OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/SNPs_Reorder_outputs/2012-0612-snps+indels_FVBNJ_annotated.fixed.reordered.vcf'
+OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/outputfile.reordersam.vcf'
 
 #ref: www.broadinstitute.org/gatk/guide/article?id=1328
 
@@ -18,5 +18,5 @@ ReorderSam \
 I=$INPUT \
 O=$OUTPUT \
 R=$REFERENCE \
-CREATE_INDEX=TRUE
+CREATE_INDEX=false
 
