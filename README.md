@@ -200,15 +200,3 @@ Using framework:		SnpEff
 Using method			SnpSift.jar
 ```
 *[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
-
-
-######Other:
-
-Reorder BAM to reference file
-```
-Script:					reorderBamToReference.sh
-Reference:		        mm10.fa
-Using framework:		Picard
-Using method:			ReorderSam
-```
-* [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#ReorderSam)
