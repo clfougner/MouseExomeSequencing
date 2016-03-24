@@ -115,7 +115,7 @@ The algorithms that are used in the initial mapping step tend to produce various
 
 This step used to be very important when the the variant callers were position-based (such as UnifiedGenotyper) but now that we have assembly-based variant callers (such as HaplotypeCaller) it is less important. We still perform indel realignment because we think it may improve the accuracy of the base recalibration model in the next step, but this step may be made obsolete in the near future.[(3)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 
-First step:
+######First step:
 ```
 Script:				RealignerTargetCreator.sh
 Reference file: 	mm10.fa
@@ -124,7 +124,7 @@ Using framework:	Genome Analysis Toolkit
 Using method:		RealignerTargetCreator
 ```
 
-Second step:
+######Second step:
 ```
 Script:					IndelRealigner.sh
 Reference file:			mm10.fa
@@ -137,7 +137,7 @@ Using method:			IndelRealigner
 ####6) Recalibrate bases
 Variant calling algorithms rely heavily on the quality scores assigned to the individual base calls in each sequence read. These scores are per-base estimates of error emitted by the sequencing machines. Unfortunately the scores produced by the machines are subject to various sources of systematic technical error, leading to over- or under-estimated base quality scores in the data. Base quality score recalibration (BQSR) is a process in which we apply machine learning to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls[(4)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 
-First step:
+######First step:
 ```
 Script:             BaseRecalibrator.sh
 Reference file:     mm10.fa
@@ -147,7 +147,7 @@ Using framework:    Genome Analysis Toolkit
 Using Method:       BaseRecalibrator
 ````
 
-Second step:
+######Second step:
 ```
 Script:             BaseRecalibratorSecondPass.sh
 Reference file:     mm10.fa
@@ -157,7 +157,7 @@ Using framework:    Genome Analysis Toolkit
 Using Method:       BaseRecalibrator
 ````
 
-Third step:
+######Third step:
 ```
 Script:             AnalyzeCovariates.sh
 Reference file:     mm10.fa
@@ -165,7 +165,7 @@ Using framework:    Genome Analysis Toolkit
 Using Method:       AnalyzeCovariates
 ````
 
-Fourth Step:
+######Fourth Step:
 ```
 Script:             PrintReads.sh
 Reference file:     mm10.fa
