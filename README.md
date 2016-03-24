@@ -85,7 +85,7 @@ First off, raw reads must be turned into a FASTQ file. In my case, this was done
 ####2) Map reads to produce BAM file 
 Second, the reads must be mapped to the reference genome:
 ```
-Script:				MapReadsWithBWAmem.sh
+Script:				BWAmem.sh
 Reference file:		mm10.fa
 Using framework:	Burrows Wheeler Aligner (BWA)
 Using method:		mem
@@ -113,7 +113,7 @@ Using method:		MarkDuplicates
 ####5) Realign around indels
 The algorithms that are used in the initial mapping step tend to produce various types of artifacts. For example, reads that align on the edges of indels often get mapped with mismatching bases that might look like evidence for SNPs, but are actually mapping artifacts. The realignment process identifies the most consistent placement of the reads relative to the indel in order to clean up these artifacts. It occurs in two steps: first the program identifies intervals that need to be realigned, then in the second step it determines the optimal consensus sequence and performs the actual realignment of reads.
 
-This step used to be very important when the the variant callers were position-based (such as UnifiedGenotyper) but now that we have assembly-based variant callers (such as HaplotypeCaller) it is less important. We still perform indel realignment because we think it may improve the accuracy of the base recalibration model in the next step, but this step may be made obsolete in the near future.[(3)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
+This step used to be very important when the the variant callers were position-based (such as UnifiedGenotyper) but now that we have assembly-based variant callers (such as HaplotypeCaller) it is less important. We still perform indel realignment because we think it may improve the accuracy of the base recalibration model in the next step, but this step may be made obsolete in the near future [(3)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 
 ######First step:
 ```
@@ -135,7 +135,7 @@ Using method:			IndelRealigner
 * [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
 ####6) Recalibrate bases
-Variant calling algorithms rely heavily on the quality scores assigned to the individual base calls in each sequence read. These scores are per-base estimates of error emitted by the sequencing machines. Unfortunately the scores produced by the machines are subject to various sources of systematic technical error, leading to over- or under-estimated base quality scores in the data. Base quality score recalibration (BQSR) is a process in which we apply machine learning to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls[(4)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
+Variant calling algorithms rely heavily on the quality scores assigned to the individual base calls in each sequence read. These scores are per-base estimates of error emitted by the sequencing machines. Unfortunately the scores produced by the machines are subject to various sources of systematic technical error, leading to over- or under-estimated base quality scores in the data. Base quality score recalibration (BQSR) is a process in which we apply machine learning to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls [(4)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 
 ######First step:
 ```
