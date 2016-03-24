@@ -5,7 +5,7 @@ This is a repository to document my work in setting up a pipeline for mouse exom
 The exome sequencing data used for this project was generated at the TheragenEtex Insitute in South Korea, using an Illumina HiSeq and the Agilent SureSelect All Mouse All Exon Kit. The tissue used was collected from FVB/N mice, which is reflected in the choice of SNP and indel files.
 
 
-##Frameworks
+##Frameworks [(1)](https://www.broadinstitute.org/gatk/guide/article?id=2899)
 
 ####Genome Analysis Toolkit
 As the name implies, the Genome Analysis Toolkit (GATK) is a framework for analysing sequencing data, including exome sequencing. The primary use of GATK in this pipeline is for the mutation calling itself, using the MuTect command. GATK is created by the Broad Institute, and can be downloaded [here](https://www.broadinstitute.org/gatk/download/). Login is required to download. Java (see below) is required to run GATK. All work presented here is using the Genome Analysis Toolkit version 3.5
@@ -34,6 +34,14 @@ Ant is required for building HTSJDK, and can be downloaded [here](http://ant.apa
 ####Gawk
 Awk is a programming language which can be used for simple data-reformatting jobs. Gawk is the GNU implementation of awk, and can be downloaded from [here](http://www.gnu.org/software/gawk/). It is required for the script used to reformat reference SNP and indel files.
 
+####R
+To generate plots in the base score quality recalibration step, [R](https://www.r-project.org/) or [RStudio](https://www.rstudio.com/products/rstudio/#Desktop) must be installed. Further, the packages "gplots", "reshape", "ggplot2" and "gsalib" must be installed. This can be done by entering the following code into your R console:
+```
+install.packages("gplots")
+install.packages("reshape")
+install.packages("ggplot2")
+install.package("gsalib")
+```
 
 ##Reference Files
 
@@ -102,10 +110,12 @@ Using method:		MarkDuplicates
 ```
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
 
-####5) Create Realigner Target
+####5) Realign around indels
 The algorithms that are used in the initial mapping step tend to produce various types of artifacts. For example, reads that align on the edges of indels often get mapped with mismatching bases that might look like evidence for SNPs, but are actually mapping artifacts. The realignment process identifies the most consistent placement of the reads relative to the indel in order to clean up these artifacts. It occurs in two steps: first the program identifies intervals that need to be realigned, then in the second step it determines the optimal consensus sequence and performs the actual realignment of reads.
 
 This step used to be very important when the the variant callers were position-based (such as UnifiedGenotyper) but now that we have assembly-based variant callers (such as HaplotypeCaller) it is less important. We still perform indel realignment because we think it may improve the accuracy of the base recalibration model in the next step, but this step may be made obsolete in the near future.[(2)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
+
+First step:
 ```
 Script:				RealignerTargetCreator.sh
 Reference file: 	mm10.fa
@@ -113,10 +123,8 @@ Known indels: 		2012-0612-snps+indels_FVBNJ_annotated.vcf
 Using framework:	Genome Analysis Toolkit	
 Using method:		RealignerTargetCreator
 ```
-* [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=2800)
 
-####6) Realign around indels
-This is a continuation of the previous step:
+Second step:
 ```
 Script:					IndelRealigner.sh
 Reference file:			mm10.fa
@@ -126,9 +134,9 @@ Using method:			IndelRealigner
 ```
 * [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
-####7) Recalibrate bases: COMING SOON
+####6) Recalibrate bases: COMING SOON
 
-####8) Call variants
+####7) Call variants
 ```
 Script: 				MuTect.sh
 Reference file:			mm10.fa
@@ -138,7 +146,7 @@ Method:		  	  	    MuTect2
 ````
 * [Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/org_broadinstitute_gatk_tools_walkers_cancer_m2_MuTect2.php)
 
-####9) Annotate variants
+####8) Annotate variants
 ```
 Script:					SnpEff.sh
 Reference:		   	    GRCm38.82
@@ -147,7 +155,7 @@ Using method:			SnpEff.jar
 ````
 * [Documentation](http://snpeff.sourceforge.net/SnpEff_manual.html#run)
 
-####10) Filter variants for passing MuTect filters
+####9) Filter variants for passing MuTect filters
 ```
 Script:					SnpSiftForPass.sh
 Using framework:		SnpEff
