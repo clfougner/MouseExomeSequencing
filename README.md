@@ -135,7 +135,7 @@ Using method:			IndelRealigner
 * [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
 ####6) Recalibrate bases
-Variant calling algorithms rely heavily on the quality scores assigned to the individual base calls in each sequence read. These scores are per-base estimates of error emitted by the sequencing machines. Unfortunately the scores produced by the machines are subject to various sources of systematic technical error, leading to over- or under-estimated base quality scores in the data. Base quality score recalibration (BQSR) is a process in which we apply machine learning to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls. [3](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1)
+Variant calling algorithms rely heavily on the quality scores assigned to the individual base calls in each sequence read. These scores are per-base estimates of error emitted by the sequencing machines. Unfortunately the scores produced by the machines are subject to various sources of systematic technical error, leading to over- or under-estimated base quality scores in the data. Base quality score recalibration (BQSR) is a process in which we apply machine learning to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls[(4)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 
 First step:
 ```
@@ -172,6 +172,7 @@ Reference file:     mm10.fa
 Using framework:    Genome Analysis Toolkit
 Using Method:       PrintReads
 ````
+* [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=2801)
 
 ####7) Call variants
 ```
