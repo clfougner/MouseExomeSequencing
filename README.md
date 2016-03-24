@@ -31,6 +31,9 @@ High Throughput Sequencing Java Development Kit (HTSJDK) is is a Java API for hi
 ####Apache Ant
 Ant is required for building HTSJDK, and can be downloaded [here](http://ant.apache.org/). All work presented here is using Ant version 1.9.6.
 
+####Gawk
+Awk is a programming language which can be used for simple data-reformatting jobs. Gawk is the GNU implementation of awk, and can be downloaded from [here](http://www.gnu.org/software/gawk/). It is required for the script used to reformat reference SNP and indel files.
+
 
 ##Reference Files
 
