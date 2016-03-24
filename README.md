@@ -102,7 +102,7 @@ Using method:		SortSam
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#SortSam)
 
 ####4) Remove duplicates from BAM files
-during the sequencing process, the same DNA fragments may be sequenced several times. The resulting duplicate reads are not informative and should not be counted as additional evidence for or against a putative variant. The duplicate marking process (sometimes called **dedupping** in bioinformatics slang) does not remove the reads, but identifies them as duplicates by adding a flag in the read's SAM record. Most GATK tools will then ignore these duplicate reads by default, through the internal application of a read filter [(1)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
+during the sequencing process, the same DNA fragments may be sequenced several times. The resulting duplicate reads are not informative and should not be counted as additional evidence for or against a putative variant. The duplicate marking process (sometimes called **dedupping** in bioinformatics slang) does not remove the reads, but identifies them as duplicates by adding a flag in the read's SAM record. Most GATK tools will then ignore these duplicate reads by default, through the internal application of a read filter [(2)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 ```
 Script:				MarkDuplicatesPicard.sh
 Using framework:	Picard
@@ -113,7 +113,7 @@ Using method:		MarkDuplicates
 ####5) Realign around indels
 The algorithms that are used in the initial mapping step tend to produce various types of artifacts. For example, reads that align on the edges of indels often get mapped with mismatching bases that might look like evidence for SNPs, but are actually mapping artifacts. The realignment process identifies the most consistent placement of the reads relative to the indel in order to clean up these artifacts. It occurs in two steps: first the program identifies intervals that need to be realigned, then in the second step it determines the optimal consensus sequence and performs the actual realignment of reads.
 
-This step used to be very important when the the variant callers were position-based (such as UnifiedGenotyper) but now that we have assembly-based variant callers (such as HaplotypeCaller) it is less important. We still perform indel realignment because we think it may improve the accuracy of the base recalibration model in the next step, but this step may be made obsolete in the near future.[(2)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
+This step used to be very important when the the variant callers were position-based (such as UnifiedGenotyper) but now that we have assembly-based variant callers (such as HaplotypeCaller) it is less important. We still perform indel realignment because we think it may improve the accuracy of the base recalibration model in the next step, but this step may be made obsolete in the near future.[(3)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 
 First step:
 ```
