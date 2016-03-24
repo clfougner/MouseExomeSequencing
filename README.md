@@ -52,7 +52,7 @@ The mouse reference genome is maintained by UCSC, and can be downloaded from [he
 The Sanger Institute maintains a list of SNPs and Indels for mice, which can be found through their FTP (`ftp://ftp-mouse.sanger.ac.uk/`). My work is using mice bred on a pure FVB/N background, and I will consequently be using the list of indels found for this specific strain: `ftp://ftp-mouse.sanger.ac.uk/current_indels/strain_specific_vcfs/FVB_NJ.mgp.v5.indels.dbSNP142.normed.vcf.gz`.
 
 ####SNPs
-A list of SNPs for FVB/N mice can be found here: `ftp://ftp-mouse.sanger.ac.uk/current_indels/strain_specific_vcfs/FVB_NJ.mgp.v5.snps.dbSNP142.vcf.gz`
+A list of SNPs for FVB/N mice can be found here: `ftp://ftp-mouse.sanger.ac.uk/current_indels/strain_specific_vcfs/FVB_NJ.mgp.v5.snps.dbSNP142.vcf.gz`.
 
 ###Preparing the reference files
 
@@ -73,10 +73,10 @@ In order to use GATK, an dictionary file for the reference FASTA must be created
 * [Documentation](http://gatkforums.broadinstitute.org/gatk/discussion/1601/how-can-i-prepare-a-fasta-file-to-use-as-reference)
 
 ####Correctly format the indel reference file
-When realigning around indels, a list of known indels is used; this list must be correctly formatted to match the reference FASTA used for the alignment. This can be done using the script `FormatKnownIndels.sh`. Thanks to [John Longinotto](https://www.biostars.org/p/182917/#183000) for help with this!
+When realigning around indels, a list of known indels is used; this list must be correctly formatted to match the reference FASTA used for the alignment. This can be done using the script `FormatKnownIndels.sh`. Thanks to [John Longinotto](https://www.biostars.org/p/182917/#183000) for help with this! In this project, this file after processing is referred to as `mm10.FVBN.INDELS.vcf`.
 
 ####Correctly format the SNP reference file
-Same concept as with the indels; additionally, the SNP list must be sorted with Picard's `SortVcf`tool. The SNP reference file can be formatted with the script `FormatKnownSNPs.sh`.
+Same concept as with the indels; additionally, the SNP list must be sorted with Picard's `SortVcf`tool. The SNP reference file can be formatted with the script `FormatKnownSNPs.sh`. In this project, this file after processing is referred to as `mm10.FVBN.SNPs.vcf`.
 
 ##Call Variants
 ####1) Raw reads to FASTQ file
@@ -119,7 +119,7 @@ First step:
 ```
 Script:				RealignerTargetCreator.sh
 Reference file: 	mm10.fa
-Known indels: 		2012-0612-snps+indels_FVBNJ_annotated.vcf
+Known indels: 		mm10.FVBN.INDELS.vcf
 Using framework:	Genome Analysis Toolkit	
 Using method:		RealignerTargetCreator
 ```
@@ -128,13 +128,50 @@ Second step:
 ```
 Script:					IndelRealigner.sh
 Reference file:			mm10.fa
-Known indels: 			2012-0612-snps+indels_FVBNJ_annotated.vcf
+Known indels: 			mm10.FVBN.INDELS.vcf
 Using framework:		Genome Analysis Toolkit
 Using method:			IndelRealigner
 ```
 * [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
-####6) Recalibrate bases: COMING SOON
+####6) Recalibrate bases
+Variant calling algorithms rely heavily on the quality scores assigned to the individual base calls in each sequence read. These scores are per-base estimates of error emitted by the sequencing machines. Unfortunately the scores produced by the machines are subject to various sources of systematic technical error, leading to over- or under-estimated base quality scores in the data. Base quality score recalibration (BQSR) is a process in which we apply machine learning to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls. [3](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1)
+
+First step:
+```
+Script:             BaseRecalibrator.sh
+Reference file:     mm10.fa
+Known indels:       mm10.FVBN.INDELS.vcf
+Known SNPs:         mm10.FVBN.SNPs.vcf
+Using framework:    Genome Analysis Toolkit
+Using Method:       BaseRecalibrator
+````
+
+Second step:
+```
+Script:             BaseRecalibratorSecondPass.sh
+Reference file:     mm10.fa
+Known indels:       mm10.FVBN.INDELS.vcf
+Known SNPs:         mm10.FVBN.SNPs.vcf
+Using framework:    Genome Analysis Toolkit
+Using Method:       BaseRecalibrator
+````
+
+Third step:
+```
+Script:             AnalyzeCovariates.sh
+Reference file:     mm10.fa
+Using framework:    Genome Analysis Toolkit
+Using Method:       AnalyzeCovariates
+````
+
+Fourth Step:
+```
+Script:             PrintReads.sh
+Reference file:     mm10.fa
+Using framework:    Genome Analysis Toolkit
+Using Method:       PrintReads
+````
 
 ####7) Call variants
 ```
