@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Path to output recalibration plot
-
 #path to output plot
 OUTPUT_PLOT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalyzeCovariatesRecalibrationPlots/422_15_11.sorted.dedupped.indelrealigned.recalibrationplot.pdf'
 

@@ -11,11 +11,6 @@ OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/
 #path to metrics
 METRICS='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/DeduppedBams/422_15_11.sorted.metrics.txt'
 
-#change directory to picard
-#cd /Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/Picard/
-
-
-
 java -jar dist/picard.jar \
 MarkDuplicates \
 CREATE_INDEX=true \

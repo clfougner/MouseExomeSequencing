@@ -28,5 +28,4 @@ java -jar $JARFILE \
 -knownSites $SNPS \
 -knownSites $INDELS \
 -BQSR $RECAL_DATA \
--o $POST_RECAL_DATA \
--l DEBUG
+-o $POST_RECAL_DATA   

@@ -3,7 +3,7 @@
 #path to input file (bam fafter realignment around indels)
 INPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/422_15_11.sorted.dedupped.indelrealigned.addedreadgroups.bam'
 
-#path to output file (bam fafter realignment around indels)
+#path to output file (bam after realignment around indels)
 OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/BaseRecalibratorFirstRun/422_15_11.sorted.dedupped.indelrealigned.recal_data.table'
 
 #path to known indels
