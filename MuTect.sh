@@ -1,35 +1,29 @@
 #!/bin/bash
 
-#connect to genlab4
-#ssh chrfou@genlab4
+#Path to tumor bam file
+TUMORBAM='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/PrintReadsRecalibrated/422_15_2.sorted.dedupped.indelrealigned.addedreadgroups.recalibrated.bam'
 
-#change to correct directory
-#cd /data2/christian/GenomeAnalysisTK-3.5/
+#Path to normal Bam file
+NORMALBAM='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/PrintReadsRecalibrated/422_15_11.sorted.dedupped.indelrealigned.addedreadgroups.recalibrated.bam'
 
-#path to tumor .bam file
-TUMORBAM='/data2/christian/Reordered/TN1511D0818.dedup.reordered.bam'
+#Path to output vcf
+OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/MuTect2/422_15_2.vcf'
 
-#path to normal .bam file
-NORMALBAM='/data2/christian/Reordered/TN1511D0819.dedup.reordered.bam'
+#Path to reference fasta file
+REF_FASTA='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.fa'
 
-#output
-OUTPUT='/data2/christian/Output/MuTect/401_15_output_WITH_SNPS.vcf'
+#Path to reference SNP file
+SNPS='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.FVBN.SNPs.vcf'
 
-#path to reference .fasta file
-FASTA='/data2/christian/mm9_fasta_2/mm9_fasta_2.fa'
-
-#path to reference snp file
-SNPS='/data2/christian/ReferenceFiles/2012-0612-snps+indels_FVBNJ_annotated_reordered.vcf'
-
-#path to jarfile
-JARFILE='/data2/christian/GenomeAnalysisTK3.5/GenomeAnalysisTK.jar'
+#Path to GATK jarfile
+GATK_JARFILE='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/GenomeAnalysisTK-3.5/GenomeAnalysisTK.jar'
 
 #run analysis
-java -jar $JARFILE \
-     -T MuTect2 \
-     -R $FASTA \
-     -I:tumor $TUMORBAM \
-     -I:normal $NORMALBAM \
-     --dbsnp $SNPS \
-     -nct 2 \
-     -o $OUTPUT
+java -jar $GATK_JARFILE \
+-T MuTect2 \
+-R $REF_FASTA \
+-I:tumor $TUMORBAM \
+-I:normal $NORMALBAM \
+--dbsnp $SNPS \
+-nct 2 \
+-o $OUTPUT
