@@ -40,7 +40,7 @@ To generate plots in the base score quality recalibration step, [R](https://www.
 install.packages("gplots")
 install.packages("reshape")
 install.packages("ggplot2")
-install.package("gsalib")
+install.packages("gsalib")
 ```
 
 ##Reference Files
@@ -189,14 +189,23 @@ Method:		  	  	    MuTect2
 Script:					SnpEff.sh
 Reference:		   	    GRCm38.82
 Using framework:		SnpEff
-Using method:			SnpEff.jar
 ````
 * [Documentation](http://snpeff.sourceforge.net/SnpEff_manual.html#run)
 
 ####9) Filter variants for passing MuTect filters
+This step filters the annotated variants for only those passing MuTect's filters.
 ```
-Script:					SnpSiftForPass.sh
-Using framework:		SnpEff
-Using method			SnpSift.jar
+Script:				     	SnpSiftForPass.sh
+Using framework:		SnpSift (part of SnpEff)
+Using method:		  	filter
+```
+*[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
+
+####10) Extract variants to text file
+This step extracts the passed filters to a .txt file which is more easily readable and better for downstream analyses.
+````
+Script:             SnpSiftExtract.sh
+Using framework:    SnpSift (part of SnpEff)
+Using method:       extractFields
 ```
 *[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
