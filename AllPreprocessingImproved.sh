@@ -19,11 +19,17 @@ SNPS='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Reference
 #Path to GATK jar file
 GATK_JARFILE='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/GenomeAnalysisTK-3.5/GenomeAnalysisTK.jar'
 
-#Path to reference FASTA
-REF_FASTA='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.fa'
+#Path to SnpEff jarfile
+SNPEFF_JARFILE='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/SnpEff/snpEff/snpEff.jar'
+
+#Path to SnpSift jarfile
+SNPSIFT_JARFILE='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/SnpEff/snpEff/SnpSift.jar'
 
 #Path to folder containing Picard.jar
 PICARD_PATH='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/Picard/'
+
+#Path to reference FASTA
+REF_FASTA='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.fa'
 
 #Master path to output folder
 MASTER='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/'
@@ -31,24 +37,35 @@ MASTER='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/
 #Number of threads for variant calling (MuTect, nct argument)
 NCT='2'
 
+#SnpEff reference genome version
+SNPEFF_REFERENCE='GRCm38.82'
+
 #Names of folders needed in output folder
 #mkdir BWAmemAlignedBams
 #mkdir SamSortedBams
-#mkdir DeduppedBams
-#mkdir /DeduppedBams/Metrics
 #mkdir RealignerTargetCreator
 #mkdir IndelRealigned
 #mkdir BaseRecalibratorFirstRun
 #mkdir BaseRecalibratorSecondRun
 #mkdir AnalyzeCovariatesRecalibrationPlots
 #mkdir PrintReadsRecalibrated
+#mkdir MuTect2
+#mkdir SnpEffAnnotated
+#cd ./SnpEffAnnotated
+#mkdir Summaries
+#cd $MASTER
+#mkdir SnpSiftFiltered
+#mkdir SnpSiftExtracted
+#mkdir DeduppedBams
+#cd ./DeduppedBams/
+#mkdir Metrics
 
 
 #NORMAL
 #Map read to reference genome (BWAmem.sh)
 #Path to output bam file
 OUTPUT_BWA_PATH='BWAmemAlignedBams/'
-OUTPUT__BWA_EXTENSION='.bam'
+OUTPUT_BWA_EXTENSION='.bam'
 OUTPUT_BWA_NORMAL=$MASTER$OUTPUT_BWA_PATH$SAMPLE_NORMAL$OUTPUT_BWA_EXTENSION
 
 bwa mem \
@@ -316,3 +333,48 @@ java -jar $GATK_JARFILE \
 --dbsnp $SNPS \
 -nct $NCT \
 -o $MUTECT_OUTPUT
+
+
+#Annotate with SnpEff (SnpEff.sh)
+#path to annotated output
+SNPEFF_PATH='SnpEffAnnotated/'
+SNPEFF_EXTENSION='.annotated.vcf'
+SNPEFF_OUTPUT=$MASTER$SNPEFF_PATH$SAMPLE_TUMOR$SNPEFF_EXTENSION
+
+#Path to stats
+SNPEFF_STATS_PATH='SnpEffAnnotated/Summaries/'
+SNPEFF_STATS_EXTENSION='.summary.html'
+SNPEFF_STATS_OUTPUT=$MASTER$SNPEFF_STATS_PATH$SAMPLE_TUMOR$SNPEFF_STATS_EXTENSION
+
+java -Xmx4g -jar $SNPEFF_JARFILE \
+$SNPEFF_REFERENCE \
+-v -stats $SNPEFF_STATS_OUTPUT \
+$MUTECT_OUTPUT > \
+$SNPEFF_OUTPUT
+
+
+#Filter annotated VCF for variants passing MuTect filters (SnpSiftForPass.sh)
+#name and path to output file
+SNPSIFT_PATH='SnpSiftFiltered/'
+SNPSIFT_EXTENSION='.annotated.passfiltered.vcf'
+SNPSIFT_OUTPUT=$MASTER$SNPSIFT_PATH$SAMPLE_TUMOR$SNPSIFT_EXTENSION
+
+#Sift input for rows with FILTER=PASS
+cat $SNPEFF_OUTPUT | java -jar $SNPSIFT_JARFILE \
+filter "(FILTER='PASS')" \
+> $SNPSIFT_OUTPUT
+
+
+#Extract pass filtered vcf to  text file (SnpSiftExtract.sh)
+#name and path to output file
+SNPEXTRACT_PATH='SnpSiftExtracted/'
+SNPEXTRACT_EXTENSION='.annotated.passfiltered.extracted.vcf'
+SNPEXTRACT_OUTPUT=$MASTER$SNPEXTRACT_PATH$SAMPLE_TUMOR$SNPEXTRACT_EXTENSION
+
+java -jar $SNPSIFT_JARFILE \
+extractFields \
+-s "," \
+$SNPSIFT_OUTPUT \
+'CHROM' 'POS' 'ID' 'QUAL' 'ANN[*].GENE' 'ANN[*].ALLELE' 'ANN[*].EFFECT' \
+'ANN[*].IMPACT' 'ANN[*].GENEID' > $SNPEXTRACT_OUTPUT
+

@@ -1,10 +1,11 @@
 #!/bin/bash
 
 #name and path to input file
-INPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/SnpSift_filtered/401_15_output.ann.passfiltered.vcf'
+INPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/SnpSiftFiltered/422_15_2.annotated.passfiltered.vcf'
 
 #name and path to output file
-OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/SnpSift_extracted/401_15_output.ann.passfiltered.extracted.txt'
+OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/SnpSiftExtracted/422_15_2.annotated.passfiltered.extracted.vcf'
+
 #name and path to jarfile
 JARFILE='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/SnpEff/snpEff/SnpSift.jar'
 
