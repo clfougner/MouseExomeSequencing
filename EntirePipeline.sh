@@ -1,44 +1,61 @@
 #!/bin/bash
 
 #Sample numbers
-SAMPLE_NORMAL='422_15_11'
-SAMPLE_TUMOR='422_15_2'
+SAMPLE_NORMAL='123_14_8'
+SAMPLE_TUMOR='123_14_6'
 
-#Path to FASTQ input files
-INPUT_FASTQ_NORMAL_1='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/FastQInput/TN1511D0826/TN1511D0826_1.fastq'
-INPUT_FASTQ_NORMAL_2='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/FastQInput/TN1511D0826/TN1511D0826_2.fastq'
-INPUT_FASTQ_TUMOR_1='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/FastQInput/TN1511D0825/TN1511D0825_1.fastq'
-INPUT_FASTQ_TUMOR_2='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/FastQInput/TN1511D0825/TN1511D0825_2.fastq'
-
-#Path to known indels
-INDELS='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.FVBN.INDELS.vcf'
-
-#Path to known SNPs
-SNPS='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.FVBN.SNPs.vcf'
-
-#Path to GATK jar file
-GATK_JARFILE='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/GenomeAnalysisTK-3.5/GenomeAnalysisTK.jar'
-
-#Path to SnpEff jarfile
-SNPEFF_JARFILE='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/SnpEff/snpEff/snpEff.jar'
-
-#Path to SnpSift jarfile
-SNPSIFT_JARFILE='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/SnpEff/snpEff/SnpSift.jar'
-
-#Path to folder containing Picard.jar
-PICARD_PATH='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/Picard/'
-
-#Path to reference FASTA
-REF_FASTA='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.fa'
+#Theragen Sample numbers
+THERAGEN_NORMAL='796'
+THERAGEN_TUMOR='795'
 
 #Master path to output folder
-MASTER='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/'
+MASTER='/data2/christian/Sequencing/Output/'
+
+#Master path to FASTQ files
+FASTQ_MASTER='/data2/christian/TBO150127_151231/01_fastq_file/TN1511D0'
+
+#Path to known indels
+INDELS='/data2/christian/Sequencing/ReferenceFiles/mm10.FVBN.INDELS.vcf'
+
+#Path to known SNPs
+SNPS='/data2/christian/Sequencing/ReferenceFiles/mm10.FVBN.SNPs.vcf'
+
+#Path to GATK jar file
+GATK_JARFILE='/data2/christian/Sequencing/Frameworks/GenomeAnalysisTK-3.5/GenomeAnalysisTK.jar'
+
+#Path to SnpEff jarfile
+SNPEFF_JARFILE='/data2/christian/Sequencing/Frameworks/SnpEff/snpEff/snpEff.jar'
+
+#Path to SnpSift jarfile
+SNPSIFT_JARFILE='/data2/christian/Sequencing/Frameworks/SnpEff/snpEff/SnpSift.jar'
+
+#Path to folder containing Picard.jar
+#PICARD_PATH='/data2/christian/Sequencing/Frameworks/Picard/'
+
+#Path to reference FASTA
+REF_FASTA='/data2/christian/Sequencing/ReferenceFiles/mm10.fa'
 
 #Number of threads for variant calling (MuTect, nct argument)
 NCT='2'
 
 #SnpEff reference genome version
 SNPEFF_REFERENCE='GRCm38.82'
+
+#Path to fastq files
+FASTQ_EXTENSION_1='_1.fastq'
+FASTQ_EXTENSION_2='_2.fastq'
+FASTQ_BETWEEN='/TN1511D0'
+INPUT_FASTQ_NORMAL_1=$FASTQ_MASTER$THERAGEN_NORMAL$FASTQ_BETWEEN$THERAGEN_NORMAL$FASTQ_EXTENSION_1
+INPUT_FASTQ_NORMAL_2=$FASTQ_MASTER$THERAGEN_NORMAL$FASTQ_BETWEEN$THERAGEN_NORMAL$FASTQ_EXTENSION_2
+INPUT_FASTQ_TUMOR_1=$FASTQ_MASTER$THERAGEN_TUMOR$FASTQ_BETWEEN$THERAGEN_TUMOR$FASTQ_EXTENSION_1
+INPUT_FASTQ_TUMOR_2=$FASTQ_MASTER$THERAGEN_TUMOR$FASTQ_BETWEEN$THERAGEN_TUMOR$FASTQ_EXTENSION_2
+
+#Unzip fastq files. Remove if no longer necessary
+#UNZIP_EXTENSION='.gz'
+#gunzip $INPUT_FASTQ_NORMAL_1$UNZIP_EXTENSION
+#gunzip $INPUT_FASTQ_NORMAL_2$UNZIP_EXTENSION
+#gunzip $INPUT_FASTQ_TUMOR_1$UNZIP_EXTENSION
+#gunzip $INPUT_FASTQ_TUMOR_2$UNZIP_EXTENSION
 
 #Names of folders needed in output folder
 #mkdir BWAmemAlignedBams
@@ -60,6 +77,7 @@ SNPEFF_REFERENCE='GRCm38.82'
 #cd ./DeduppedBams/
 #mkdir Metrics
 
+#/opt/picard/picard.jar
 
 #NORMAL
 #Map read to reference genome (BWAmem.sh)
@@ -68,6 +86,7 @@ OUTPUT_BWA_PATH='BWAmemAlignedBams/'
 OUTPUT_BWA_EXTENSION='.bam'
 OUTPUT_BWA_NORMAL=$MASTER$OUTPUT_BWA_PATH$SAMPLE_NORMAL$OUTPUT_BWA_EXTENSION
 
+#BRING BACK
 bwa mem \
 -R '@RG\tID:foo\tSM:bar\tPL:Illumina' \
 $REF_FASTA \
@@ -77,14 +96,15 @@ $OUTPUT_BWA_NORMAL
 
 #Sort mapped reads by coordinate (SortSam.sh)
 
-cd $PICARD_PATH
+#cd $PICARD_PATH
 
 #Path to coordinate sorted bam file
 OUTPUT_SORTSAM_PATH='SamSortedBams/'
 OUTPUT_SORTSAM_EXTENSION='.sorted.bam'
 OUTPUT_SORTSAM_NORMAL=$MASTER$OUTPUT_SORTSAM_PATH$SAMPLE_NORMAL$OUTPUT_SORTSAM_EXTENSION
 
-java -jar dist/picard.jar \
+BRING BACK
+picard \
 SortSam \
 I=$OUTPUT_BWA_NORMAL \
 O=$OUTPUT_SORTSAM_NORMAL \
@@ -92,7 +112,7 @@ SORT_ORDER=coordinate
 
 
 #Mark duplicates (MarkDuplicates.sh)
-cd $PICARD_PATH
+#cd $PICARD_PATH
 
 #Path to dedupped output
 OUTPUT_MARKDUPLICATES_PATH='DeduppedBams/'
@@ -104,10 +124,10 @@ METRICS_PATH='DeduppedBams/Metrics/'
 METRICS_EXTENSION='.sorted.metrics.txt'
 METRICS_NORMAL=$MASTER$METRICS_PATH$SAMPLE_NORMAL$METRICS_EXTENSION
 
-java -jar dist/picard.jar \
+picard \
 MarkDuplicates \
 CREATE_INDEX=true \
-I=OUTPUT_SORTSAM_NORMAL \
+I=$OUTPUT_SORTSAM_NORMAL \
 O=$OUTPUT_MARKDUPLICATES_NORMAL \
 M=$METRICS_NORMAL
 
@@ -204,6 +224,7 @@ java -jar $GATK_JARFILE \
 #Path to output bam file
 OUTPUT_BWA_TUMOR=$MASTER$OUTPUT_BWA_PATH$SAMPLE_TUMOR$OUTPUT_BWA_EXTENSION
 
+
 bwa mem \
 -R '@RG\tID:foo\tSM:bar\tPL:Illumina' \
 $REF_FASTA \
@@ -212,13 +233,12 @@ $OUTPUT_BWA_TUMOR
 
 
 #Sort mapped reads by coordinate (SortSam.sh)
-
-cd $PICARD_PATH
+#cd $PICARD_PATH
 
 #Path to coordinate sorted bam file
 OUTPUT_SORTSAM_TUMOR=$MASTER$OUTPUT_SORTSAM_PATH$SAMPLE_TUMOR$OUTPUT_SORTSAM_EXTENSION
 
-java -jar dist/picard.jar \
+picard \
 SortSam \
 I=$OUTPUT_BWA_TUMOR \
 O=$OUTPUT_SORTSAM_TUMOR \
@@ -226,7 +246,7 @@ SORT_ORDER=coordinate
 
 
 #Mark duplicates (MarkDuplicates.sh)
-cd $PICARD_PATH
+#cd $PICARD_PATH
 
 #Path to dedupped output
 OUTPUT_MARKDUPLICATES_TUMOR=$MASTER$OUTPUT_MARKDUPLICATES_PATH$SAMPLE_TUMOR$OUTPUT_MARKDUPLICATES_EXTENSION
@@ -234,10 +254,10 @@ OUTPUT_MARKDUPLICATES_TUMOR=$MASTER$OUTPUT_MARKDUPLICATES_PATH$SAMPLE_TUMOR$OUTP
 #Path to metrics for deduplication
 METRICS_TUMOR=$MASTER$METRICS_PATH$SAMPLE_TUMOR$METRICS_EXTENSION
 
-java -jar dist/picard.jar \
+picard \
 MarkDuplicates \
 CREATE_INDEX=true \
-I=OUTPUT_SORTSAM_TUMOR \
+I=$OUTPUT_SORTSAM_TUMOR \
 O=$OUTPUT_MARKDUPLICATES_TUMOR \
 M=$METRICS_TUMOR
 
