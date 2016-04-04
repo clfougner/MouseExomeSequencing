@@ -213,3 +213,7 @@ Using framework:    SnpSift (part of SnpEff)
 Using method:       extractFields
 ```
 *[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
+
+
+##Putting it all together
+The entire pipeline can be found in the script `EntirePipeline.sh`. If all reference files are prepared according to the previous instructions and all required frameworks are installed, the entire pipeline from mapping to variant annotation can be run simply by replacing the paths to the relevant input, reference and framework files. Note that a number of folders are required (see lines 60-78 for names). Also, note that I can invoke Picard simply by inputting `picard`; depending on your installation you may have to replace the relevant lines with `java -jar dist/picard.jar`.
