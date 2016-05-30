@@ -43,6 +43,19 @@ install.packages("ggplot2")
 install.packages("gsalib")
 ```
 
+####Pip
+This is a python package used to install Cutadapt (note: some users may already have this installed). Follow the instructions [here](https://pip.pypa.io/en/stable/installing/) to install.
+
+####Cutadapt
+Framework required to remove adapter sequences from reads. Follow the instructions [here](http://cutadapt.readthedocs.io/en/stable/installation.html) to install.
+
+####Sickle
+Sickle is used to trim low quality reads. In order to install, clone the repository from [here](https://github.com/najoshi/sickle). Change directory to the folder and enter the following:
+```
+make
+export PATH=$PATH:~/opt/bin
+````
+
 ##Reference Files
 
 ####Mouse Reference Genome: mm10.2bit
