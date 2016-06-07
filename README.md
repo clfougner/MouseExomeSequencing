@@ -92,10 +92,25 @@ When realigning around indels, a list of known indels is used; this list must be
 Same concept as with the indels; additionally, the SNP list must be sorted with Picard's `SortVcf`tool. The SNP reference file can be formatted with the script `FormatKnownSNPs.sh`. In this project, this file after processing is referred to as `mm10.FVBN.SNPs.vcf`.
 
 ##Preprocessing
-####1) Raw reads to FASTQ file
-First off, raw reads must be turned into a FASTQ file. In my case, this was done for me by the sequencing service, and will not be mentioned further
+####1) Cutadapt
+Cutadapt finds and removes adapter sequences, primers, poly-A tails and other types of unwanted sequence from your high-throughput sequencing reads.
 
-####2) Map reads to produce BAM file 
+```
+Script:				CutAdapt.sh
+Using framework:	cutadapt
+```
+* [Documentation](https://cutadapt.readthedocs.io/en/stable/)
+
+####2) Sickle
+Most modern sequencing technologies produce reads that have deteriorating quality towards the 3'-end and some towards the 5'-end as well. Incorrectly called bases in both regions negatively impact assembles, mapping, and downstream bioinformatics analyses. Sickle is a tool that uses sliding windows along with quality and length thresholds to determine when quality is sufficiently low to trim the 3'-end of reads and also determines when the quality is sufficiently high enough to trim the 5'-end of reads.
+```
+Script:				Sickle.sh
+Using framework:	sickle
+Using method:       pe
+```
+* [Documentation](https://github.com/najoshi/sickle)
+
+####3) Map reads to produce BAM file 
 Second, the reads must be mapped to the reference genome:
 ```
 Script:				BWAmem.sh
@@ -105,7 +120,7 @@ Using method:		mem
 ```
 * [Documentation](http://bio-bwa.sourceforge.net/bwa.shtml)
 
-####3) Realign BAM file by coordinate
+####4) Realign BAM file by coordinate
 In order to remove duplicates (dedup), the BAM file must first be sorted by coordinate:
 ```
 Script:				SortSam.sh
@@ -114,7 +129,7 @@ Using method:		SortSam
 ```
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#SortSam)
 
-####4) Remove duplicates from BAM files
+####5) Remove duplicates from BAM files
 During the sequencing process, the same DNA fragments may be sequenced several times. The resulting duplicate reads are not informative and should not be counted as additional evidence for or against a putative variant. The duplicate marking process (sometimes called **dedupping** in bioinformatics slang) does not remove the reads, but identifies them as duplicates by adding a flag in the read's SAM record. Most GATK tools will then ignore these duplicate reads by default, through the internal application of a read filter [(2)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 ```
 Script:				MarkDuplicates.sh
@@ -123,7 +138,7 @@ Using method:		MarkDuplicates
 ```
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
 
-####5) Realign around indels
+####6) Realign around indels
 The algorithms that are used in the initial mapping step tend to produce various types of artifacts. For example, reads that align on the edges of indels often get mapped with mismatching bases that might look like evidence for SNPs, but are actually mapping artifacts. The realignment process identifies the most consistent placement of the reads relative to the indel in order to clean up these artifacts. It occurs in two steps: first the program identifies intervals that need to be realigned, then in the second step it determines the optimal consensus sequence and performs the actual realignment of reads.
 
 This step used to be very important when the the variant callers were position-based (such as UnifiedGenotyper) but now that we have assembly-based variant callers (such as HaplotypeCaller) it is less important. We still perform indel realignment because we think it may improve the accuracy of the base recalibration model in the next step, but this step may be made obsolete in the near future [(3)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
@@ -147,7 +162,7 @@ Using method:			IndelRealigner
 ```
 * [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
-####6) Recalibrate bases
+####7) Recalibrate bases
 Variant calling algorithms rely heavily on the quality scores assigned to the individual base calls in each sequence read. These scores are per-base estimates of error emitted by the sequencing machines. Unfortunately the scores produced by the machines are subject to various sources of systematic technical error, leading to over- or under-estimated base quality scores in the data. Base quality score recalibration (BQSR) is a process in which we apply machine learning to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls [(4)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 
 ######First step:
@@ -212,7 +227,7 @@ Using framework:		SnpEff
 ####2) Filter variants for passing MuTect filters
 This step filters the annotated variants for only those passing MuTect's filters.
 ```
-Script:				     	SnpSiftForPass.sh
+Script:				     SnpSiftForPass.sh
 Using framework:		SnpSift (part of SnpEff)
 Using method:		  	filter
 ```
@@ -229,4 +244,4 @@ Using method:       extractFields
 
 
 ##Putting it all together
-The entire pipeline can be found in the script `EntirePipeline.sh`. If all reference files are prepared according to the previous instructions and all required frameworks are installed, the entire pipeline from mapping to variant annotation can be run simply by replacing the paths to the relevant input, reference and framework files. Note that a number of folders are required (see lines 60-78 for names). Also, note that I can invoke Picard simply by inputting `picard`; depending on your installation you may have to replace the relevant lines with `java -jar dist/picard.jar`.
+The entire pipeline can be found in the script `EntirePipeline.sh`. If all reference files are prepared according to the previous instructions and all required frameworks are installed, the entire pipeline from mapping to variant annotation can be run simply by replacing the paths to the relevant input, reference and framework files. Note that a number of folders are required (see lines 60-78 for names). Also, note that Picard is invoked here simply by inputting `picard`; depending on your installation you may have to replace the relevant lines with `java -jar dist/picard.jar`.
