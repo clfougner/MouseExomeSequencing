@@ -26,7 +26,7 @@ Framework for converting .2bit files to .fa (fasta) files, created by UCSC, and 
 Java is required for almost all frameworks listed, and can be downloaded [here](https://java.com/en/download/). All work presented here is running Java version 1.8.
 
 ####HTSJDK
-High Throughput Sequencing Java Development Kit (HTSJDK) is is a Java API for high throughput sequencing data formats and can be downloaded [here](http://samtools.github.io/htsjdk/). HTSJDK is most required in order to use Picard. All work presented here is using HTSJDK version 2.0.1. 
+High Throughput Sequencing Java Development Kit (HTSJDK) is is a Java API for high throughput sequencing data formats and can be downloaded [here](http://samtools.github.io/htsjdk/). HTSJDK is required in order to use Picard. All work presented here is using HTSJDK version 2.0.1. 
 
 ####Apache Ant
 Ant is required for building HTSJDK, and can be downloaded [here](http://ant.apache.org/). All work presented here is using Ant version 1.9.6.
@@ -111,7 +111,7 @@ Using method:       pe
 * [Documentation](https://github.com/najoshi/sickle)
 
 ####3) Map reads to produce BAM file 
-Second, the reads must be mapped to the reference genome:
+Map reads to the reference genome using BWA:
 ```
 Script:				BWAmem.sh
 Reference file:		mm10.fa
@@ -227,14 +227,14 @@ Using framework:		SnpEff
 ####2) Filter variants for passing MuTect filters
 This step filters the annotated variants for only those passing MuTect's filters.
 ```
-Script:				     SnpSiftForPass.sh
+Script:	      		   SnpSiftForPass.sh
 Using framework:		SnpSift (part of SnpEff)
 Using method:		  	filter
 ```
 *[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
 
 ####3) Extract variants to text file
-This step extracts the passed filters to a .txt file which is more easily readable and better for downstream analyses.
+This step extracts the passed filters to a .txt file which is more easily readable and (arguably) better for downstream analyses.
 ````
 Script:             SnpSiftExtract.sh
 Using framework:    SnpSift (part of SnpEff)
