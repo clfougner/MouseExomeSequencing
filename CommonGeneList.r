@@ -44,7 +44,7 @@ geneList<-c(S123_14_6_list, S131_14_9_list, S132_14_5_list, S153_14_2_list,
             S159_14_2_list, S159_14_8_list, S160_14_2_list, S176_14_2_list,
             S187_14_1_list, S189_14_2_list, S189_14_4_list, S400_15_2_list,
             S400_15_7_list, S401_15_2_list, S412_15_2_list, S416_15_2_list,
-            S416_15_13, S422_15_2_list)
+            S416_15_13_list, S422_15_2_list)
 
 ###################################################################
 ## Remove all duplicated genes
