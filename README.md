@@ -1,4 +1,4 @@
-#Mouse Exome Sequencing
+#Mouse Exome Sequencing Analysis
 
 This is a repository to document my work in setting up a pipeline for somatic variant calling from mouse exome sequencing data, and downstream analyis thereof . It is for my own research use, but may act as a guideline for anyone looking to do accomplish the same goal.
 
