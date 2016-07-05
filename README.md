@@ -4,7 +4,6 @@ This is a repository to document my work in setting up a pipeline for somatic va
 
 This repository is organized as follows:
 ````
-Folder:
 Install           Instructions on installing the necessary frameworks
 ReferenceFiles    Instructions on downloading and processing th enecessary reference files
 VariantCalling    A complete pipeline for variant calling
