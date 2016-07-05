@@ -6,7 +6,7 @@ This repository is organized as follows:
 ````
 Install           Instructions on installing the necessary frameworks
 ReferenceFiles    Instructions on downloading and processing th enecessary reference files
-VariantCalling    A complete pipeline for variant calling
+VariantCalling    Pipeline for variant calling (including preprocessing and annotation)
 PostProcessing    Scripts used for downstream analysis of called variants
 Figures           Scripts used for creating figures
 `````
