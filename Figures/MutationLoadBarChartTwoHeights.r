@@ -12,9 +12,12 @@ data2<-df['Mutect, AD>10, AF>0.05, RF, modifier and synon removed',]
 numeric<-as.numeric(data)
 numeric2<-as.numeric(data2)
 numeric2<-numeric-numeric2
+numeric<-as.numeric(data2)
+forOrder<-as.numeric(data)
+
 variants<-data.frame(numeric, numeric2, stringsAsFactors = FALSE, row.names=colnames(df))
 variants<-cbind(sample=row.names(variants), variants)
-variants<-arrange(variants, numeric, row.names(variants))
+variants<-arrange(variants, forOrder, row.names(variants))
 variants$sample<-factor(variants$sample, levels=variants$sample)
 
 variants1<-melt(variants, id.var='sample')
