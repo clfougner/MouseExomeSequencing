@@ -2,12 +2,12 @@
 
 args<-commandArgs()
 filename<-args[6]
-outputExtension<-'.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt'
-outputPath<-'FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/'
+outputExtension<-'.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt'
+outputPath<-'FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/'
 master<-args[7]
 sampleNumber<-args[8]
 
-file<-read.table(file=filename)
+file<-read.table(file=filename, sep='\t')
 file<-file[!duplicated(file$V5),]
 
 outputFileName<-paste(master, outputPath, sampleNumber, outputExtension, sep='')

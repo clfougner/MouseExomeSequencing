@@ -3,7 +3,7 @@ library(plyr)
 
 filteredvars<-read.table(file='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/FilteringOwnDataTests.txt', header=TRUE, sep='\t', stringsAsFactors = F)
 
-df<-data.frame(filteredvars, stringsAsFactors = F, row.names=filteredvars$Filter)
+df<-data.frame(filteredvars, stringsAsFactors = FALSE, row.names=filteredvars$Filter)
 df<-df[ , !(names(df) %in% 'Filter')]
 
 data<-df['Mutect, AD>10, AF>0.05, RF, modifier removed,',]
