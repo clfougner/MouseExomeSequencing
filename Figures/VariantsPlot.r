@@ -3,11 +3,11 @@ library('cowplot')
 
 file<-read.table(file='/Volumes/Christian/DMBA-induced/Output/Analysis/VogelsteinSelectedModLowGrep.txt')
 
-sampleNames<-c('S123_14_6', 'S131_14_9', 'S132_14_5', 'S153_14_2',
-               'S159_14_2', 'S159_14_8', 'S160_14_2', 'S176_14_2',
-               'S187_14_1', 'S189_14_2', 'S189_14_4', 'S400_15_2',
-               'S400_15_7', 'S401_15_2', 'S412_15_2', 'S416_15_2',
-               'S416_15_13', 'S422_15_2')
+sampleNames<-c('S123_14_6 ', 'S131_14_9 ', 'S132_14_5 ', 'S153_14_2 ',
+               'S159_14_2 ', 'S159_14_8 ', 'S160_14_2 ', 'S176_14_2 ',
+               'S187_14_1 ', 'S189_14_2 ', 'S189_14_4 ', 'S400_15_2 ',
+               'S400_15_7 ', 'S401_15_2 ', 'S412_15_2 ', 'S416_15_2 ',
+               'S416_15_13', 'S422_15_2 ')
 
 df<-data.frame(file)
 geneLabs<-row.names(df)
@@ -35,19 +35,23 @@ df<-data.frame(samples, genes, contains)
 plotdata<-ggplot(data=df, aes(x=samples, y=rev(genes), fill=contains))
 
 chart<-plotdata+geom_raster() + 
-  theme(axis.text.x=element_text(size=14, face='bold', angle=270, hjust=-1),
-        axis.text.y=element_text(size=10, face='italic', hjust=0),
-        axis.ticks.x=element_blank(), axis.ticks.y=element_blank(),
-        panel.background=element_rect(fill='#ffffff'),
+       ylab('') +
+    theme(axis.title.y=element_blank(),
+        axis.title.x=element_text(size=0),
+        axis.text.y=element_text(size=10, face='italic', hjust=1),
+        axis.text.x=element_text(size=14, face='bold', angle=270, hjust=-1),
         axis.line=element_blank(),
-        legend.position='none') +
-  scale_y_continuous('Genes', breaks=1:length(geneLabs), labels=rev(geneLabs)) +
-  scale_x_discrete("Sample") + 
-  scale_fill_gradient(low='grey87', high='dodgerblue4') +
-  geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.5) +
-  geom_hline(yintercept = seq(1.5, (length(geneLabs)+0.5), by=1), color = "white", size = 0.5)
+        legend.position='none',
+        panel.background=element_rect(fill='#ffffff'),
+        axis.ticks.y=element_blank(),
+        axis.ticks.x=element_line(colour='white')) +
+    scale_y_continuous('Genes', breaks=1:length(geneLabs), labels=rev(geneLabs)) +
+    scale_x_discrete("Sample") + 
+    scale_fill_gradient(low='grey85', high='dodgerblue4') +
+    geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.5) +
+    geom_hline(yintercept = seq(1.5, (length(geneLabs)+0.5), by=1), color = "white", size = 0.5)
   
-
-print(chart)
+chart2<-ggdraw(switch_axis_position(chart, axis='x'))
+print(chart2)
 
 
