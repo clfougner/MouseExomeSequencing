@@ -16,7 +16,7 @@ Purpose: Creates a plot giving an overview of the samples in which a given gene 
 Input: Overview of samples containing a given variant in wide format, as produced by the output from /Analysis/CommonGeneList.r
 ```
 Sample output:
-![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/SampleImages/Screen%20Shot%202016-07-12%20at%2012.10.02.png =250x250)
+![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/SampleImages/Screen%20Shot%202016-07-12%20at%2012.10.02.png)
 
 ####VariantsPlotSpecific.r
 ```
