@@ -1,8 +1,9 @@
 #!/usr/local/bin/Rscript
 
-###################################################################
-## Create list of all genes
-###################################################################
+#########################################################################
+## Create list of all genes (must have passed through ModGrepPipeline.sh
+## with RemoveDuplicateVariants.r)
+#########################################################################
 S123_14_6_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueCoordinates/123_14_6.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.txt")
 S131_14_9_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueCoordinates/131_14_9.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.txt")
 S132_14_5_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueCoordinates/132_14_5.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.txt")
@@ -22,6 +23,19 @@ S416_15_13_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests
 S416_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueCoordinates/416_15_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.txt")
 S422_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueCoordinates/422_15_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.txt")
 
+#########################################################################
+## Create list of all sample names
+#########################################################################
+sampleNames<-c('S123_14_6', 'S131_14_9', 'S132_14_5', 'S153_14_2',
+               'S159_14_2', 'S159_14_8', 'S160_14_2', 'S176_14_2',
+               'S187_14_1', 'S189_14_2', 'S189_14_4', 'S400_15_2',
+               'S400_15_7', 'S401_15_2', 'S412_15_2', 'S416_15_2',
+               'S416_15_13', 'S422_15_2')
+
+#########################################################################
+## Create list of all positions with variants for the given sample
+## (format: chrN:nnnnnnnnn)
+#########################################################################
 S123_14_6_list<-c(as.character(S123_14_6_table$V12))
 S131_14_9_list<-c(as.character(S131_14_9_table$V12))
 S132_14_5_list<-c(as.character(S132_14_5_table$V12))
@@ -41,6 +55,9 @@ S416_15_13_list<-c(as.character(S416_15_13_table$V12))
 S416_15_2_list<-c(as.character(S416_15_2_table$V12))
 S422_15_2_list<-c(as.character(S422_15_2_table$V12))
 
+#########################################################################
+## Concatenate all lists into one
+#########################################################################
 geneList<-c(S123_14_6_list, S131_14_9_list, S132_14_5_list, S153_14_2_list,
             S159_14_2_list, S159_14_8_list, S160_14_2_list, S176_14_2_list,
             S187_14_1_list, S189_14_2_list, S189_14_4_list, S400_15_2_list,
@@ -48,12 +65,14 @@ geneList<-c(S123_14_6_list, S131_14_9_list, S132_14_5_list, S153_14_2_list,
             S416_15_13_list, S422_15_2_list)
 
 ###################################################################
-## Remove all duplicated genes
+## Remove all duplicated genes from list
 ###################################################################
 geneList<-geneList[!duplicated(geneList)]
 
 ###################################################################
-## Create empty data frame of size corresponding to gene list
+## Create empty data frame of size corresponding to gene list 
+## (Important: object names must be identical to sample name in the
+## sampleNames object)
 ###################################################################
 numGenes<-length(geneList)
 S123_14_6<-rep(0, times=numGenes)
@@ -76,12 +95,6 @@ S416_15_13<-rep(0, times=numGenes)
 S422_15_2<-rep(0, times=numGenes)
 Sum<-rep(0, times=numGenes)
 
-sampleNames<-c('S123_14_6', 'S131_14_9', 'S132_14_5', 'S153_14_2',
-               'S159_14_2', 'S159_14_8', 'S160_14_2', 'S176_14_2',
-               'S187_14_1', 'S189_14_2', 'S189_14_4', 'S400_15_2',
-               'S400_15_7', 'S401_15_2', 'S412_15_2', 'S416_15_2',
-               'S416_15_13', 'S422_15_2')
-
 df<-data.frame(S123_14_6, S131_14_9,S132_14_5, S153_14_2,
                S159_14_2, S159_14_8, S160_14_2, S176_14_2,
                S187_14_1, S189_14_2, S189_14_4, S400_15_2,
@@ -90,7 +103,8 @@ df<-data.frame(S123_14_6, S131_14_9,S132_14_5, S153_14_2,
                Sum, row.names=geneList)
 
 ###################################################################
-## Assign variants to sample object
+## Assign variants to sample object (Important: object names must
+## be identical to sample name in the sampleNames object)
 ###################################################################
 S123_14_6<-S123_14_6_list
 S131_14_9<-S131_14_9_list
@@ -141,5 +155,8 @@ for (gene in geneList)
 ###################################################################
 ordered<-df[order(-df[,'Sum'],df[,1]), ]
 
+###################################################################
+## Print table
+###################################################################
 write.table(ordered, file='/Volumes/christian/DMBA-induced/Output/Analysis/OrderedListCoordinates.txt', quote = FALSE, sep='\t')
 

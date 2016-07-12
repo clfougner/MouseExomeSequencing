@@ -2,9 +2,9 @@ library('ggplot2')
 library('cowplot')
 
 #########################################################################################
-## Read file for CommonGeneListDetails.r -> FilterForVogelstein.r
+## Read file for CommonGeneListSpecific.r -> FilterForVogelstein.r
 #########################################################################################
-file<-read.table(file='/Volumes/christian/DMBA-induced/Output/OrderedListVogelFiltered.txt', stringsAsFactors=FALSE)
+file<-read.table(file='OrderedListSpecificVogelFiltered.txt', stringsAsFactors=FALSE)
 
 #########################################################################################
 ## Sample names in same order as input file
@@ -42,7 +42,7 @@ for (a in 2:length(sampleNames)) {
 genes<-c(rep(1:length(geneLabs), times=length(sampleNames)))
 
 #########################################################################################
-## Create list for data regarding variant effect (HIGH, MODERATE, LOW or NA)
+## Create list for data regarding the specific type of variant found in the sample
 #########################################################################################
 contains<-c(file[,1])
 for (b in 2:length(sampleNames)){
@@ -56,10 +56,8 @@ df<-data.frame(samples, genes, contains)
 
 #########################################################################################
 ## Optional: Set custom order for samples to be placed on the x-axis (note: sample
-## names must have identical spelling as in the sampleNames object), and order of effect
-## type in the legend
+## names must have identical spelling as in the sampleNames object)
 #########################################################################################
-df$contains<-factor(df$contains, levels=c('HIGH','MODERATE','LOW'))
 df$samples<-factor(df$samples, levels=c('S159_14_8 ', 'S400_15_7 ', 'S401_15_2 ', 'S189_14_2 ',
                                         'S176_14_2 ', 'S153_14_2 ','S400_15_2 ', 'S416_15_13',
                                         'S160_14_2 ', 'S159_14_2 ', 'S123_14_6 ', 'S412_15_2 ',
@@ -86,7 +84,8 @@ chart<-plotdata+geom_raster() +
     scale_y_continuous('Genes', breaks=1:length(geneLabs), labels=rev(geneLabs)) +
     geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.5) +
     geom_hline(yintercept = seq(1.5, (length(geneLabs)+0.5), by=1), color = "white", size = 0.5) +
-    scale_fill_manual(values=c('red3', 'dodgerblue4', 'forestgreen'), na.value='grey85', name='Variant effect') 
+    scale_fill_manual(values=c('chartreuse', 'cadetblue1', 'midnightblue', 'blue', 'orange',
+                               'aquamarine', 'purple', 'green', 'yellow', 'deeppink1'), na.value='grey85', name='Variant effect') 
   
 #########################################################################################
 ## Use switch_axis_positions to place sample names on top and make chart with ggdraw

@@ -22,6 +22,29 @@ S416_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/
 S422_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/422_15_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
 
 #########################################################################
+## Create data frame for each sample with row names set to gene names
+## and data set to effect type (LOW, MODERATE, HIGH)
+#########################################################################
+S123_14_6_df<-data.frame(S123_14_6_table$V11, row.names = S123_14_6_table$V5, stringsAsFactors = FALSE)
+S131_14_9_df<-data.frame(S131_14_9_table$V11, row.names = S131_14_9_table$V5, stringsAsFactors = FALSE)
+S132_14_5_df<-data.frame(S132_14_5_table$V11, row.names = S132_14_5_table$V5, stringsAsFactors = FALSE)
+S153_14_2_df<-data.frame(S153_14_2_table$V11, row.names = S153_14_2_table$V5, stringsAsFactors = FALSE)
+S159_14_2_df<-data.frame(S159_14_2_table$V11, row.names = S159_14_2_table$V5, stringsAsFactors = FALSE)
+S159_14_8_df<-data.frame(S159_14_8_table$V11, row.names = S159_14_8_table$V5, stringsAsFactors = FALSE)
+S160_14_2_df<-data.frame(S160_14_2_table$V11, row.names = S160_14_2_table$V5, stringsAsFactors = FALSE)
+S176_14_2_df<-data.frame(S176_14_2_table$V11, row.names = S176_14_2_table$V5, stringsAsFactors = FALSE)
+S187_14_1_df<-data.frame(S187_14_1_table$V11, row.names = S187_14_1_table$V5, stringsAsFactors = FALSE)
+S189_14_2_df<-data.frame(S189_14_2_table$V11, row.names = S189_14_2_table$V5, stringsAsFactors = FALSE)
+S189_14_4_df<-data.frame(S189_14_4_table$V11, row.names = S189_14_4_table$V5, stringsAsFactors = FALSE)
+S400_15_2_df<-data.frame(S400_15_2_table$V11, row.names = S400_15_2_table$V5, stringsAsFactors = FALSE)
+S400_15_7_df<-data.frame(S400_15_7_table$V11, row.names = S400_15_7_table$V5, stringsAsFactors = FALSE)
+S401_15_2_df<-data.frame(S401_15_2_table$V11, row.names = S401_15_2_table$V5, stringsAsFactors = FALSE)
+S412_15_2_df<-data.frame(S412_15_2_table$V11, row.names = S412_15_2_table$V5, stringsAsFactors = FALSE)
+S416_15_13_df<-data.frame(S416_15_13_table$V11, row.names = S416_15_13_table$V5, stringsAsFactors = FALSE)
+S416_15_2_df<-data.frame(S416_15_2_table$V11, row.names = S416_15_2_table$V5, stringsAsFactors = FALSE)
+S422_15_2_df<-data.frame(S422_15_2_table$V11, row.names = S422_15_2_table$V5, stringsAsFactors = FALSE)
+
+#########################################################################
 ## Create list of all sample names
 #########################################################################
 sampleNames<-c('S123_14_6', 'S131_14_9', 'S132_14_5', 'S153_14_2',
@@ -72,25 +95,25 @@ geneList<-geneList[!duplicated(geneList)]
 ## sampleNames object)
 ###################################################################
 numGenes<-length(geneList)
-S123_14_6<-rep(0, times=numGenes)
-S131_14_9<-rep(0, times=numGenes)
-S132_14_5<-rep(0, times=numGenes)
-S153_14_2<-rep(0, times=numGenes)
-S159_14_2<-rep(0, times=numGenes)
-S159_14_8<-rep(0, times=numGenes)
-S160_14_2<-rep(0, times=numGenes)
-S176_14_2<-rep(0, times=numGenes)
-S187_14_1<-rep(0, times=numGenes)
-S189_14_2<-rep(0, times=numGenes)
-S189_14_4<-rep(0, times=numGenes)
-S400_15_2<-rep(0, times=numGenes)
-S400_15_7<-rep(0, times=numGenes)
-S401_15_2<-rep(0, times=numGenes)
-S412_15_2<-rep(0, times=numGenes)
-S416_15_2<-rep(0, times=numGenes)
-S416_15_13<-rep(0, times=numGenes)
-S422_15_2<-rep(0, times=numGenes)
-Sum<-rep(0, times=numGenes)
+S123_14_6<-rep(NA, times=numGenes)
+S131_14_9<-rep(NA, times=numGenes)
+S132_14_5<-rep(NA, times=numGenes)
+S153_14_2<-rep(NA, times=numGenes)
+S159_14_2<-rep(NA, times=numGenes)
+S159_14_8<-rep(NA, times=numGenes)
+S160_14_2<-rep(NA, times=numGenes)
+S176_14_2<-rep(NA, times=numGenes)
+S187_14_1<-rep(NA, times=numGenes)
+S189_14_2<-rep(NA, times=numGenes)
+S189_14_4<-rep(NA, times=numGenes)
+S400_15_2<-rep(NA, times=numGenes)
+S400_15_7<-rep(NA, times=numGenes)
+S401_15_2<-rep(NA, times=numGenes)
+S412_15_2<-rep(NA, times=numGenes)
+S416_15_2<-rep(NA, times=numGenes)
+S416_15_13<-rep(NA, times=numGenes)
+S422_15_2<-rep(NA, times=numGenes)
+Sum<-rep(NA, times=numGenes)
 
 df<-data.frame(S123_14_6, S131_14_9, S132_14_5, S153_14_2,
                 S159_14_2, S159_14_8, S160_14_2, S176_14_2,
@@ -122,16 +145,19 @@ S416_15_13<-S416_15_13_list
 S422_15_2<-S422_15_2_list
 
 ###################################################################
-## Set given data position value to 1 if variant is found in sample
+## Set given data position value to effect type if variant exists
+## for given sample and gene
 ###################################################################
 
-for (x in sampleNames)
+for (sample in sampleNames)
  {
-  for (y in geneList)
+  for (gene in geneList)
     {
-     if (y %in% eval(parse(text=x)))
+     if (gene %in% eval(parse(text=sample)))
         {
-          df[y,x]<-1
+          pasted<-paste(sample, '_df', sep='')
+          impact<-eval(parse(text=pasted))[gene,]
+          df[gene,sample]<-impact
         }
       }
  }
@@ -139,7 +165,7 @@ for (x in sampleNames)
 ###################################################################
 ## Calculate sum of samples with variant
 ###################################################################
-sum<-rowSums(df)
+sum<-rowSums(!is.na(df))
 for (gene in geneList)
  {
    df[gene,'Sum']<-sum[gene]
@@ -153,5 +179,5 @@ ordered<-df[order(-df[,'Sum'],df[,1]), ]
 ###################################################################
 ## Print table
 ###################################################################
-write.table(ordered, file='OrderedList.txt', quote = FALSE, sep='\t')
+write.table(ordered, file='OrderedListSpecific.txt', quote = FALSE, sep='\t')
 
