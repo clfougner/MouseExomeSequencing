@@ -1,22 +1,22 @@
 library(ggplot2)
-S123_14_6_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/123_14_6.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S131_14_9_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/131_14_9.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S132_14_5_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/132_14_5.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S153_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/153_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S159_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/159_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S159_14_8_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/159_14_8.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S160_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/160_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S176_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/176_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S187_14_1_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/187_14_1.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S189_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/189_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S189_14_4_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/189_14_4.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S400_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/400_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S400_15_7_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/400_15_7.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S401_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/401_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S412_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/412_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S416_15_13_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/415_15_13.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S416_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/416_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
-S422_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/422_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S123_14_6_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/123_14_6.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S131_14_9_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/131_14_9.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S132_14_5_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/132_14_5.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S153_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/153_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S159_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/159_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S159_14_8_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/159_14_8.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S160_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/160_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S176_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/176_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S187_14_1_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/187_14_1.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S189_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/189_14_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S189_14_4_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/189_14_4.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S400_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/400_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S400_15_7_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/400_15_7.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S401_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/401_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S412_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/412_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S416_15_13_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/415_15_13.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S416_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/416_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
+# S422_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/422_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
 
 #################################################################################
 ## Create data frame with sample name, reference allele and alternate allele
@@ -47,14 +47,14 @@ objs<-list(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10, df11, df12,
 #################################################################################
 ## Remove all rows with more than one nucleotide in alternate allele (insertions)
 #################################################################################
-
 for (filenum in 1:length(objs)){
+
   df<-as.data.frame(objs[filenum])
-  for ( row in 1:length(df$sample)){
-    if (nchar(as.vector(df[row, 'alt']))>1){
-      df <-df[-row, ]
+    for ( row in 1:length(df$sample)){
+      if (nchar(as.vector(df[row, 'alt']))>1){
+        df <-df[-row, ]
+      }
     }
-  }
 
 
 
@@ -63,74 +63,74 @@ for (filenum in 1:length(objs)){
 #################################################################################
 ## Remove all rows with more than one nucleotide in reference allele (deletions)
 #################################################################################
-for (row in 1:length(df$sample)){
-  if (nchar(as.vector(df[row, 'ref']))>1){
-    df <- df[-row, ]
+  for (row in 1:length(df$sample)){
+    if (nchar(as.vector(df[row, 'ref']))>1){
+      df <- df[-row, ]
 
+    }
   }
-}
   
 
 
 #################################################################################
 ## Convert all refs to pyrimidines (C & T) according to convention
 #################################################################################
-for (row in 1:length(df$sample)){
-  if (df[row, 'ref']=='A'){
-    df[row, 'ref']<-'T'
+  for (row in 1:length(df$sample)){
+    if (df[row, 'ref']=='A'){
+      df[row, 'ref']<-'T'
     
-    if (df[row, 'alt']=='T') 
-    {
-      df[row, 'alt'] <- 'A'
-    }
+      if (df[row, 'alt']=='T') 
+      {
+        df[row, 'alt'] <- 'A'
+      }
     
-    if (df[row, 'alt']=='G') 
-    {
-      df[row, 'alt'] <- 'C'
-    }
+      if (df[row, 'alt']=='G') 
+      {
+        df[row, 'alt'] <- 'C'
+      }
     
-    if (df[row, 'alt']=='C') 
-    {
-      df[row, 'alt'] <- 'G'
+      if (df[row, 'alt']=='C') 
+      {
+        df[row, 'alt'] <- 'G'
+      }
     }
-  }
   
-  if (df[row, 'ref']=='G'){
-    df[row, 'ref']<-'C'
+    if (df[row, 'ref']=='G'){
+      df[row, 'ref']<-'C'
     
-    if (df[row, 'alt']=='T') 
-    {
-      df[row, 'alt'] <- 'A'
-    }
+      if (df[row, 'alt']=='T') 
+      {
+        df[row, 'alt'] <- 'A'
+      }
     
-    if (df[row, 'alt']=='A') 
-    {
-      df[row, 'alt'] <- 'T'
-    }
+      if (df[row, 'alt']=='A') 
+      {
+        df[row, 'alt'] <- 'T'
+      }
     
-    if (df[row, 'alt']=='C') 
-    {
-      df[row, 'alt'] <- 'G'
+      if (df[row, 'alt']=='C') 
+      {
+        df[row, 'alt'] <- 'G'
+      }
     }
   }
-}
 
 #################################################################################
 ## Create new column in df with transition type
 #################################################################################
-for (row in 1:length(df$sample)){
-  df[row, 'TS']<-paste(df[row, 'ref'], df[row, 'alt'], sep='')
-}
+  for (row in 1:length(df$sample)){
+    df[row, 'TS']<-paste(df[row, 'ref'], df[row, 'alt'], sep='>')
+  }
 
 #################################################################################
 ## Create new df with transition type as a proportion
 #################################################################################
-freqs<-count(as.factor(df$TS))
-proportion<-freqs[1:6, 'freq']/length(df$TS)
+  freqs<-count(as.factor(df$TS))
+  proportion<-freqs[1:6, 'freq']/length(df$TS)
 
-propdf<-data.frame(sample=rep(df[1,1], times=6), TS=freqs$x, proportion=proportion)
+  propdf<-data.frame(sample=rep(df[1,1], times=6), TS=freqs$x, proportion=proportion)
 
-assign(paste('sample', filenum, sep=''), propdf)
+  assign(paste('sample', filenum, sep=''), propdf)
 }
 
 bound<-rbind(sample1, sample2, sample3, sample4, sample5, sample6, sample7,
@@ -139,7 +139,19 @@ bound<-rbind(sample1, sample2, sample3, sample4, sample5, sample6, sample7,
 
 
 plotdata<-ggplot(bound,aes(x=factor(sample),y=proportion,fill=factor(TS)), color=factor(TS))
-chart<-plotdata + stat_summary(fun.y=mean,position="stack",geom="bar")
+
+
+chart<-plotdata + stat_summary(fun.y=mean,position="stack",geom="bar") +
+  theme(axis.title.x=element_blank(),
+        axis.line.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.x=element_text(angle=90),
+        legend.title=element_blank()) +
+  labs(y='Proportion of substitutions') +
+  coord_cartesian(ylim = c(0.0000, 1)) 
+
+
+
 print(chart)
 
 
