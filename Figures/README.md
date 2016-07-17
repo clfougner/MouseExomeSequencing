@@ -5,7 +5,7 @@ Input: Number of variants per sample in wide format, as produced my the the outp
 ```
 Sample output:
 
-![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/SampleImages/Screen%20Shot%202016-07-12%20at%2012.17.44.png)
+![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/Figures/SampleImages/Screen%20Shot%202016-07-12%20at%2012.17.44.png)
 
 ####MutationLoadBarChartTwoHeights.r
 ```
@@ -14,7 +14,7 @@ Input: Number of variants per sample in wide format, as produced my the the outp
 ```
 Sample output:
 
-![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/SampleImages/Screen%20Shot%202016-07-12%20at%2012.18.08.png)
+![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/Figures/SampleImages/Screen%20Shot%202016-07-12%20at%2012.18.08.png)
 
 ####VariantsPlot.r
 ```
@@ -23,7 +23,7 @@ Input: Overview of samples containing a given variant in wide format, as produce
 ```
 Sample output:
 
-![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/SampleImages/Screen%20Shot%202016-07-12%20at%2012.10.02.png)
+![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/Figures/SampleImages/Screen%20Shot%202016-07-12%20at%2012.10.02.png)
 
 ####VariantsPlotSpecific.r
 ```
@@ -32,7 +32,7 @@ Input: Overview of samples containing a given variant, and type of variant, in w
 ```
 Sample output:
 
-![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/SampleImages/Screen%20Shot%202016-07-12%20at%2012.16.04.png)
+![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/Figures/SampleImages/Screen%20Shot%202016-07-12%20at%2012.16.04.png)
 
 ####VariantsPlotWithLevels.r
 ```
@@ -41,4 +41,4 @@ Input: Overview of samples containing a given variant, and type of effect caused
 ```
 Sample output:
 
-![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/SampleImages/Screen%20Shot%202016-07-12%20at%2012.17.20.png)
+![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/Figures/SampleImages/Screen%20Shot%202016-07-12%20at%2012.17.20.png)
