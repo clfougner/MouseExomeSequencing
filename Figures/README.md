@@ -42,3 +42,12 @@ Input: Overview of samples containing a given variant, and type of effect caused
 Sample output:
 
 ![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/Figures/SampleImages/Screen%20Shot%202016-07-12%20at%2012.17.20.png)
+
+####MutationSpectrumAnalysisSingleNucleotide.r
+```
+Purpose: Creates a plot displaying the type of single nucleotide substitutions occuring in a list of samples
+Input: Text file containing a list of variants, including reference and alternate alleles (output from /VariantCalling/SnpSiftExtract.sh or the files in /Output/SnpSiftExtract/ from /VariantCalling/EntirePipeline.sh). Can be modified to take .vcf files as input using the 'skip' argument in read.table and changing the columns used when creating the data.frames to $V4 (ref) and $V5 (alt).
+```
+Sample output:
+
+![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/Figures/SampleImages/SingleNucleotideSubstitutionSpectrum.png)
