@@ -148,7 +148,7 @@ chart<-plotdata + stat_summary(fun.y=mean,position="stack",geom="bar") +
         axis.text.x=element_text(angle=90),
         legend.title=element_blank()) +
   labs(y='Proportion of substitutions') +
-  coord_cartesian(ylim = c(0.0000, 1)) 
+  scale_y_continuous(limits = c(0,1), expand = c(0, 0))
 
 
 
