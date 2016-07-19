@@ -1,82 +1,12 @@
-#install.packages('devtools')
+## See https://github.com/clfougner/MouseExomeSequencing/tree/master/Figures for
+## explanation of steps carried out in modifying deconstructSigs to work for
+## mouse data
 library(devtools)
-#source("https://bioconductor.org/biocLite.R")
-#biocLite("BSgenome")
-#biocLite("BSgenome.Mmusculus.UCSC.mm10")
-
-
-#Clone package from GitHub: https://github.com/raerose01/deconstructSigs
-
-#Edit:
-#mut.to.sigs.input.R
-# line65:
-#From:
-# unknown.regions <- levels(mut[, chr])[which(!(levels(mut[, chr]) %in% GenomeInfoDb::seqnames(BSgenome.Hsapiens.UCSC.hg19::Hsapiens)))]
-#To:
-# unknown.regions <- levels(mut[, chr])[which(!(levels(mut[, chr]) %in% GenomeInfoDb::seqnames(BSgenome.Mmusculus.UCSC.mm10::Mmusculus)))]
-
-# line68:
-#From:
-#  warning(paste('Check chr names -- not all match BSgenome.Hsapiens.UCSC.hg19::Hsapiens object:\n', unknown.regions, sep = ' '))
-#To:
-#  warning(paste('Check chr names -- not all match BSgenome.Mmusculus.UCSC.mm10::Mmusculus object:\n', unknown.regions, sep = ' '))
-
-# line69:
-#From:
-#   mut <- mut[mut[, chr] %in% GenomeInfoDb::seqnames(BSgenome.Hsapiens.UCSC.h1910::Hsapiens), ]
-#To:
-#    mut <- mut[mut[, chr] %in% GenomeInfoDb::seqnames(BSgenome.Mmusculus.UCSC.mm10::Mmusculus), ]
-
-# line74:
-#From:
-#  mut$context = BSgenome::getSeq(BSgenome.Hsapiens.UCSC.hg19::Hsapiens, mut[,chr], mut[,pos]-1, mut[,pos]+1, as.character = T)
-#To:
-#    mut$context = BSgenome::getSeq(BSgenome.Mmusculus.UCSC.mm10::Mmusculus, mut[,chr], mut[,pos]-1, mut[,pos]+1, as.character = T)
-
-#changes to plotting.r
-
-# Modify horizontal lines from plot
-# Lines 76, 83 and 90
-# From:
-#    graphics::abline(h = seq(from = 0, to = y_limit, by = 0.01), col = '#d3d3d350, lty = 1)
-# To:
-#   graphics::abline(h = seq(from = 0, to = y_limit, by = 0.01), col = 'darkgrey', lty = 1)
-
-
-# Remove vertical lines from plot
-#Comment out lines 77, 84 and 91
-
-# Change color pallete for barplot (Line 70) and legend (line 96)
-# Line 70
-# From:
-#   grDevices::palette(c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"))
-# To:
-#   grDevices::palette(c("deepskyblue", "black", "red", "magenta4", "forestgreen", "salmon"))
-
-# Line 96
-# From:
-#   graphics::legend('right', legend = unique(tumor_plotting$mutation), col = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"), bty = 'n', ncol = 1, inset=c(-0,0), pch = 15, xpd = TRUE, pt.cex = 2.5)
-# To:
-#   graphics::legend('right', legend = unique(tumor_plotting$mutation), col = c("deepskyblue", "black", "red", "magenta4", "forestgreen", "salmon"), bty = 'n', ncol = 1, inset=c(-0,0), pch = 15, xpd = TRUE, pt.cex = 2.5)
-
-# Remove axis ticks
-# Lines 78, 85
-# From:
-#   graphics::barplot(tumor_plotting$fraction, names.arg = tumor_plotting$full_context, cex.names = 0.7, las = 2, col = factor(tumor_plotting$mutation), ylim = c(0, y_limit), border = NA, space = 0.3, main = top.title, ylab = 'fraction', add = TRUE)
-# To:
-#    graphics::barplot(tumor_plotting$fraction, names.arg = tumor_plotting$full_context, cex.names = 0.7, las = 2, col = factor(tumor_plotting$mutation), ylim = c(0, y_limit), border = NA, space = 0.3, main = top.title, ylab = 'fraction', add = TRUE, col.ticks=rgb(0,0,0,0))
-
-#Line 92:
-# From:
-#   graphics::barplot(diff_plotting$fraction, names.arg = diff_plotting$full_context, cex.names = 0.7, las = 2, col = factor(diff_plotting$mutation), ylim = c(-y_limit, y_limit), border = 'black', space = 0.3, main = paste("error = ", error_summed, sep = ""), ylab = 'fraction', add = TRUE)
-# To:
-#   graphics::barplot(diff_plotting$fraction, names.arg = diff_plotting$full_context, cex.names = 0.7, las = 2, col = factor(diff_plotting$mutation), ylim = c(-y_limit, y_limit), border = 'black', space = 0.3, main = paste("error = ", error_summed, sep = ""), ylab = 'fraction', add = TRUE, col.ticks=rgb(0,0,0,0))
-
-
-
-#install('/path/to/deconstructSigs-master)
 library(deconstructSigs)
 
+#########################################################################################
+## Read variant lists as extracted from SnpSiftExtract.sh
+#########################################################################################
 S123_14_6_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/123_14_6.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
 S131_14_9_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/131_14_9.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
 S132_14_5_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/132_14_5.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
@@ -96,6 +26,10 @@ S416_15_13_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests
 S416_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/416_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
 S422_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/422_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
 
+#########################################################################################
+## Create data frame of variant lists in the long format with columns for sample name
+## chromosome number, variant position/coordinate, reference and alternate bases.
+#########################################################################################
 df1<-data.frame(sample=c(rep('S123_14_6', times=(length(S123_14_6_table$V3)))), chr=S123_14_6_table$V1, pos=S123_14_6_table$V2, ref=S123_14_6_table$V3, alt=S123_14_6_table$V4)
 df2<-data.frame(sample=c(rep('S131_14_9', times=(length(S131_14_9_table$V3)))), chr=S131_14_9_table$V1, pos=S131_14_9_table$V2, ref=S131_14_9_table$V3, alt=S131_14_9_table$V4)
 df3<-data.frame(sample=c(rep('S132_14_5', times=(length(S132_14_5_table$V3)))), chr=S132_14_5_table$V1, pos=S132_14_5_table$V2, ref=S132_14_5_table$V3, alt=S132_14_5_table$V4)
@@ -115,9 +49,15 @@ df16<-data.frame(sample=c(rep('S416_15_13', times=(length(S416_15_13_table$V3)))
 df17<-data.frame(sample=c(rep('S416_15_2', times=(length(S416_15_2_table$V3)))), chr=S416_15_2_table$V1, pos=S416_15_2_table$V2, ref=S416_15_2_table$V3, alt=S416_15_2_table$V4)
 df18<-data.frame(sample=c(rep('S422_15_2', times=(length(S422_15_2_table$V3)))), chr=S422_15_2_table$V1, pos=S422_15_2_table$V2, ref=S422_15_2_table$V3, alt=S422_15_2_table$V4)
 
+#########################################################################################
+## Place all data in one data frame
+#########################################################################################
 alldfs<-rbind(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10,
              df11, df12, df13, df14, df15, df16, df17, df18)
-  
+
+#########################################################################################
+## Create input to whichSignatures
+#########################################################################################
 sigs.input <- mut.to.sigs.input(mut.ref = alldfs, 
                                 sample.id = "sample", 
                                 chr = "chr", 
@@ -125,14 +65,28 @@ sigs.input <- mut.to.sigs.input(mut.ref = alldfs,
                                 ref = "ref", 
                                 alt = "alt")
 
+#########################################################################################
+## Create list of sample names (must correspond to the sample= column in alldfs!)
+#########################################################################################
+sampleNames<-c('S123_14_6', 'S131_14_9', 'S132_14_5', 'S153_14_2',
+               'S159_14_2', 'S159_14_8', 'S160_14_2', 'S176_14_2',
+               'S187_14_1', 'S189_14_2', 'S189_14_4', 'S400_15_2',
+               'S400_15_7', 'S401_15_2', 'S412_15_2', 'S416_15_2',
+               'S416_15_13', 'S422_15_2')
+
+#########################################################################################
+## Create charts for all samples
+#########################################################################################
+for (sn in sampleNames){
 wchSig = whichSignatures(tumor.ref = sigs.input, 
-                         signatures.ref = signatures.nature2013, 
-                         sample.id = 'S123_14_6', 
+                         signatures.ref = signatures.cosmic, 
+                         sample.id = sn, 
                          contexts.needed = TRUE,
                          tri.counts.method = 'default')
 
-
-
+outputFileName<-paste(sn, '.deconstructSigs.pdf', sep='')
+pdf(outputFileName, width = 10, height = 10)
 chart<-plotSignatures(wchSig)
-
+dev.off()
+}
 
