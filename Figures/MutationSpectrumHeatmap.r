@@ -2,6 +2,7 @@
 ## explanation of steps carried out in modifying deconstructSigs to work for
 ## mouse data
 library(deconstructSigs)
+library(gplots)
 
 #########################################################################################
 ## Read variant lists as extracted from SnpSiftExtract.sh
@@ -52,7 +53,7 @@ df18<-data.frame(sample=c(rep('S422_15_2', times=(length(S422_15_2_table$V3)))),
 ## Place all data in one data frame
 #########################################################################################
 alldfs<-rbind(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10,
-             df11, df12, df13, df14, df15, df16, df17, df18)
+              df11, df12, df13, df14, df15, df16, df17, df18)
 
 #########################################################################################
 ## Create input to whichSignatures
@@ -64,28 +65,38 @@ sigs.input <- mut.to.sigs.input(mut.ref = alldfs,
                                 ref = "ref", 
                                 alt = "alt")
 
-#########################################################################################
-## Create list of sample names (must correspond to the sample= column in alldfs!)
-#########################################################################################
-sampleNames<-c('S123_14_6', 'S131_14_9', 'S132_14_5', 'S153_14_2',
-               'S159_14_2', 'S159_14_8', 'S160_14_2', 'S176_14_2',
-               'S187_14_1', 'S189_14_2', 'S189_14_4', 'S400_15_2',
-               'S400_15_7', 'S401_15_2', 'S412_15_2', 'S416_15_2',
-               'S416_15_13', 'S422_15_2')
 
-#########################################################################################
-## Create charts for all samples
-#########################################################################################
-for (sn in sampleNames){
-wchSig = whichSignatures(tumor.ref = sigs.input, 
-                         signatures.ref = signatures.cosmic, 
-                         sample.id = sn, 
-                         contexts.needed = TRUE,
-                         tri.counts.method = 'default')
-
-outputFileName<-paste(sn, '.deconstructSigs.pdf', sep='')
-pdf(outputFileName, width = 10, height = 10)
-chart<-plotSignatures(wchSig)
-dev.off()
+df<-data.frame(matrix(0, ncol=24, nrow=4))
+rownames(df)<-c('A','C','G','T')
+colnames(df)<-rep(c('A','C','G','T'), times=6)
+for (n in 1:24){
+  start<-(4*n)-3
+  end<-(4*n)
+  df[,n]<-as.numeric(sigs.input[1, start:end])
 }
+df<-log10(df)
+
+dfs<-data.frame(matrix(0, ncol=24, nrow=4))
+rownames(dfs)<-c('A','C','G','T')
+colnames(dfs)<-rep(c('A','C','G','T'), times=6)
+for (n in 1:24){
+  start<-(4*n)-3
+  end<-(4*n)
+  dfs[,n]<-as.numeric(sigs.input[2, start:end])
+}
+dfs<-log10(dfs)
+
+dev.off()
+
+z<-heatmap.2(as.matrix(df), trace='none', dendrogram='none', Rowv=FALSE,
+             Colv=FALSE, scale='column', colsep=c(4, 8, 12, 16, 20),
+             sepcolor = '#333333', key=TRUE, keysize = 1.5)
+x<-heatmap.2(as.matrix(dfs), trace='none', dendrogram='none', Rowv=FALSE,
+             Colv=FALSE, scale='column', colsep=c(4, 8, 12, 16, 20),
+             sepcolor = '#333333', key=TRUE, keysize = 1.5)
+
+
+
+
+
 
