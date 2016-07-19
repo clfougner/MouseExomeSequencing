@@ -154,4 +154,4 @@ The script can now be run using your own files. Remember, this is only required 
 
 Sample output:
 
-![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/Figures/SampleImages/Screen%20Shot%202016-07-12%20at%2012.17.44.png)
+![](https://raw.githubusercontent.com/clfougner/MouseExomeSequencing/master/Figures/SampleImages/S123_14_6.deconstructsigs.png)
