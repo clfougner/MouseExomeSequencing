@@ -84,16 +84,41 @@ for (n in 1:24){
   end<-(4*n)
   dfs[,n]<-as.numeric(sigs.input[2, start:end])
 }
+
+
 dfs<-log10(dfs)
 
 dev.off()
 
-z<-heatmap.2(as.matrix(df), trace='none', dendrogram='none', Rowv=FALSE,
-             Colv=FALSE, scale='column', colsep=c(4, 8, 12, 16, 20),
-             sepcolor = '#333333', key=TRUE, keysize = 1.5)
-x<-heatmap.2(as.matrix(dfs), trace='none', dendrogram='none', Rowv=FALSE,
-             Colv=FALSE, scale='column', colsep=c(4, 8, 12, 16, 20),
-             sepcolor = '#333333', key=TRUE, keysize = 1.5)
+cols<-c(rep("deepskyblue", times=4), rep("black", times=4),
+          rep("red", times=4), rep("magenta4", times=4),
+          rep("forestgreen", times=4), rep("salmon", times=4))
+
+heatmap.2(as.matrix(df),
+          trace='none',
+          dendrogram='none',
+          Rowv=FALSE,
+          Colv=FALSE,
+          scale='column',
+          colsep=c(4, 8, 12, 16, 20),
+          sepcolor = '#333333',
+          key=TRUE,
+          keysize = 1.5,
+          denscol=rgb(0,0,0,0),
+          key.title='Heatmap scale (log10)',
+          ylab = '3\' base',
+          xlab='5\' base',
+          key.xlab = NA,
+          key.ylab = NA,
+          srtCol = 0,
+          main='S123_14_6',
+          ColSideColors = cols,
+          adjCol = c(0.5,1),
+          key.ytickfun=function() {breaks <- list(9999)},
+          cexRow = 1,
+          cexCol = 1
+          )
+
 
 
 
