@@ -95,10 +95,10 @@ cols<-c(rep("deepskyblue", times=4), rep("black", times=4),
         rep("red", times=4), rep("magenta4", times=4),
         rep("forestgreen", times=4), rep("salmon", times=4))
 
-my_palette <- colorRampPalette(c("yellow", "orange", "red"))(n = 299)
+my_palette <- colorRampPalette(c("yellow", "orange", "red"))#(n = 299)
 sampleNum<-length(levels(alldfs$sample))
 
-pdf('heatmap.pdf', width=6, height=14)
+pdf('heatmap.pdf', width=7, height=14)
 heatmap.2(as.matrix(bound),
           trace='none',
           dendrogram='none',
@@ -113,10 +113,10 @@ heatmap.2(as.matrix(bound),
           key.title='Heatmap scale (log10)',
           ylab = '3\' base',
           xlab='5\' base',
-          main='C>A      C>G        C>T      T>A      T>C      T>G',
+          main='C>A      C>G       C>T       T>A      T>C      T>G',
           key.xlab = NA,
           key.ylab = NA,
-          keysize= 1.0,
+          keysize= 1.5,
           srtCol = 0,
           ColSideColors = cols,
           adjCol = c(0.5,1),
@@ -126,7 +126,8 @@ heatmap.2(as.matrix(bound),
           col=my_palette,
           labRow=rep(c('A','C','G', 'T'), times = sampleNum),
           na.color='yellow',
-          main.margin
+          lwid=c(1.5,4),
+          lhei=c(1,14)
 )
 
 dev.off()
