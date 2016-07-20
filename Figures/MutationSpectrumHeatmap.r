@@ -124,7 +124,6 @@ heatmap.2(as.matrix(bound),
           xlab='5\' base',
           key.xlab = NA,
           key.ylab = NA,
-          main='C>A       C>G       C>T      T>A       T>C       T>G',
           keysize= 1.5,
           srtCol = 0,
           ColSideColors = cols,
@@ -136,13 +135,21 @@ heatmap.2(as.matrix(bound),
           labRow=rep(c('A','C','G', 'T'), times = sampleNum),
           na.color='yellow',
           lwid=c(1.5,4),
-          lhei=c(1,14)
+          lhei=c(1.1,14)
           
           )
 
+pos1 <- structure(list(x = c(0.222, 0.861), 
+                       y = 0.993),
+                  .Names = c("x", "y"))
 
-pos2 <- structure(list(x = c(0.0098180), 
-                       y = c(0.95534353, -0.05015668)),
+text(x=seq(pos1$x[1], pos1$x[2], len=6), y=rep(pos1$y[1],6)  ,
+     srt=0, xpd=TRUE, adj = 0,
+     labels=c('C>A', 'C>G', 'C>T', 'T>A', 'T>C', 'T>G') )
+
+
+pos2 <- structure(list(x = 0.0098, 
+                       y = c(0.96183, -0.040)),
                   .Names = c("x", "y"))
 text(y=seq(pos2$y[1], pos2$y[2], len=19), x=rep(pos2$x[1],19)  ,
      srt=0, xpd=TRUE, adj = 0,
