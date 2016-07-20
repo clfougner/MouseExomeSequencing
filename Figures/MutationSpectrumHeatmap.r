@@ -3,6 +3,7 @@
 ## mouse data
 library(deconstructSigs)
 library(gplots)
+library(ComplexHeatmap)
 
 #########################################################################################
 ## Read variant lists as extracted from SnpSiftExtract.sh
@@ -98,6 +99,14 @@ cols<-c(rep("deepskyblue", times=4), rep("black", times=4),
 my_palette <- colorRampPalette(c("yellow", "orange", "red"))#(n = 299)
 sampleNum<-length(levels(alldfs$sample))
 
+sampleNames<-c('S123_14_6', 'S131_14_9', 'S132_14_5', 'S153_14_2',
+               'S159_14_2', 'S159_14_8', 'S160_14_2', 'S176_14_2',
+               'S187_14_1', 'S189_14_2', 'S189_14_4', 'S400_15_2',
+               'S400_15_7', 'S401_15_2', 'S412_15_2', 'S416_15_2',
+               'S416_15_13', 'S422_15_2')
+sndf<-data.frame(sampleNames)
+
+
 pdf('heatmap.pdf', width=7, height=14)
 heatmap.2(as.matrix(bound),
           trace='none',
@@ -113,14 +122,14 @@ heatmap.2(as.matrix(bound),
           key.title='Heatmap scale (log10)',
           ylab = '3\' base',
           xlab='5\' base',
-          main='C>A      C>G       C>T       T>A      T>C      T>G',
           key.xlab = NA,
           key.ylab = NA,
+          main='C>A       C>G       C>T      T>A       T>C       T>G',
           keysize= 1.5,
           srtCol = 0,
           ColSideColors = cols,
           adjCol = c(0.5,1),
-          key.ytickfun=function() {breaks <- list(9999)},
+          key.ytickfun=function() {breaks <- list(3)},
           cexRow = 1,
           cexCol = 1,
           col=my_palette,
@@ -128,7 +137,17 @@ heatmap.2(as.matrix(bound),
           na.color='yellow',
           lwid=c(1.5,4),
           lhei=c(1,14)
-)
+          
+          )
+
+
+pos2 <- structure(list(x = c(0.0098180), 
+                       y = c(0.95534353, -0.05015668)),
+                  .Names = c("x", "y"))
+text(y=seq(pos2$y[1], pos2$y[2], len=19), x=rep(pos2$x[1],19)  ,
+     srt=0, xpd=TRUE, adj = 0,
+     labels=sampleNames )
+
 
 dev.off()
 
