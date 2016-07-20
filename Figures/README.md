@@ -58,7 +58,7 @@ Purpose: Creates a bar chart representing the proportion of single bases substit
 Input: List of variants as output by /VariantCalling/SnpSiftExtract.sh or the files in /Output/SnpSiftExtract/ from /VariantCalling/EntirePipeline.sh
 ```
 
-This script uses the [deconstructSigs framework](https://github.com/raerose01/deconstructSigs)[1](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0893-4). As provided, this framework is only intended for use with the hg19 reference genome. In order to use this with the mm10 reference genome, a few changes must be made to the source code. The instructions for this are as follows:
+This script uses the [deconstructSigs framework](https://github.com/raerose01/deconstructSigs)([1](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0893-4)). As provided, this framework is only intended for use with the hg19 reference genome. In order to use this with the mm10 reference genome, a few changes must be made to the source code. The instructions for this are as follows:
 
 First, in your R console run the following commands:
 ````
@@ -97,7 +97,7 @@ Second, clone the [deconstructSigs framework](https://github.com/raerose01/decon
 ```
 
 OPTIONAL step:
-I prefer the chart aesthetic found in the original WTSI mutational signature framework[1](http://se.mathworks.com/matlabcentral/fileexchange/38724-wtsi-mutational-signature-framework)[2](http://www.nature.com/nature/journal/v500/n7463/full/nature12477.html)[3](http://www.sciencedirect.com/science/article/pii/S0092867412005284) to that found in the [deconstructSigs framework](https://raw.githubusercontent.com/raerose01/deconstructSigs/master/inst/extdata/plotSignatures.png) and have therefore made a few changes to the `plotting.R` file in order to arrive at the figure shown below:
+I prefer the chart aesthetic found in the original WTSI mutational signature framework([1, ](http://se.mathworks.com/matlabcentral/fileexchange/38724-wtsi-mutational-signature-framework)[2, ](http://www.nature.com/nature/journal/v500/n7463/full/nature12477.html)[3](http://www.sciencedirect.com/science/article/pii/S0092867412005284)) to that found in the [deconstructSigs framework](https://raw.githubusercontent.com/raerose01/deconstructSigs/master/inst/extdata/plotSignatures.png) and have therefore made a few changes to the `plotting.R` file in order to arrive at the figure shown below:
 
 ```
 ## Change colour of horizontal background lines
