@@ -66,62 +66,69 @@ sigs.input <- mut.to.sigs.input(mut.ref = alldfs,
                                 alt = "alt")
 
 
-df<-data.frame(matrix(0, ncol=24, nrow=4))
-rownames(df)<-c('A','C','G','T')
-colnames(df)<-rep(c('A','C','G','T'), times=6)
-for (n in 1:24){
-  start<-(4*n)-3
-  end<-(4*n)
-  df[,n]<-as.numeric(sigs.input[1, start:end])
+bound<-data.frame(matrix(0, ncol=24, nrow=4))
+rownames(bound)<-c('A','C','G','T')
+colnames(bound)<-rep(c('A','C','G','T'), times=6)
+
+for (a in 1:18){
+  
+  df<-data.frame(matrix(0, ncol=24, nrow=4))
+  rownames(df)<-c('A','C','G','T')
+  colnames(df)<-rep(c('A','C','G','T'), times=6)
+  for (n in 1:24){
+    start<-(4*n)-3
+    end<-(4*n)
+    df[,n]<-as.numeric(sigs.input[a, start:end])
+  }
+  
+  df<-df+1
+  df<-log10(df)
+  df<-scale(df, center=TRUE, scale=TRUE)
+  
+  bound<-rbind(bound, df)
 }
-df<-log10(df)
+bound<-bound[-(1:4),]
 
-dfs<-data.frame(matrix(0, ncol=24, nrow=4))
-rownames(dfs)<-c('A','C','G','T')
-colnames(dfs)<-rep(c('A','C','G','T'), times=6)
-for (n in 1:24){
-  start<-(4*n)-3
-  end<-(4*n)
-  dfs[,n]<-as.numeric(sigs.input[2, start:end])
-}
-
-
-dfs<-log10(dfs)
-
-dev.off()
+#dev.off()
 
 cols<-c(rep("deepskyblue", times=4), rep("black", times=4),
-          rep("red", times=4), rep("magenta4", times=4),
-          rep("forestgreen", times=4), rep("salmon", times=4))
+        rep("red", times=4), rep("magenta4", times=4),
+        rep("forestgreen", times=4), rep("salmon", times=4))
 
-heatmap.2(as.matrix(df),
+my_palette <- colorRampPalette(c("yellow", "orange", "red"))(n = 299)
+sampleNum<-length(levels(alldfs$sample))
+
+pdf('heatmap.pdf', width=6, height=14)
+heatmap.2(as.matrix(bound),
           trace='none',
           dendrogram='none',
           Rowv=FALSE,
           Colv=FALSE,
-          scale='column',
+          scale='none',
           colsep=c(4, 8, 12, 16, 20),
+          rowsep=seq(4, (sampleNum*4), by=4),
           sepcolor = '#333333',
           key=TRUE,
-          keysize = 1.5,
           denscol=rgb(0,0,0,0),
           key.title='Heatmap scale (log10)',
           ylab = '3\' base',
           xlab='5\' base',
+          main='C>A      C>G        C>T      T>A      T>C      T>G',
           key.xlab = NA,
           key.ylab = NA,
+          keysize= 1.0,
           srtCol = 0,
-          main='S123_14_6',
           ColSideColors = cols,
           adjCol = c(0.5,1),
           key.ytickfun=function() {breaks <- list(9999)},
           cexRow = 1,
-          cexCol = 1
-          )
+          cexCol = 1,
+          col=my_palette,
+          labRow=rep(c('A','C','G', 'T'), times = sampleNum),
+          na.color='yellow',
+          main.margin
+)
 
-
-
-
-
+dev.off()
 
 
