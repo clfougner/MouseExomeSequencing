@@ -149,7 +149,7 @@ text(x=seq(pos1$x[1], pos1$x[2], len=6), y=rep(pos1$y[1],6)  ,
 
 
 pos2 <- structure(list(x = 0.0098, 
-                       y = c(0.96183, -0.040)),
+                       y = c(0.96183, -0.037)),
                   .Names = c("x", "y"))
 text(y=seq(pos2$y[1], pos2$y[2], len=19), x=rep(pos2$x[1],19)  ,
      srt=0, xpd=TRUE, adj = 0,
