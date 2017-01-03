@@ -2,24 +2,24 @@
 #########################################################################
 ## Create list of all genes (must have passed through ModGrepPipeline.sh)
 #########################################################################
-S123_14_6_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/123_14_6.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S131_14_9_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/131_14_9.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S132_14_5_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/132_14_5.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S153_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/153_14_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S159_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/159_14_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S159_14_8_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/159_14_8.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S160_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/160_14_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S176_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/176_14_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S187_14_1_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/187_14_1.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S189_14_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/189_14_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S189_14_4_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/189_14_4.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S400_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/400_15_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S400_15_7_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/400_15_7.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S401_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/401_15_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S412_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/412_15_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S416_15_13_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/415_15_13.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S416_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/416_15_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
-S422_15_2_table<-read.table("/Volumes/christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModGrep/UniqueGenes/422_15_2.modgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S123_14_6_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/123_14_6.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S131_14_9_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/131_14_9.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S132_14_5_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/132_14_5.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S153_14_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/153_14_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S159_14_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/159_14_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S159_14_8_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/159_14_8.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S160_14_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/160_14_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S176_14_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/176_14_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S187_14_1_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/187_14_1.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S189_14_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/189_14_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S189_14_4_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/189_14_4.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S400_15_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/400_15_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S400_15_7_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/400_15_7.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S401_15_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/401_15_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S412_15_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/412_15_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S416_15_13_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/415_15_13.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S416_15_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/416_15_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
+S422_15_2_table<-read.table("/Volumes/open-3/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RFModLowGrep/UniqueGenes/422_15_2.modlowgrepAD10AF005FR.annotated.passfiltered.extracted.modgrep.dedup.dedupgenes.txt", stringsAsFactors = FALSE)
 
 #########################################################################
 ## Create data frame for each sample with row names set to gene names
@@ -179,5 +179,5 @@ ordered<-df[order(-df[,'Sum'],df[,1]), ]
 ###################################################################
 ## Print table
 ###################################################################
-write.table(ordered, file='OrderedListSpecific.txt', quote = FALSE, sep='\t')
+write.table(ordered, file='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/OrderedListSpecificModLow.txt', quote = FALSE, sep='\t')
 

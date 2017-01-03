@@ -4,7 +4,7 @@ library('cowplot')
 #########################################################################################
 ## Read file for CommonGeneListSpecific.r -> FilterForVogelstein.r
 #########################################################################################
-file<-read.table(file='OrderedListSpecificVogelFiltered.txt', stringsAsFactors=FALSE)
+file<-read.table(file='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/OrderedListSpecificNewListFiltered.txt', stringsAsFactors=FALSE)
 
 #########################################################################################
 ## Sample names in same order as input file
@@ -71,8 +71,9 @@ df$samples<-factor(df$samples, levels=c('S159_14_8 ', 'S400_15_7 ', 'S401_15_2 '
 ## https://github.com/wilkelab/cowplot/issues/13
 ## https://github.com/wilkelab/cowplot/issues/35
 #########################################################################################
+
 plotdata<-ggplot(data=df, aes(x=samples, y=rev(genes), fill=contains))
-chart<-plotdata+geom_raster() + 
+chart1<-plotdata+geom_raster() + 
     theme(axis.title.y=element_blank(),
           axis.title.x=element_text(size=0),
           axis.text.y=element_text(size=10, face='italic', hjust=1),
@@ -84,11 +85,20 @@ chart<-plotdata+geom_raster() +
     scale_y_continuous('Genes', breaks=1:length(geneLabs), labels=rev(geneLabs)) +
     geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.5) +
     geom_hline(yintercept = seq(1.5, (length(geneLabs)+0.5), by=1), color = "white", size = 0.5) +
-    scale_fill_manual(values=c('chartreuse', 'cadetblue1', 'midnightblue', 'blue', 'orange',
-                               'aquamarine', 'purple', 'green', 'yellow', 'deeppink1'), na.value='grey85', name='Variant effect') 
+    scale_fill_manual(values=c('chartreuse', 'midnightblue', 'cadetblue1', 'blue', 'orange',
+                               'deeppink1', 'red', 'green', 'yellow'), na.value='grey85', name='Variant effect') 
   
 #########################################################################################
 ## Use switch_axis_positions to place sample names on top and make chart with ggdraw
 #########################################################################################
+
 chart2<-ggdraw(switch_axis_position(chart, axis='x'))
+
 print(chart2)
+
+
+layout <- matrix(c(1,1,1,1,1,1,
+                   1,1,1,1,1,1,
+                   2,2,2,2,2,0), nrow = 3, byrow = TRUE)
+multiplot(chart2, chart, cols=2, layout=layout)
+
