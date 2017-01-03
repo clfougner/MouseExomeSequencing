@@ -127,6 +127,7 @@ chart<-plotdata + stat_summary(fun.y=mean,position="stack",geom="bar") +
         axis.line.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.x=element_text(angle=90),
+        panel.background = element_rect(fill = "white"),
         legend.title=element_blank()) +
   labs(y='Proportion of substitutions') +
   scale_y_continuous(limits = c(0,1), expand = c(0, 0))
