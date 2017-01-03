@@ -20,9 +20,7 @@ S416_15_13_table<-read.table("/Volumes/open/tmp/Christian/DMBA-induced/Output/Fi
 S416_15_2_table<-read.table("/Volumes/open/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/416_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
 S422_15_2_table<-read.table("/Volumes/open/tmp/Christian/DMBA-induced/Output/FilterTests/OnePerLineAD10AF005RF/UniqueCoordinates/422_15_2.AD10AF005FR.annotated.passfiltered.extracted.dedup.txt", sep='\t')
 
-#################################################################################
-## Create data frame with sample name, reference allele and alternate allele
-#################################################################################
+# Create data frame with sample name, reference allele and alternate allele
 df1<-data.frame(sample=c(rep('S123_14_6', times=(length(S123_14_6_table$V3)))), ref=S123_14_6_table$V3, alt=S123_14_6_table$V4)
 df2<-data.frame(sample=c(rep('S131_14_9', times=(length(S131_14_9_table$V3)))), ref=S131_14_9_table$V3, alt=S131_14_9_table$V4)
 df3<-data.frame(sample=c(rep('S132_14_5', times=(length(S132_14_5_table$V3)))), ref=S132_14_5_table$V3, alt=S132_14_5_table$V4)
@@ -42,15 +40,11 @@ df16<-data.frame(sample=c(rep('S416_15_13', times=(length(S416_15_13_table$V3)))
 df17<-data.frame(sample=c(rep('S416_15_2', times=(length(S416_15_2_table$V3)))), ref=S416_15_2_table$V3, alt=S416_15_2_table$V4)
 df18<-data.frame(sample=c(rep('S422_15_2', times=(length(S422_15_2_table$V3)))), ref=S422_15_2_table$V3, alt=S422_15_2_table$V4)
 
-
 objs<-list(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10, df11, df12,
            df13, df14, df15, df16, df17, df18)
 
-#################################################################################
-## Remove all rows with more than one nucleotide in alternate allele (insertions)
-#################################################################################
+# Remove all rows with more than one nucleotide in alternate allele (insertions)
 for (filenum in 1:length(objs)){
-
   df<-as.data.frame(objs[filenum])
     for ( row in 1:length(df$sample)){
       if (nchar(as.vector(df[row, 'alt']))>1){
@@ -58,13 +52,7 @@ for (filenum in 1:length(objs)){
       }
     }
 
-
-
-
-
-#################################################################################
-## Remove all rows with more than one nucleotide in reference allele (deletions)
-#################################################################################
+# Remove all rows with more than one nucleotide in reference allele (deletions)
   for (row in 1:length(df$sample)){
     if (nchar(as.vector(df[row, 'ref']))>1){
       df <- df[-row, ]
@@ -72,67 +60,53 @@ for (filenum in 1:length(objs)){
     }
   }
   
-
-
-#################################################################################
-## Convert all refs to pyrimidines (C & T) according to convention
-#################################################################################
+# Convert all refs to pyrimidines (C & T) according to convention
   for (row in 1:length(df$sample)){
     if (df[row, 'ref']=='A'){
-      df[row, 'ref']<-'T'
+        df[row, 'ref']<-'T'
     
-      if (df[row, 'alt']=='T') 
-      {
+      if (df[row, 'alt']=='T'){
         df[row, 'alt'] <- 'A'
         next
       }
     
-      if (df[row, 'alt']=='G') 
-      {
+      if (df[row, 'alt']=='G'){
         df[row, 'alt'] <- 'C'
         next
       }
     
-      if (df[row, 'alt']=='C') 
-      {
+      if (df[row, 'alt']=='C'){
         df[row, 'alt'] <- 'G'
         next
       }
     }
   
     if (df[row, 'ref']=='G'){
-      df[row, 'ref']<-'C'
+        df[row, 'ref']<-'C'
     
-      if (df[row, 'alt']=='T') 
-      {
+      if (df[row, 'alt']=='T'){
         df[row, 'alt'] <- 'A'
         next
       }
     
-      if (df[row, 'alt']=='A') 
-      {
+      if (df[row, 'alt']=='A'){
         df[row, 'alt'] <- 'T'
         next
       }
     
-      if (df[row, 'alt']=='C') 
-      {
+      if (df[row, 'alt']=='C'){
         df[row, 'alt'] <- 'G'
         next
       }
     }
   }
 
-#################################################################################
-## Create new column in df with transition type
-#################################################################################
+# Create new column in df with transition type
   for (row in 1:length(df$sample)){
     df[row, 'TS']<-paste(df[row, 'ref'], df[row, 'alt'], sep='>')
   }
 
-#################################################################################
-## Create new df with transition type as a proportion
-#################################################################################
+# Create new df with transition type as a proportion
   freqs<-count(as.factor(df$TS))
   proportion<-freqs[1:6, 'freq']/length(df$TS)
 
@@ -148,7 +122,6 @@ bound<-rbind(sample1, sample2, sample3, sample4, sample5, sample6, sample7,
 
 plotdata<-ggplot(bound,aes(x=factor(sample),y=proportion,fill=factor(TS)), color=factor(TS))
 
-
 chart<-plotdata + stat_summary(fun.y=mean,position="stack",geom="bar") +
   theme(axis.title.x=element_blank(),
         axis.line.x=element_blank(),
@@ -158,9 +131,4 @@ chart<-plotdata + stat_summary(fun.y=mean,position="stack",geom="bar") +
   labs(y='Proportion of substitutions') +
   scale_y_continuous(limits = c(0,1), expand = c(0, 0))
 
-
-
 print(chart)
-
-
-
