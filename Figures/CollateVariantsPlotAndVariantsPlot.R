@@ -107,8 +107,8 @@ VPSplot<-plotdata+geom_bar(stat='identity', width=0.9) +
         plot.margin = unit(c(-0.5, 0.1, 0, 0.065), "cm"),
         legend.title=element_blank()) +
        geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.6) +
-  labs(y='Variants', x='') +
-  scale_fill_manual(labels=c('Non-synonymous variants', 'Synonymous variants'), 
+  labs(y='Number of Mutations', x='') +
+  scale_fill_manual(labels=c('Non-synonymous mutations', 'Synonymous mutations'), 
                     values=c('dodgerblue4', "turquoise4"))
 
 
@@ -203,7 +203,7 @@ chart<-plotdata+geom_raster() +
   geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.5) +
   geom_hline(yintercept = seq(1.5, (length(geneLabs)+0.5), by=1), color = "white", size = 0.5) +
   scale_fill_manual(values=c('chartreuse4', 'midnightblue', 'purple', 'deeppink1','firebrick3', 'coral2'),
-                    na.value='grey90', name='Variant effect') 
+                    na.value='grey90', name='Mutation effect') 
 
 #########################################################################################
 ## Use switch_axis_positions to place sample names on top and make chart with ggdraw
@@ -219,4 +219,4 @@ layout <- matrix(c(1,1,1,1,1,1,
                    2,2,2,2,2,0), nrow = 5, byrow = TRUE)
 
 multiplot(chart2, VPSplot, cols=2, layout=layout)
-#export as pdf, landscape, width 10, height 15
+#export as pdf, landscape, width 9.5, height 13
