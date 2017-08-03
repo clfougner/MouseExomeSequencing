@@ -1,8 +1,7 @@
 ##########################################################################################
-## List of genes to filter for (list from 'Cancer Genome Landscapes', B Vogelstein et al.)
-## is used here
+
 ##########################################################################################
-vogelstein<-read.table(file='ReferenceFiles/VogelsteinHomologsNewFormatted.txt')
+vogelstein<-read.table(file='ReferenceFiles/CosmicHomologs.txt')
 
 #########################################################################################
 ## File from CommonGeneList.r
@@ -22,4 +21,30 @@ selected<-selected[order(-selected[,'Sum'],selected[,1]), ]
 #########################################################################################
 ## Print table
 #########################################################################################
-write.table(selected, file='OrderedListSpecificModLowVogelFiltered.txt', quote = FALSE, sep='\t')
+write.table(selected, file='OrderedListSpecificCOSMICFiltered.txt', quote = FALSE, sep='\t')
+
+newDF<-data.frame(matrix(data=0, nrow=180, ncol=18))
+
+for (i in 1:18){
+  for (n in 1:180){
+    
+    if (is.na(selected[n,i])){
+      next
+    }
+    
+    if (selected[n, i]){
+      newDF[n,i]<-1
+    } 
+  }
+}
+alltot<-c()
+for (i in 1:18){
+  tot<-sum(newDF[,i])
+  alltot<-c(alltot,tot)
+  print(tot)
+}
+
+range(alltot)
+mean(alltot)
+median(alltot)
+  
