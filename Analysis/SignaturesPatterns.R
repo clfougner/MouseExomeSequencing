@@ -66,96 +66,40 @@ sigs.input <- mut.to.sigs.input(mut.ref = alldfs,
                                 ref = "ref", 
                                 alt = "alt")
 
+# N[T>N]G mutations
+NTAG<-sum(sigs.input[,"A[T>A]G"], sigs.input[,"C[T>A]G"],sigs.input[,"G[T>A]G"],sigs.input[,"T[T>A]G"], na.rm = TRUE)
+NTAN<-sum(sigs.input[,49:64])
 
-bound<-data.frame(matrix(0, ncol=24, nrow=4))
-rownames(bound)<-c('A','C','G','T')
-colnames(bound)<-rep(c('A','C','G','T'), times=6)
+ratio<-NTAG/NTAN
+print(ratio)
 
-for (a in 1:18){
-  
-  df<-data.frame(matrix(0, ncol=24, nrow=4))
-  rownames(df)<-c('A','C','G','T')
-  colnames(df)<-rep(c('A','C','G','T'), times=6)
-  for (n in 1:24){
-    start<-(4*n)-3
-    end<-(4*n)
-    df[,n]<-as.numeric(sigs.input[a, start:end])
-  }
-  
-  df<-df+1
-  df<-log10(df)
-  df<-scale(df, center=TRUE, scale=TRUE)
-  
-  bound<-rbind(bound, df)
-}
-bound<-bound[-(1:4),]
+NTCG<-sum(sigs.input[,"A[T>C]G"], sigs.input[,"C[T>C]G"],sigs.input[,"G[T>C]G"],sigs.input[,"T[T>C]G"], na.rm = TRUE)
+NTCN<-sum(sigs.input[,65:80])
 
-#dev.off()
+ratio<-NTCG/NTCN
+print(ratio)
 
-cols<-c(rep("deepskyblue", times=4), rep("black", times=4),
-        rep("red", times=4), rep("magenta4", times=4),
-        rep("forestgreen", times=4), rep("salmon", times=4))
+NTGG<-sum(sigs.input[,"A[T>G]G"], sigs.input[,"C[T>G]G"],sigs.input[,"G[T>G]G"],sigs.input[,"T[T>G]G"], na.rm = TRUE)
+NTGN<-sum(sigs.input[,81:96])
+ratio<-NTGG/NTGN
+print(ratio)
 
-my_palette <- colorRampPalette(c("yellow", "orange", "red"))#(n = 299)
-sampleNum<-length(levels(alldfs$sample))
+# N[C>N]A mutations
+NCAA<-sum(sigs.input[,"A[C>A]A"], sigs.input[,"C[C>A]A"],sigs.input[,"G[C>A]A"],sigs.input[,"T[C>A]A"], na.rm = TRUE)
+NCAN<-sum(sigs.input[,1:16])
 
-sampleNames<-c('S123_14_6', 'S131_14_9', 'S132_14_5', 'S153_14_2',
-               'S159_14_2', 'S159_14_8', 'S160_14_2', 'S176_14_2',
-               'S187_14_1', 'S189_14_2', 'S189_14_4', 'S400_15_2',
-               'S400_15_7', 'S401_15_2', 'S412_15_2', 'S416_15_2',
-               'S416_15_13', 'S422_15_2')
-sndf<-data.frame(sampleNames)
+ratio<-NCAA/NCAN
+print(ratio)
 
+NCGA<-sum(sigs.input[,"A[C>G]A"], sigs.input[,"C[C>G]A"],sigs.input[,"G[C>G]A"],sigs.input[,"T[C>G]A"], na.rm = TRUE)
+NCGN<-sum(sigs.input[,17:32])
 
-pdf('heatmap.pdf', width=7, height=14)
-heatmap.2(as.matrix(bound),
-          trace='none',
-          dendrogram='none',
-          Rowv=FALSE,
-          Colv=FALSE,
-          scale='none',
-          colsep=c(4, 8, 12, 16, 20),
-          rowsep=seq(4, (sampleNum*4), by=4),
-          sepcolor = '#333333',
-          key=TRUE,
-          denscol=rgb(0,0,0,0),
-          key.title='Heatmap scale (log10)',
-          ylab = '3\' base',
-          xlab='5\' base',
-          key.xlab = NA,
-          key.ylab = NA,
-          keysize= 1.5,
-          srtCol = 0,
-          ColSideColors = cols,
-          adjCol = c(0.5,1),
-          key.ytickfun=function() {breaks <- list(3)},
-          cexRow = 1,
-          cexCol = 1,
-          col=my_palette,
-          labRow=rep(c('A','C','G', 'T'), times = sampleNum),
-          na.color='yellow',
-          lwid=c(1.5,4),
-          lhei=c(1.1,14)
-          
-          )
+ratio<-NCGA/NCGN
+print(ratio)
 
-pos1 <- structure(list(x = c(0.222, 0.861), 
-                       y = 0.993),
-                  .Names = c("x", "y"))
+NCGA<-sum(sigs.input[,"A[C>T]A"], sigs.input[,"C[C>T]A"],sigs.input[,"G[C>T]A"],sigs.input[,"T[C>T]A"], na.rm = TRUE)
+NCGN<-sum(sigs.input[,33:48])
 
-text(x=seq(pos1$x[1], pos1$x[2], len=6), y=rep(pos1$y[1],6)  ,
-     srt=0, xpd=TRUE, adj = 0,
-     labels=c('C>A', 'C>G', 'C>T', 'T>A', 'T>C', 'T>G') )
-
-
-pos2 <- structure(list(x = 0.0098, 
-                       y = c(0.96183, -0.037)),
-                  .Names = c("x", "y"))
-text(y=seq(pos2$y[1], pos2$y[2], len=19), x=rep(pos2$x[1],19)  ,
-     srt=0, xpd=TRUE, adj = 0,
-     labels=sampleNames )
-
-
-dev.off()
-
+ratio<-NCGA/NCGN
+print(ratio)
 
