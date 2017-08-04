@@ -97,9 +97,9 @@ NCGN<-sum(sigs.input[,17:32])
 ratio<-NCGA/NCGN
 print(ratio)
 
-NCGA<-sum(sigs.input[,"A[C>T]A"], sigs.input[,"C[C>T]A"],sigs.input[,"G[C>T]A"],sigs.input[,"T[C>T]A"], na.rm = TRUE)
-NCGN<-sum(sigs.input[,33:48])
+NCTA<-sum(sigs.input[,"A[C>T]A"], sigs.input[,"C[C>T]A"],sigs.input[,"G[C>T]A"],sigs.input[,"T[C>T]A"], na.rm = TRUE)
+NCTN<-sum(sigs.input[,33:48])
 
-ratio<-NCGA/NCGN
+ratio<-NCTA/NCTN
 print(ratio)
 
