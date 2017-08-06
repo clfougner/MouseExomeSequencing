@@ -1,20 +1,20 @@
-counts<-read.table("~/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/TrinucleotideCountsMouseGenome.txt")
+counts<-read.table("~/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/TrinucleotideCountsOnlyCT.txt")
 
-# Find proportion of cytosines to all nucleotides in the genome
-allCytosines<-sum(counts[c(5:8, 21:24, 37:40, 53:56), 2])
+# Find proportion of cytosines+guanine to adenosine+thymine
+allCytosines<-sum(counts[c(1:4, 9:12, 17:20, 25:28), 2])
 totalNucleotides<-sum(as.numeric((counts[, 2])))
 cytosineProportion<-allCytosines/totalNucleotides
 
-# Find proportion of thymines to all nucleotides in genome
-allThymines<-sum(counts[c(13:16, 29:32, 45:48, 61:64), 2])
+# Find proportion of thymine+adenosine to all cytosine+guanine
+allThymines<-sum(counts[c(5:8, 13:16, 21:24, 29:32), 2])
 thymineProportion<-allThymines/totalNucleotides
 
 # Proportion of NTG thymine nucleotides relative to all thymines
-NTG<-sum(counts[c(15, 31, 47, 63), 2])
+NTG<-sum(counts[c(7, 15, 23, 31), 2])
 NTGdivNTN<-NTG/allThymines
 
 # Proportion of NCA adenosine nucleotides relative to all thymines
-NCA<-sum(counts[c(5, 21, 37, 53), 2])
+NCA<-sum(counts[c(1, 9, 17, 25), 2])
 NCAdivNCN<-NCA/allCytosines
 
 
