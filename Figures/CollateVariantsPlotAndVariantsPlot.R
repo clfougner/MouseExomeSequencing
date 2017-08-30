@@ -48,11 +48,17 @@ library(ggplot2)
 library(plyr)
 library(reshape2)
 
+sampleNames<-c('S123_14_6 ', 'S131_14_9 ', 'S132_14_5 ', 'S153_14_2 ',
+               'S159_14_2 ', 'S159_14_8 ', 'S160_14_2 ', 'S176_14_2 ',
+               'S187_14_1 ', 'S189_14_2 ', 'S189_14_4 ', 'S400_15_2 ',
+               'S400_15_7 ', 'S401_15_2 ', 'S412_15_2 ', 'S416_15_2 ',
+               'S416_15_13', 'S422_15_2 ')
+
 #########################################################################################
 ## Read table with the list number of variants per sample in the wide format (output from 
 ## ModGrepPipeline.sh "wc -l" command)
 #########################################################################################
-filteredvars<-read.table(file='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/FilteringOwnDataTests.txt', header=TRUE, sep='\t', stringsAsFactors = F)
+filteredvars<-read.table(file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/FilteringOwnDataTests.txt', header=TRUE, sep='\t', stringsAsFactors = F)
 
 #########################################################################################
 ## Make data.frame of file, remove the first column and set to row names
@@ -63,8 +69,8 @@ df<-df[ , !(names(df) %in% 'Filter')]
 #########################################################################################
 ## Select row
 #########################################################################################
-data<-df['Mutect, AD>10, AF>0.05, RF, modifier removed',]
-data2<-df['Mutect, AD>10, AF>0.05, RF, modifier and synon removed',]
+data<-df['mm10, Mutect, AD>10, AF>0.05, RF, modifier removed',]
+data2<-df['mm10, Mutect, AD>10, AF>0.05, RF, modifier and synonymous removed',]
 
 #########################################################################################
 ## Find difference between two rows
@@ -78,7 +84,7 @@ forOrder<-as.numeric(data)
 #########################################################################################
 ## First step for converting to long format (required for ggplot2)
 #########################################################################################
-variants<-data.frame(numeric, numeric2, stringsAsFactors = FALSE, row.names=colnames(df))
+variants<-data.frame("Non-synonymous mutations"=numeric2, "Synonymous mutations"=numeric, stringsAsFactors = FALSE, row.names=colnames(df))
 variants<-cbind(sample=row.names(variants), variants)
 
 #########################################################################################
@@ -91,9 +97,9 @@ variants$sample<-factor(variants$sample, levels=variants$sample)
 ## Second step for converting to long format
 #########################################################################################
 variants1<-melt(variants, id.var='sample')
+variants1<-rev(variants1)
 
-
-#########################################################################################
+#########################################################################################fill=factor(y, levels=c("blue","white" ))
 ## Create plot
 #########################################################################################
 plotdata<-ggplot(variants1, aes(x=sample, y=value, fill=variable))
@@ -106,21 +112,21 @@ VPSplot<-plotdata+geom_bar(stat='identity', width=0.9) +
         plot.title=element_text(size=18, face='bold'),
         plot.margin = unit(c(-0.5, 0.1, 0, 0.065), "cm"),
         legend.title=element_blank()) +
-       geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.6) +
+  geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.6) +
   labs(y='Number of Mutations', x='') +
-  scale_fill_manual(labels=c('Non-synonymous mutations', 'Synonymous mutations'), 
-                    values=c('dodgerblue4', "turquoise4"))
+  scale_fill_manual(labels=c('Synonymous mutations', 'Non-synonymous mutations'), 
+                    values=c("turquoise4", "dodgerblue4"))
 
 
 
 
 library('ggplot2')
-library('cowplot')
+#library('cowplot')
 
 #########################################################################################
 ## Read file for CommonGeneListSpecific.r -> FilterForVogelstein.r
 #########################################################################################
-file<-read.table(file='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/OrderedListSpecificNewListModLowFiltered.txt', stringsAsFactors=FALSE)
+file<-read.table(file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/FinalOut/VariantsForRaster.txt', stringsAsFactors=FALSE)
 
 #########################################################################################
 ## Sample names in same order as input file
@@ -188,35 +194,36 @@ df$samples<-factor(df$samples, levels=c('S159_14_8 ', 'S400_15_7 ', 'S401_15_2 '
 ## https://github.com/wilkelab/cowplot/issues/35
 #########################################################################################
 
+annotationColors<-matrix(data=c("chartreuse4","lemonchiffon","khaki3","deepskyblue3", "brown4", "deepskyblue3", "deepskyblue3", "chartreuse4", "deepskyblue3", "deepskyblue3", "deepskyblue3", "khaki3", "khaki3", "grey90", "antiquewhite3", "lemonchiffon", "darkgoldenrod4", "darkgoldenrod4"), nrow=1, ncol=18)
+
 plotdata<-ggplot(data=df, aes(x=samples, y=rev(genes), fill=contains))
 chart<-plotdata+geom_raster() + 
   theme(axis.title.y=element_blank(),
         axis.title.x=element_text(size=0),
         axis.text.y=element_text(size=10, face='italic', hjust=1),
-        axis.text.x=element_text(size=14, face='bold', angle=270, hjust=-2),
+        axis.text.x=element_text(size=14, face='bold', angle=270, hjust=-0),
         axis.line=element_blank(),
         panel.background=element_rect(fill='#ffffff'),
         axis.ticks.y=element_blank(),
         axis.ticks.x=element_line(colour='white'),
         plot.margin = unit(c(0, 0.8, 0, 0), "cm")) +
   scale_y_continuous('Genes', breaks=1:length(geneLabs), labels=rev(geneLabs)) +
+  scale_x_discrete(position = "top") +
+  annotation_raster(annotationColors, 0.5, 18.5, 61.9, 61) +
   geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.5) +
   geom_hline(yintercept = seq(1.5, (length(geneLabs)+0.5), by=1), color = "white", size = 0.5) +
-  scale_fill_manual(values=c('chartreuse4', 'midnightblue', 'purple', 'deeppink1','firebrick3', 'coral2'),
+  scale_fill_manual(breaks=levels(df$contains), values=c('chartreuse4', 'midnightblue', 'purple', 'deeppink1','firebrick3', 'coral2'),
                     na.value='grey90', name='Mutation effect') 
 
-#########################################################################################
-## Use switch_axis_positions to place sample names on top and make chart with ggdraw
-#########################################################################################
-chart2<-ggdraw(switch_axis_position(chart, axis='x'))
-print(chart2)
+print(chart)
 
 
-layout <- matrix(c(1,1,1,1,1,1,
-                   1,1,1,1,1,1,
-                   1,1,1,1,1,1,
-                   1,1,1,1,1,1,
-                   2,2,2,2,2,0), nrow = 5, byrow = TRUE)
+layout <- matrix(c(1,1,1,1,1,1,1,1,
+                   1,1,1,1,1,1,1,1,
+                   1,1,1,1,1,1,1,1,
+                   1,1,1,1,1,1,1,1,
+                   1,1,1,1,1,1,1,1,
+                   2,2,2,2,2,2,2,0), nrow = 6, byrow = TRUE)
 
-multiplot(chart2, VPSplot, cols=2, layout=layout)
-#export as pdf, landscape, width 9.5, height 13
+multiplot(chart, VPSplot, cols=2, layout=layout)
+#export as pdf, portrait, width 7.6, height 11

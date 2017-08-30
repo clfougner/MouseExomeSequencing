@@ -1,3 +1,5 @@
+# NOTE: This script doesn't deal with amino acid changes to * - these must be manually checked.
+
 
 #library(stringr)
 #allMutations<-read.table(file="~/Documents/Forskerlinja/Forskerlinjeoppgaven/Supplementary/CosmicHomologsWorksheet.txt", sep="\t", header=TRUE)
@@ -5,9 +7,10 @@
 #COSMIC<-read.table(file="~/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/v82/CosmicMutantExport.tsv", sep="\t", header=TRUE)
 #COSMIC<-data.frame(COSMIC$Gene.name, COSMIC$Primary.site, COSMIC$Mutation.CDS, COSMIC$Mutation.AA, COSMIC$Mutation.genome.position, COSMIC$Mutation.Description, COSMIC$Mutation.zygosity)
 
-#outputDataFrame<-data.frame(sample=allMutations$sample, gene=allMutations$gene, queried_gene=allMutations$queried_gene, aa_change=allMutations$aa_change, aa_change_shorthand=allMutations$aa_change_shorthand, queried_aa=allMutations$queried_aa, aa_conserved=allMutations$aa_conserved, human_aa_if_not_conserved=allMutations$human_aa_if_not_conserved, location=allMutations$location, ref=allMutations$ref, alt=allMutations$alt, nucleotide_change=allMutations$nucleotide_change, cosmic_exact_matches=NA, cosmic_exact_matches_in_breast=NA, cosmic_matches_in_codon=NA, cosmic_matches_in_codon_in_breast=NA, cosmic_matches_in_10_AA_window=NA, cosmic_mutations_in_gene=NA, cosmic_mutations_in_gene_in_breast=NA)
+outputDataFrame<-data.frame(sample=allMutations$sample, gene=allMutations$gene, queried_gene=allMutations$queried_gene, aa_change=allMutations$aa_change, aa_change_shorthand=allMutations$aa_change_shorthand, queried_aa=allMutations$queried_aa, aa_conserved=allMutations$aa_conserved, human_aa_if_not_conserved=allMutations$human_aa_if_not_conserved, location=allMutations$location, ref=allMutations$ref, alt=allMutations$alt, nucleotide_change=allMutations$nucleotide_change, cosmic_exact_matches=NA, cosmic_exact_matches_in_breast=NA, cosmic_matches_in_codon=NA, cosmic_matches_in_codon_in_breast=NA, cosmic_matches_in_10_AA_window=NA, cosmic_mutations_in_gene=NA, cosmic_mutations_in_gene_in_breast=NA)
 
-for (mut in 1:length(allMutations$sample)){
+#for (mut in 1:length(allMutations$sample)){
+for (mut in 80){
   
   if (is.na(allMutations[mut, "queried_aa"])){
     next
@@ -22,18 +25,12 @@ for (mut in 1:length(allMutations$sample)){
   cosmicMutsCurrentDataFrame<-COSMIC[cosmicMutsCurrent, ]
 
  
-   ###################
-   ## Godkjent
-   ## write.table(x=cosmicMutsCurrentDataFrame, file="AllMutationsInGene.txt", sep="\t", quote = FALSE)
   numberOfMutationsForGene<-length(cosmicMutsCurrentDataFrame$COSMIC.Gene.name)
   print(paste("There are", numberOfMutationsForGene, "mutations in the gene", currentGene))
   
   geneMatchesInBreast<-grep(pattern=paste("^breast$", sep=""), x=cosmicMutsCurrentDataFrame$COSMIC.Primary.site)
   geneMatchesInBreastDataFrame<-cosmicMutsCurrentDataFrame[geneMatchesInBreast, ]
   
-  ####################
-  ## Godkjent
-  ## write.table(x=geneMatchesInBreastDataFrame, file="nBreastMutationsInGene.txt", sep="\t", quote = FALSE)
   
   numberOfGeneMatchesInBreast<-length(geneMatchesInBreastDataFrame$COSMIC.Gene.name)
   print(paste("Of the", numberOfMutationsForGene, "mutations in the", currentGene, "gene,", numberOfGeneMatchesInBreast, "are found in breast cancers"))
@@ -69,12 +66,9 @@ for (mut in 1:length(allMutations$sample)){
   cosmicExactMatchesCurrent<-grep(pattern=queriedCodonSubstitution, x=cosmicMutsCurrentDataFrame$COSMIC.Mutation.AA)
   numberOfExactMatchesCurrent<-length(cosmicExactMatchesCurrent)
   
-  ################
-  ## Godkjent
   
   cosmicExactMatchesCurrentDataFrame<-cosmicMutsCurrentDataFrame[cosmicExactMatchesCurrent, ]
 
-    ## write.table(x=cosmicExactMatchesCurrentDataFrame, file="exactMatchesForGene.txt", sep="\t", quote = FALSE)
   
   print(paste("There are", numberOfExactMatchesCurrent, "exact matches for", queriedCodonSubstitution, "in the gene", currentGene))
   
@@ -91,23 +85,12 @@ for (mut in 1:length(allMutations$sample)){
   cosmicMatchesInCurrentCodon<-grep(pattern=paste("^", queriedCodon, "$", sep=""), x=str_extract_all(cosmicMutsCurrentDataFrame$COSMIC.Mutation.AA, "[0-9]+"))
   numberOfMutationsInCurrentCodonInCurrentGene<-length(cosmicMatchesInCurrentCodon)
  
-  #################
-  ## Godkjent
   cosmicExactCodonDataFrame<-cosmicMutsCurrentDataFrame[cosmicMatchesInCurrentCodon, ]
-  ## write.table(x=cosmicExactCodonDataFrame, file="exactCodon.txt", sep="\t", quote = FALSE)
 
-  
   print(paste("There are", numberOfMutationsInCurrentCodonInCurrentGene, "mutations in codon", queriedCodon, "in the gene", currentGene))
   
-  
-  #matchesInCurrentCodonDataFrame<-COSMIC[cosmicMatchesInCurrentCodon, ]
   matchesInCurrentCodonInBreast<-grep(pattern="breast", x=cosmicExactCodonDataFrame$COSMIC.Primary.site)
   numberOfMatchesInCurrentCodonInBreast<-length(matchesInCurrentCodonInBreast)
-  
-  #################
-  ## Godkjent
-  ## cosmicExactCodonBreastDataFrame<-cosmicExactCodonDataFrame[matchesInCurrentCodonInBreast, ]
-  ## write.table(x=cosmicExactCodonBreastDataFrame, file="exactCodonInBreast.txt", sep="\t", quote = FALSE)
   
   print(paste("Of the", numberOfMutationsInCurrentCodonInCurrentGene, "mutations in codon", queriedCodon, "in the gene", currentGene, "-", numberOfMatchesInCurrentCodonInBreast, "are found in breast tumors"))
   
@@ -131,15 +114,15 @@ for (mut in 1:length(allMutations$sample)){
   ## cosmic10AAWindowDataFrame<-cosmicMutsCurrentDataFrame[cosmicMatchesIn10AAWindow, ]
   ## write.table(x=cosmic10AAWindowDataFrame, file="10AAWindowMuts.txt", sep="\t", quote = FALSE)
   
-  print(paste("There are", numberOfCosmicMatchesIn10AAWindow, "mutations in a 10 amino acid range of the queried codon (queried codon not included)"))
-  
-  outputDataFrame[mut, "cosmic_exact_matches"]<-numberOfExactMatchesCurrent
-  outputDataFrame[mut, "cosmic_exact_matches_in_breast"]<-numberOfExactMatchesInBreastCurrent
-  outputDataFrame[mut, "cosmic_matches_in_codon"]<-numberOfMutationsInCurrentCodonInCurrentGene
-  outputDataFrame[mut, "cosmic_matches_in_codon_in_breast"]<-numberOfMatchesInCurrentCodonInBreast
-  outputDataFrame[mut, "cosmic_matches_in_10_AA_window"]<-numberOfCosmicMatchesIn10AAWindow
-  outputDataFrame[mut, "cosmic_mutations_in_gene"]<-numberOfMutationsForGene
-  outputDataFrame[mut, "cosmic_mutations_in_gene_in_breast"]<-numberOfGeneMatchesInBreast
-}
-
-write.table(x=outputDataFrame, file="HomologsWithCosmicInfor.txt", sep="\t", quote = FALSE)
+#   print(paste("There are", numberOfCosmicMatchesIn10AAWindow, "mutations in a 10 amino acid range of the queried codon (queried codon not included)"))
+#   
+#   outputDataFrame[mut, "cosmic_exact_matches"]<-numberOfExactMatchesCurrent
+#   outputDataFrame[mut, "cosmic_exact_matches_in_breast"]<-numberOfExactMatchesInBreastCurrent
+#   outputDataFrame[mut, "cosmic_matches_in_codon"]<-numberOfMutationsInCurrentCodonInCurrentGene
+#   outputDataFrame[mut, "cosmic_matches_in_codon_in_breast"]<-numberOfMatchesInCurrentCodonInBreast
+#   outputDataFrame[mut, "cosmic_matches_in_10_AA_window"]<-numberOfCosmicMatchesIn10AAWindow
+#   outputDataFrame[mut, "cosmic_mutations_in_gene"]<-numberOfMutationsForGene
+#   outputDataFrame[mut, "cosmic_mutations_in_gene_in_breast"]<-numberOfGeneMatchesInBreast
+ }
+# 
+# write.table(x=outputDataFrame, file="HomologsWithCosmicInfo.txt", sep="\t", quote = FALSE)

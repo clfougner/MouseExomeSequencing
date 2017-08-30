@@ -120,7 +120,7 @@ bound<-rbind(sample1, sample2, sample3, sample4, sample5, sample6, sample7,
              sample14, sample15, sample16, sample17, sample18)
 
 
-plotdata<-ggplot(bound,aes(x=factor(sample),y=proportion,fill=factor(TS)), color=factor(TS))
+plotdata<-ggplot(bound,aes(x=factor(sample),y=rev(proportion),fill=factor(TS)), color=factor(TS))
 
 chart<-plotdata + stat_summary(fun.y=mean,position="stack",geom="bar") +
   theme(axis.title.x=element_blank(),

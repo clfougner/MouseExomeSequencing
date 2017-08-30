@@ -5,7 +5,7 @@ library(plyr)
 ## Read table with the list number of variants per sample in the wide format (output from 
 ## ModGrepPipeline.sh "wc -l" command)
 #########################################################################################
-filteredvars<-read.table(file='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/FilteringOwnDataTests.txt', header=TRUE, sep='\t', stringsAsFactors = F)
+filteredvars<-read.table(file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/FilteringOwnDataTests.txt', header=TRUE, sep='\t', stringsAsFactors = F)
 
 #########################################################################################
 ## Make data.frame of file, remove the first column and set to row names
