@@ -2,7 +2,7 @@
 ## List of genes to filter for (list from 'Cancer Genome Landscapes', B Vogelstein et al.)
 ## is used here
 ##########################################################################################
-vogelstein<-read.table(file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/161005_genesforfigure.txt')
+vogelstein<-read.table(file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/CosmicHomologs.txt')
 
 #########################################################################################
 ## File from CommonGeneList.r
@@ -22,4 +22,4 @@ selected<-selected[order(-selected[,'Sum'],selected[,1]), ]
 #########################################################################################
 ## Print table
 #########################################################################################
-write.table(selected, file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/FinalOut/VariantsForRaster.txt', quote = FALSE, sep='\t')
+write.table(selected, file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/FinalOut/COSMICVariants.txt', quote = FALSE, sep='\t')

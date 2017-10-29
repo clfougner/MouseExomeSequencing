@@ -2,15 +2,15 @@
 
 
 #library(stringr)
-#allMutations<-read.table(file="~/Documents/Forskerlinja/Forskerlinjeoppgaven/Supplementary/CosmicHomologsWorksheet.txt", sep="\t", header=TRUE)
+#allMutations<-read.table(file="~/Documents/Forskerlinja/DMBA-indusert/Sequencing/CosmicHomologsWorksheet.txt", sep="\t", header=TRUE)
 
 #COSMIC<-read.table(file="~/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/v82/CosmicMutantExport.tsv", sep="\t", header=TRUE)
 #COSMIC<-data.frame(COSMIC$Gene.name, COSMIC$Primary.site, COSMIC$Mutation.CDS, COSMIC$Mutation.AA, COSMIC$Mutation.genome.position, COSMIC$Mutation.Description, COSMIC$Mutation.zygosity)
 
-outputDataFrame<-data.frame(sample=allMutations$sample, gene=allMutations$gene, queried_gene=allMutations$queried_gene, aa_change=allMutations$aa_change, aa_change_shorthand=allMutations$aa_change_shorthand, queried_aa=allMutations$queried_aa, aa_conserved=allMutations$aa_conserved, human_aa_if_not_conserved=allMutations$human_aa_if_not_conserved, location=allMutations$location, ref=allMutations$ref, alt=allMutations$alt, nucleotide_change=allMutations$nucleotide_change, cosmic_exact_matches=NA, cosmic_exact_matches_in_breast=NA, cosmic_matches_in_codon=NA, cosmic_matches_in_codon_in_breast=NA, cosmic_matches_in_10_AA_window=NA, cosmic_mutations_in_gene=NA, cosmic_mutations_in_gene_in_breast=NA)
+#outputDataFrame<-data.frame(sample=allMutations$sample, gene=allMutations$gene, queried_gene=allMutations$queried_gene, aa_change=allMutations$aa_change, aa_change_shorthand=allMutations$aa_change_shorthand, queried_aa=allMutations$queried_aa, aa_conserved=allMutations$aa_conserved, human_aa_if_not_conserved=allMutations$human_aa_if_not_conserved, location=allMutations$location, ref=allMutations$ref, alt=allMutations$alt, nucleotide_change=allMutations$nucleotide_change, cosmic_exact_matches=NA, cosmic_exact_matches_in_breast=NA, cosmic_matches_in_codon=NA, cosmic_matches_in_codon_in_breast=NA, cosmic_matches_in_10_AA_window=NA, cosmic_mutations_in_gene=NA, cosmic_mutations_in_gene_in_breast=NA)
 
 #for (mut in 1:length(allMutations$sample)){
-for (mut in 80){
+for (mut in 219){
   
   if (is.na(allMutations[mut, "queried_aa"])){
     next
