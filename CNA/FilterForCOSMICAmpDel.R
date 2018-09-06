@@ -2,7 +2,9 @@
 COSMICGenes<-read.table(file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/CosmicHomologs.txt')
 COSMICGenes<-as.character(COSMICGenes$V1)
 
-CNAList<-read.table(file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w50k/CollatedAmpDelList-4.txt', sep="\t", header=TRUE)
+CNAList<-read.table(file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w10k/Analysis/CollatedAmpDelList_w10k.txt', sep="\t", header=TRUE)
+
+CNAList <- cbind(Gene=row.names(CNAList), CNAList)
 
 allPositions<-c()
 
@@ -24,4 +26,4 @@ COSMICCNAs <- COSMICCNAs[!duplicated(COSMICCNAs$Gene),]
 
 COSMICCNAs <- data.frame(COSMICCNAs[,2:20], row.names = COSMICCNAs[,1])
 
-write.table(COSMICCNAs, file="/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w50k/CollatedAmpDelListCOSMICfiltered.txt", quote = FALSE, sep='\t', row.names=TRUE)
+write.table(COSMICCNAs, file="/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w10k/Analysis/CollatedAmpDelList_w10k_COSMIC.txt", quote = FALSE, sep='\t', row.names=TRUE)

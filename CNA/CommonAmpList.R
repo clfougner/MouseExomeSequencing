@@ -2,7 +2,7 @@
 #########################################################################
 ## Create list of all genes (must have passed through ModGrepPipeline.sh)
 #########################################################################
-setwd("/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w50k/Results/Intersect/")
+setwd("/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w20k/Intersect/")
 S123_14_6_table<-read.table("S123_14_6_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
 S131_14_9_table<-read.table("S131_14_9_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
 S132_14_5_table<-read.table("S132_14_5_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
@@ -177,7 +177,7 @@ for (sample in sampleNames)
     {
       pasted<-paste(sample, '_df', sep='')
       impact<-eval(parse(text=pasted))[gene,]
-      df[gene,sample]<-impact
+      df[gene,sample]<-as.character(impact)
     }
   }
 }
@@ -207,5 +207,5 @@ ordered<-ordered[-toRemove,]
 ###################################################################
 ## Print table
 ###################################################################
-write.table(ordered, file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w50k/CollatedAmpDelList.txt', quote = FALSE, sep='\t')
+write.table(ordered, file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w50k/Analysis/CollatedAmpDelList_w50k_call.txt', quote = FALSE, sep='\t')
 

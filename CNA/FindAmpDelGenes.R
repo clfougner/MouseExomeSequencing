@@ -12,7 +12,7 @@ for(sampleName in sampleNames){
   
   all<-c()
   for (i in 1:length(CNATable$Chromosome)){
-    if (CNATable[i, "ProbCall"] > 0.95){
+    if (CNATable[i, "ProbCall"] > 0.00){
       all<-c(all, i)
     }
   }
@@ -21,10 +21,10 @@ for(sampleName in sampleNames){
   
   bedFormatted<-data.frame(chrom=CNATable[,"Chromosome"], start=CNATable[,"Start"], end=CNATable[,"End"]) 
   
-  bedFormattedFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Intersect/", sampleName, "_CNA_0.95.bed", sep="")
+  bedFormattedFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Intersect/", sampleName, "_CNA.bed", sep="")
   write.table(x=bedFormatted, file=bedFormattedFileName, quote=FALSE, row.names=FALSE, sep="\t", col.names=FALSE)
   
-  bedtoolsIntersectOutput<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Intersect/", sampleName, "_CNA_0.95_intersect.bed", sep="")
+  bedtoolsIntersectOutput<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Intersect/", sampleName, "_CNA_intersect.bed", sep="")
   
   system(paste("bedtools intersect -a ", bedFormattedFileName, " -b /open/tmp/Christian/ReferenceFiles/mm10genesRefSeqForIntersect.bed -wa -wb > ", bedtoolsIntersectOutput, sep=""))
   print("1") 
@@ -69,6 +69,6 @@ for(sampleName in sampleNames){
   
   intersected<-intersected[, 1:8]
   
-  annotatedOutputFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Intersect/", sampleName, "_CNA_0.95_annotated.txt", sep="")
+  annotatedOutputFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Intersect/", sampleName, "_CNA_annotated.txt", sep="")
   write.table(x=intersected, file=annotatedOutputFileName, quote=FALSE, row.names=FALSE, sep="\t", col.names=TRUE)
 }

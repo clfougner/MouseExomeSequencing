@@ -4,7 +4,7 @@ library('ggplot2')
 #########################################################################################
 ## Read file for CommonGeneListDetails.r -> FilterForVogelstein.r
 #########################################################################################
-file<-read.table(file="/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w50k/CollatedAmpDelListCOSMICfiltered.txt", stringsAsFactors=FALSE)
+file<-read.table(file="/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w20k/Analysis/CollatedAmpDelList_w20k_COSMIC.txt", stringsAsFactors=FALSE)
 
 #########################################################################################
 ## Sample names in same order as input file
@@ -60,15 +60,63 @@ df<-data.frame(samples, genes, contains)
 ## type in the legend
 #########################################################################################
 df$contains<-factor(df$contains, levels=c('amp',"del"))
-df$samples<-factor(df$samples, levels=c('S159_14_8', 'S159_14_2', 'S176_14_2','S412_15_2','S400_15_7', 'S400_15_2', 'S422_15_2', 'S132_14_5', 'S187_14_1', 'S401_15_2',   'S416_15_2','S189_14_4','S153_14_2', 'S416_15_13', 'S160_14_2', 'S189_14_2', 'S123_14_6', 'S131_14_9'))
+df$samples<-factor(df$samples, levels=c('S159_14_2', 'S159_14_8',  'S176_14_2','S412_15_2','S400_15_7', 'S400_15_2', 'S422_15_2', 'S132_14_5', 'S401_15_2', 'S187_14_1', 'S160_14_2', 'S123_14_6', 'S416_15_2','S189_14_4','S416_15_13', 'S153_14_2', 'S189_14_2', 'S131_14_9'))
 
-#########################################################################################
-## Create plot. Note that in order to use the switch_axis_position function found in the
-## next step, x-axis ticks must be removed by setting their colour to white, as
-## axis.ticks.x=element_blank() will cause an error. See:
-## https://github.com/wilkelab/cowplot/issues/13
-## https://github.com/wilkelab/cowplot/issues/35
-#########################################################################################
+#Annotation colors
+annotationColorsSubtype<-c()
+annotationColorsCluster<-c()
+
+tumors<-read.table(file="/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/MouseSubtypes.txt", header=FALSE, sep="\t")
+colnames(tumors) <- c("sampleName", "subtype", "cluster")
+
+for (i in 1:length(levels(df$samples))){
+  lineNum<-grep(x=tumors$sampleName, pattern=levels(df$samples)[i])
+  
+  if (is.na(tumors[lineNum, "cluster"])){
+    annotationColorsSubtype<-c(annotationColorsSubtype, "grey90")
+    annotationColorsCluster<-c(annotationColorsCluster, "grey90")
+    next
+  }
+  
+  if(tumors[lineNum, "cluster"] =="CL"){
+    annotationColorsCluster<-c(annotationColorsCluster, "goldenrod3")
+    
+    if(tumors[lineNum, "subtype"] == "Claudin-lowEx"){
+      annotationColorsSubtype<-c(annotationColorsSubtype, "deepskyblue3")
+    }
+    
+    if(tumors[lineNum, "subtype"] == "Squamous-likeEx"){
+      annotationColorsSubtype<-c(annotationColorsSubtype, "darkgoldenrod4")
+    }
+  }
+  
+  if(tumors[lineNum, "cluster"] =="Other"){
+    annotationColorsCluster<-c(annotationColorsCluster, "dodgerblue4")
+    
+    if(tumors[lineNum, "subtype"] == "Class8Ex"){
+      annotationColorsSubtype<-c(annotationColorsSubtype, "chartreuse4")
+    }
+    
+    if(tumors[lineNum, "subtype"] == "Erbb2-likeEx"){
+      annotationColorsSubtype<-c(annotationColorsSubtype, "antiquewhite3")
+    }
+    
+    if(tumors[lineNum, "subtype"] == "PyMTEx"){
+      annotationColorsSubtype<-c(annotationColorsSubtype, "khaki3")
+    }
+    
+    if(tumors[lineNum, "subtype"] == "Class3Ex"){
+      annotationColorsSubtype<-c(annotationColorsSubtype, "brown4")
+    }
+    
+    if(tumors[lineNum, "subtype"] == "Class14Ex"){
+      annotationColorsSubtype<-c(annotationColorsSubtype, "lemonchiffon")
+    }
+  }
+}
+annotationColorsSubtype <- matrix(data = annotationColorsSubtype, nrow = 1, ncol = length(annotationColorsSubtype))
+annotationColorsCluster <- matrix(data = annotationColorsCluster, nrow = 1, ncol = length(annotationColorsCluster))
+
 plotdata<-ggplot(data=df, aes(x=samples, y=rev(genes), fill=contains))
 chart<-plotdata+geom_raster() + 
     theme(axis.title.y=element_blank(),
@@ -83,11 +131,10 @@ chart<-plotdata+geom_raster() +
     scale_x_discrete(position = "top") +
     geom_vline(xintercept = seq(1.5, (length(sampleNames)+0.5), by=1), color = "white", size = 0.5) +
     geom_hline(yintercept = seq(1.5, (length(geneLabs)+0.5), by=1), color = "white", size = 0.5) +
-    scale_fill_manual(values=c('red3', "forestgreen"), na.value='grey85', name='CNA') 
+    scale_fill_manual(values=c('red', "blue"), labels=c("Amplification", "Deletion", "NA"), na.value='grey85', name='CNA') +
+  annotation_raster(annotationColorsSubtype, 0.5, 18.5, 49, 49.9) +
+  annotation_raster(annotationColorsCluster, 0.5, 18.5, 50, 50.9)
   
-#########################################################################################
-## Use switch_axis_positions to place sample names on top and make chart with ggdraw
-#########################################################################################
-#chart2<-ggdraw(switch_axis_position(chart, axis='x'))
 print(chart)
-ggsave("/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w50k/DMBAAmpDels.png", chart, width = 8, height = 13, dpi = 300)
+#ggsave("/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w50k/DMBAAmpDels.png", chart, width = 8, height = 13, dpi = 300)
+
