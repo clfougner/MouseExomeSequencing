@@ -1,7 +1,7 @@
 #!/bin/Rscript
 library(ggplot2)
 
-tumors<-read.table(file="/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/MouseSubtypes.txt", header=FALSE, sep="\t")
+tumors<-read.table(file="/Users/christianfougner/Documents/Forskning/DMBA-prosjekt/Sequencing/ReferenceFiles/MouseSubtypes.txt", header=FALSE, sep="\t")
 
 sampleNames<-c(as.character(tumors$V1))
 sampleNames<-sampleNames[1:17]
@@ -23,7 +23,7 @@ for (i in 1:length(sampleNames)){
 
 # Make data frame for Claudin low tumors
 for (i in 1:length(CLTumors)){
-  filePath<-paste("/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w10k/Results/", CLTumors[i], "/HSLMResults_", CLTumors[i], ".txt", sep="")
+  filePath<-paste("/Users/christianfougner/Documents/Forskning/DMBA-prosjekt/Sequencing/Output/AnalysisResults_w20k/Results/", CLTumors[i], "/HSLMResults_", CLTumors[i], ".txt", sep="")
   data<-read.table(file = filePath, header=TRUE, sep="\t")
   #data<-data[1:100,]
 
@@ -49,7 +49,7 @@ mediansDF<-data.frame(order=1:length(data$Position), chrom=data[, "Chromosome"],
 
 # Make data frame for other cluster
 for (i in 1:length(otherTumors)){
-  filePath<-paste("/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w10k/Results/", otherTumors[i], "/HSLMResults_", otherTumors[i], ".txt", sep="")
+  filePath<-paste("/Users/christianfougner/Documents/Forskning/DMBA-prosjekt/Sequencing/Output/AnalysisResults_w20k/Results/", otherTumors[i], "/HSLMResults_", otherTumors[i], ".txt", sep="")
   data<-read.table(file = filePath, header=TRUE, sep="\t")
   #data<-data[1:100,]
   
@@ -72,11 +72,9 @@ for(i in 1:length(otherDF[,"chrom"])){
 
 mediansOtherDF<-data.frame(order=1:length(data$Position), chrom=data[, "Chromosome"], median = mediansOther)
 
-
-#bound<-data.frame(mediansOtherDF[1:100,3:length(mediansOtherDF)], mediansDF[1:100,mediansOtherDF], row.names = mediansOtherDF$)
-
-#dotPlot<-ggplot(mediansDF, aes(x=order, y=median, colour = chrom)) + 
-#  geom_point()
+dotPlotCL<-ggplot(mediansDF, aes(x=order, y=median, colour = chrom)) + geom_point() + labs(title="Claudin Low",   x ="Chromosome position", y = "Log2(TumorDNA/NormalDNA")
+print(dotPlotCL)
+dotPlotMixed <- ggplot(mediansOtherDF, aes(x=order, y=median, colour = chrom)) + geom_point()
 
 library(samr)
 

@@ -7,7 +7,7 @@ sampleNames<-c('S123_14_6', 'S131_14_9', 'S132_14_5', 'S153_14_2',
                'S416_15_13', 'S422_15_2')
 
 for(sampleName in sampleNames){
-  CNATableFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Results/", sampleName, "/FastCallResults_", sampleName, ".txt", sep="")
+  CNATableFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w10k/AnalysisResults_w10k/Results/", sampleName, "/FastCallResults_", sampleName, ".txt", sep="")
   CNATable<-read.table(file=CNATableFileName, sep="\t", header=TRUE)
   
   all<-c()
@@ -21,10 +21,10 @@ for(sampleName in sampleNames){
   
   bedFormatted<-data.frame(chrom=CNATable[,"Chromosome"], start=CNATable[,"Start"], end=CNATable[,"End"]) 
   
-  bedFormattedFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Intersect/", sampleName, "_CNA.bed", sep="")
+  bedFormattedFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w10k/AnalysisResults_w10k/Intersect/", sampleName, "_CNA.bed", sep="")
   write.table(x=bedFormatted, file=bedFormattedFileName, quote=FALSE, row.names=FALSE, sep="\t", col.names=FALSE)
   
-  bedtoolsIntersectOutput<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Intersect/", sampleName, "_CNA_intersect.bed", sep="")
+  bedtoolsIntersectOutput<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w10k/AnalysisResults_w10k/Intersect/", sampleName, "_CNA_intersect.bed", sep="")
   
   system(paste("bedtools intersect -a ", bedFormattedFileName, " -b /open/tmp/Christian/ReferenceFiles/mm10genesRefSeqForIntersect.bed -wa -wb > ", bedtoolsIntersectOutput, sep=""))
   print("1") 
@@ -69,6 +69,6 @@ for(sampleName in sampleNames){
   
   intersected<-intersected[, 1:8]
   
-  annotatedOutputFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w20k/AnalysisResults_w20k/Intersect/", sampleName, "_CNA_annotated.txt", sep="")
+  annotatedOutputFileName<-paste("/open/tmp/Christian/DMBA-induced/Output/EXCAVATOR2/w10k/AnalysisResults_w10k/Intersect/", sampleName, "_CNA_annotated.txt", sep="")
   write.table(x=intersected, file=annotatedOutputFileName, quote=FALSE, row.names=FALSE, sep="\t", col.names=TRUE)
 }

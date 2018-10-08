@@ -58,7 +58,7 @@ sampleNames <- c('S123_14_6 ', 'S131_14_9 ', 'S132_14_5 ', 'S153_14_2 ',
 ## Read table with the list number of variants per sample in the wide format (output from 
 ## ModGrepPipeline.sh "wc -l" command)
 #########################################################################################
-filteredvars <- read.table(file = '/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/FilteringOwnDataTests.txt', header = TRUE, sep = '\t', stringsAsFactors = F)
+filteredvars <- read.table(file = '/Users/christianfougner/Documents/Forskning/DMBA-prosjekt/Sequencing/FilteringOwnDataTests.txt', header = TRUE, sep = '\t', stringsAsFactors = F)
 
 #########################################################################################
 ## Make data.frame of file, remove the first column and set to row names
@@ -106,10 +106,10 @@ plotdata <- ggplot(variants1, aes(x = sample, y = value, fill = variable))
 VPSplot <- plotdata + geom_bar(stat = 'identity', width = 0.9) +
   theme_grey() +
   theme(axis.text.x = element_blank(),
-        axis.text.y = element_text(size = 12, hjust = 0),
+        axis.text.y = element_text(size = 8, hjust = 0),
         axis.ticks.x = element_blank(),
         panel.grid = element_blank(),
-        plot.title = element_text(size = 18, face = 'bold'),
+        plot.title = element_text(size = 8, face = 'bold'),
         plot.margin = unit(c(-0.5, 0.1, 0, 0.065), "cm"),
         legend.title = element_blank()) +
   geom_vline(xintercept = seq(1.5, (length(sampleNames) + 0.5), by = 1), color = "white", size = 0.6) +
@@ -126,7 +126,7 @@ library('ggplot2')
 #########################################################################################
 ## Read file for CommonGeneListSpecific.r -> FilterForVogelstein.r
 #########################################################################################
-file <- read.table(file = '/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/FinalOut/VariantsForRaster.txt', stringsAsFactors = FALSE)
+file <- read.table(file = '/Users/christianfougner/Documents/Forskning/DMBA-prosjekt/Sequencing/Output/FinalOut/VariantsForRaster.txt', stringsAsFactors = FALSE)
 
 #########################################################################################
 ## Sample names in same order as input file
@@ -197,11 +197,11 @@ df$samples <- factor(df$samples, levels = c('S159_14_8 ', 'S400_15_7 ', 'S401_15
 annotationColors <- matrix(data = c("chartreuse4","lemonchiffon","khaki3","deepskyblue3", "brown4", "deepskyblue3", "deepskyblue3", "chartreuse4", "deepskyblue3", "deepskyblue3", "deepskyblue3", "khaki3", "khaki3", "grey90", "antiquewhite3", "lemonchiffon", "darkgoldenrod4", "darkgoldenrod4"), nrow = 1, ncol = 18)
 
 plotdata <- ggplot(data = df, aes(x = samples, y = rev(genes), fill = contains))
-chart <- plotdata + geom_raster() + 
+chart <- plotdata + geom_tile() + 
   theme(axis.title.y = element_blank(),
         axis.title.x = element_text(size = 0),
-        axis.text.y = element_text(size = 10, face = 'italic', hjust = 1),
-        axis.text.x = element_text(size = 14, face = 'bold', angle = 270, hjust = -0),
+        axis.text.y = element_text(size = 8, face = 'italic', hjust = 1),
+        axis.text.x = element_text(size = 8, angle = 270, hjust = -0),
         axis.line = element_blank(),
         panel.background = element_rect(fill = '#ffffff'),
         axis.ticks.y = element_blank(),
@@ -227,3 +227,4 @@ layout <- matrix(c(1,1,1,1,1,1,1,1,
 
 multiplot(chart, VPSplot, cols = 2, layout = layout)
 #export as pdf, portrait, width 7.6, height 11
+chart + VPSplot + plot_layout(ncol=1, heights = c(4, 1))

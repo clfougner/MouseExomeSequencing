@@ -42,3 +42,5 @@ for(sampleName in sampleNames){
 
 df<-df[2:length(df$w10k),]
 row.names(df)<-sampleNames
+
+#write.table(df, file="/Users/christianfougner/Documents/Forskning/DMBA-prosjekt/Sequencing/OverlapCNAWindowSizes.txt", sep="\t", quote=FALSE)

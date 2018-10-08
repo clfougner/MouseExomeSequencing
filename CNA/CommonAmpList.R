@@ -2,25 +2,25 @@
 #########################################################################
 ## Create list of all genes (must have passed through ModGrepPipeline.sh)
 #########################################################################
-setwd("/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w20k/Intersect/")
-S123_14_6_table<-read.table("S123_14_6_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S131_14_9_table<-read.table("S131_14_9_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S132_14_5_table<-read.table("S132_14_5_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S153_14_2_table<-read.table("S153_14_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S159_14_2_table<-read.table("S159_14_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S159_14_8_table<-read.table("S159_14_8_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S160_14_2_table<-read.table("S160_14_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S176_14_2_table<-read.table("S176_14_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S187_14_1_table<-read.table("S187_14_1_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S189_14_2_table<-read.table("S189_14_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S189_14_4_table<-read.table("S189_14_4_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S400_15_2_table<-read.table("S400_15_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S400_15_7_table<-read.table("S400_15_7_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S401_15_2_table<-read.table("S401_15_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S412_15_2_table<-read.table("S412_15_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S416_15_13_table<-read.table("S416_15_13_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S416_15_2_table<-read.table("S416_15_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
-S422_15_2_table<-read.table("S422_15_2_CNA_0.95_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+setwd("/Users/christianfougner/Documents/Forskning/DMBA-prosjekt/Sequencing/Output/AnalysisResults_w20k/IntersectNotFiltered/")
+S123_14_6_table<-read.table("S123_14_6_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S131_14_9_table<-read.table("S131_14_9_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S132_14_5_table<-read.table("S132_14_5_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S153_14_2_table<-read.table("S153_14_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S159_14_2_table<-read.table("S159_14_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S159_14_8_table<-read.table("S159_14_8_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S160_14_2_table<-read.table("S160_14_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S176_14_2_table<-read.table("S176_14_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S187_14_1_table<-read.table("S187_14_1_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S189_14_2_table<-read.table("S189_14_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S189_14_4_table<-read.table("S189_14_4_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S400_15_2_table<-read.table("S400_15_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S400_15_7_table<-read.table("S400_15_7_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S401_15_2_table<-read.table("S401_15_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S412_15_2_table<-read.table("S412_15_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S416_15_13_table<-read.table("S416_15_13_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S416_15_2_table<-read.table("S416_15_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
+S422_15_2_table<-read.table("S422_15_2_CNA_annotated.txt", stringsAsFactors = FALSE, header=TRUE)
 
 S123_14_6_table = S123_14_6_table[!duplicated(S123_14_6_table$geneName),]
 S131_14_9_table = S131_14_9_table[!duplicated(S131_14_9_table$geneName),]
@@ -207,5 +207,5 @@ ordered<-ordered[-toRemove,]
 ###################################################################
 ## Print table
 ###################################################################
-write.table(ordered, file='/Users/christianfougner/Documents/Forskerlinja/DMBA-indusert/Sequencing/Output/AnalysisResults_w50k/Analysis/CollatedAmpDelList_w50k_call.txt', quote = FALSE, sep='\t')
+write.table(ordered, file='/Users/christianfougner/Documents/Forskning/DMBA-prosjekt/Sequencing/Output/AnalysisResults_w20k/Analysis/CollatedAmpDelList_w20k_call_notfiltered.txt', quote = FALSE, sep='\t')
 
