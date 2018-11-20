@@ -7,10 +7,10 @@
 #gunzip ./mm10.FVBN.INDELS.dbSNP142.vcf.gz
 
 #Path to input file
-INPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/FVBN.INDELS.dbSNP142.vcf.gz'
+INPUT='/path/to/FVBN.INDELS.dbSNP142.vcf.gz'
 
 #Path to output file
-OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.INDELS.vcf'
+OUTPUT='/path/to/mm10.INDELS.vcf'
 
 #Format known indel file be compatible with mm10.fa
 gawk '{ if($0 !~ /^#/) print "chr"$0; else if(match($0,/(##contig=<ID=)(.*)/,m)) print m[1]"chr"m[2]; else print $0 }' $INPUT > $OUTPUT

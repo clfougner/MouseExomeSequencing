@@ -7,23 +7,23 @@
 #gunzip ./mm10.FVBN.SNPs.dbSNP142.vcf.gz
 
 #Path to input file
-INPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.FVBN.SNPs.dbSNP142.vcf'
+INPUT='/path/to/mm10.FVBN.SNPs.dbSNP142.vcf'
 
 #Path to output file
-OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.FVBN.SNPs.unordered.vcf'
+OUTPUT='/path/to/mm10.FVBN.SNPs.unordered.vcf'
 
 #Format known SNP file be compatible with mm10.fa
 gawk '{ if($0 !~ /^#/) print "chr"$0; else if(match($0,/(##contig=<ID=)(.*)/,m)) print m[1]"chr"m[2]; else print $0 }' $INPUT > $OUTPUT
 
 
 #change directory to Picard folder
-cd /Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/Frameworks/Picard/
+cd /path/to/Picard/
 
 #path to input file to be reordered
-SORT_INPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.FVBN.SNPs.unordered.vcf'
+SORT_INPUT='/path/to/mm10.FVBN.SNPs.unordered.vcf'
 
 #path to output/reordered file
-SORT_OUTPUT='/Users/Christian/Documents/Forskerlinja/DMBA-indusert/Sequencing/ReferenceFiles/mm10.FVBN.SNPs.vcf'
+SORT_OUTPUT='/path/to/mm10.FVBN.SNPs.vcf'
 
 #ref: www.broadinstitute.org/gatk/guide/article?id=1328
 
