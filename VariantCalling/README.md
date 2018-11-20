@@ -46,7 +46,7 @@ Using method:		SortSam
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#SortSam)
 
 ####5) Remove duplicates from BAM files
-During the sequencing process, the same DNA fragments may be sequenced several times. The resulting duplicate reads are not informative and should not be counted as additional evidence for or against a putative variant. The duplicate marking process (sometimes called **dedupping** in bioinformatics slang) does not remove the reads, but identifies them as duplicates by adding a flag in the read's SAM record. Most GATK tools will then ignore these duplicate reads by default, through the internal application of a read filter [(2)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
+During the sequencing process, the same DNA fragments may be sequenced several times. The resulting duplicate reads are not informative and should not be counted as additional evidence for or against a putative variant. The duplicate marking process does not remove the reads, but identifies them as duplicates by adding a flag in the read's SAM record. Most GATK tools will then ignore these duplicate reads by default, through the internal application of a read filter [(2)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 ```
 Script:				MarkDuplicates.sh
 Using framework:	Picard
