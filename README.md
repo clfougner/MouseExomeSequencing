@@ -9,4 +9,4 @@ ReferenceFiles    Instructions on downloading and processing the necessary refer
 VariantCalling    Pipeline for variant calling (including preprocessing and annotation)
 `````
 
-The exome sequencing data I use for this project was generated using an Illumina HiSeq X10 with the Agilent SureSelect Mouse All Exon Kit. The tissue used was collected from FVB/N mice, which is reflected in the choice of SNP and indel files.
+The exome sequencing data I use for this project was generated using an Illumina HiSeq X10 with the Agilent SureSelect Mouse All Exon Kit. The tissue used was collected from FVB/NJ mice, which is reflected in the choice of SNP and InDel files. All analyses are performed on a Unix-based operating system.
