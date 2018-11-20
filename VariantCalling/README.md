@@ -121,11 +121,11 @@ Using Method:       PrintReads
 ## Variant calling
 In this step, variants are called relative to the reference genome, and then marked if evidence for them is found in the matched normal sample or in the list of known SNPs.
 ```
-Script: 			 	    MuTect.sh
-Reference file:			mm10.fa
-SNP file:		    	  mm10.FVBN.SNPs.vcf
-Using framework:		Genome Analysis Toolkit
-Method:		  	  	  MuTect2
+Script:           MuTect.sh
+Reference file:   mm10.fa
+SNP file:         mm10.FVBN.SNPs.vcf
+Using framework:  Genome Analysis Toolkit
+Method:           MuTect2
 ````
 * [Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/org_broadinstitute_gatk_tools_walkers_cancer_m2_MuTect2.php)
 
@@ -134,9 +134,9 @@ Method:		  	  	  MuTect2
 #### 1) Annotate variants
 SnpEff annotates the variants found from MuTect. The most important information includes the gene names and effect (i.e. missense, synonymous, etc.)
 ```
-Script:					    SnpEff.sh
-Reference:		   	  GRCm38.82
-Using framework:		SnpEff
+Script:           SnpEff.sh
+Reference:        GRCm38.82
+Using framework:  SnpEff
 ```
 * [Documentation](http://snpeff.sourceforge.net/SnpEff_manual.html#run)
 
@@ -144,9 +144,9 @@ Using framework:		SnpEff
 This step filters the annotated variants for only those passing MuTect's filters.
 
 `````
-Script:	      		  SnpSiftForPass.sh
-Using framework:		SnpSift (part of SnpEff)
-Using method:		  	filter
+Script:           SnpSiftForPass.sh
+Using framework:  SnpSift (part of SnpEff)
+Using method:     filter
 `````
 
 *[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
