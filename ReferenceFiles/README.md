@@ -37,7 +37,7 @@ In order to use GATK, an index file for the reference genome must be created. Th
 
 `````
 samtools faidx /path/to/mm10.fa
-````
+`````
 
 * [Documentation](http://gatkforums.broadinstitute.org/gatk/discussion/1601/how-can-i-prepare-a-fasta-file-to-use-as-reference)
 
