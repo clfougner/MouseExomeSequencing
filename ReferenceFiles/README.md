@@ -54,7 +54,7 @@ OUTPUT=/path/to/mm10.dict
 * [Documentation](http://gatkforums.broadinstitute.org/gatk/discussion/1601/how-can-i-prepare-a-fasta-file-to-use-as-reference) /[also relevant](https://www.broadinstitute.org/gatk/guide/article?id=2798)
 
 #### Correctly format the indel reference file
-When realigning around indels, a list of known indels is used; this list must be correctly formatted to match the reference FASTA used for the alignment. This can be done using the script `FormatKnownIndels.sh`. Thanks to [John Longinotto](https://www.biostars.org/p/182917/#183000) for help with this issue. In this project, this file after processing is referred to as `mm10.FVBN.INDELS.vcf`.
+When realigning around indels, a list of known indels is used; this list must be correctly formatted to match the reference FASTA used for the alignment. This can be done using the script [FormatKnownIndels.sh](https://github.com/clfougner/MouseExomeSequencing/blob/master/ReferenceFiles/FormatKnownIndels.sh). Thanks to [John Longinotto](https://www.biostars.org/p/182917/#183000) for help with this issue. In this project, this file after processing is referred to as `mm10.FVBN.INDELS.vcf`.
 
 #### Correctly format the SNP reference file
-Same concept as with the indels; additionally, the SNP list must be sorted with Picard's `SortVcf`tool. The SNP reference file can be formatted with the script `FormatKnownSNPs.sh`. In this project, this file after processing is referred to as `mm10.FVBN.SNPs.vcf`.
+Same concept as with the indels; additionally, the SNP list must be sorted with Picard's `SortVcf`tool. The SNP reference file can be formatted with the script [FormatKnownSNPs.sh](https://github.com/clfougner/MouseExomeSequencing/blob/master/ReferenceFiles/FormatKnownSNPs.sh). In this project, this file after processing is referred to as `mm10.FVBN.SNPs.vcf`.
