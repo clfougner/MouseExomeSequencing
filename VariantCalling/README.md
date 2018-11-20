@@ -4,53 +4,50 @@ This pipeline is split into three parts: preprocessing, variant calling and anno
 
 There is a script for a each step. All steps are also put together into a monolithic pipeline in `EntirePipeline.sh`, in which the entire pipeline is implemented. If all reference files are prepared according to the previous instructions and all required frameworks are installed, the entire pipeline from mapping to variant annotation can be run simply by replacing the paths to the relevant input, reference and framework files. Note that a number of folders are required (see lines 60-78 for names). Also, note that Picard is invoked here simply by inputting `picard`; depending on your installation you may have to replace the relevant lines with `java -jar dist/picard.jar`.
 
-Some of the scripts found in this folder are not part of the pipeline, but I've left them here nonetheless as they have been useful in setting up the pipeline.
-
-
 ## Preprocessing
 #### 1) Cutadapt
 Cutadapt finds and removes adapter sequences, primers, poly-A tails and other types of unwanted sequence from your high-throughput sequencing reads.
 
 ```
-Script:				CutAdapt.sh
-Using framework:	cutadapt
+Script:           CutAdapt.sh
+Using framework:  cutadapt
 ```
 * [Documentation](https://cutadapt.readthedocs.io/en/stable/)
 
 #### 2) Sickle
 Most modern sequencing technologies produce reads that have deteriorating quality towards the 3'-end and some towards the 5'-end as well. Incorrectly called bases in both regions negatively impact assembles, mapping, and downstream bioinformatics analyses. Sickle is a tool that uses sliding windows along with quality and length thresholds to determine when quality is sufficiently low to trim the 3'-end of reads and also determines when the quality is sufficiently high enough to trim the 5'-end of reads.
 ```
-Script:				Sickle.sh
-Using framework:	sickle
-Using method:       pe
+Script:           Sickle.sh
+Using framework:  sickle
+Using method:     pe
 ```
 * [Documentation](https://github.com/najoshi/sickle)
 
-#### 3) Map reads to produce BAM file 
+#### 3) Map reads to produce BAM file
 Map reads to the reference genome using BWA:
 ```
-Script:				BWAmem.sh
-Reference file:		mm10.fa
-Using framework:	Burrows-Wheeler Aligner (BWA)
-Using method:		mem
+Script:           BWAmem.sh
+Reference file:   mm10.fa
+Using framework:  Burrows-Wheeler Aligner (BWA)
+Using method:     mem
 ```
 * [Documentation](http://bio-bwa.sourceforge.net/bwa.shtml)
 
 #### 4) Realign BAM file by coordinate
 In order to remove duplicates (dedup), the BAM file must first be sorted by coordinate:
 ```
-Script:				SortSam.sh
-Using framework:	Picard
-Using method:		SortSam
+Script:           SortSam.sh
+Using framework:  Picard
+Using method:     SortSam
 ```
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#SortSam)
 
 #### 5) Remove duplicates from BAM files
 During the sequencing process, the same DNA fragments may be sequenced several times. The resulting duplicate reads are not informative and should not be counted as additional evidence for or against a putative variant. The duplicate marking process does not remove the reads, but identifies them as duplicates by adding a flag in the read's SAM record. Most GATK tools will then ignore these duplicate reads by default, through the internal application of a read filter [(2)](https://www.broadinstitute.org/gatk/guide/bp_step.php?p=1).
 ```
-Script:				MarkDuplicates.sh
-Using framework:	Picard
-Using method:		MarkDuplicates
+Script:           MarkDuplicates.sh
+Using framework:  Picard
+Using method:     MarkDuplicates
 ```
 * [Documentation](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
 
@@ -64,20 +61,20 @@ This step used to be very important when the the variant callers were position-b
 
 ###### First step:
 ```
-Script:				RealignerTargetCreator.sh
-Reference file: 	mm10.fa
-Known indels: 		mm10.FVBN.INDELS.vcf
-Using framework:	Genome Analysis Toolkit	
-Using method:		RealignerTargetCreator
+Script:           RealignerTargetCreator.sh
+Reference file:   mm10.fa
+Known indels:     mm10.FVBN.INDELS.vcf
+Using framework:  Genome Analysis Toolkit
+Using method:     RealignerTargetCreator
 ```
 
 ###### Second step:
 ```
-Script:					IndelRealigner.sh
-Reference file:			mm10.fa
-Known indels: 			mm10.FVBN.INDELS.vcf
-Using framework:		Genome Analysis Toolkit
-Using method:			IndelRealigner
+Script:           IndelRealigner.sh
+Reference file:   mm10.fa
+Known indels:     mm10.FVBN.INDELS.vcf
+Using framework:  Genome Analysis Toolkit
+Using method:     IndelRealigner
 ```
 * [Documentation](https://www.broadinstitute.org/gatk/guide/article?id=38)
 
@@ -86,22 +83,22 @@ Variant calling algorithms rely heavily on the quality scores assigned to the in
 
 ###### First step:
 ```
-Script:             BaseRecalibrator.sh
-Reference file:     mm10.fa
-Known indels:       mm10.FVBN.INDELS.vcf
-Known SNPs:         mm10.FVBN.SNPs.vcf
-Using framework:    Genome Analysis Toolkit
-Using Method:       BaseRecalibrator
+Script:           BaseRecalibrator.sh
+Reference file:   mm10.fa
+Known indels:     mm10.FVBN.INDELS.vcf
+Known SNPs:       mm10.FVBN.SNPs.vcf
+Using framework:  Genome Analysis Toolkit
+Using Method:     BaseRecalibrator
 ````
 
 ###### Second step:
 ```
-Script:             BaseRecalibratorSecondPass.sh
-Reference file:     mm10.fa
-Known indels:       mm10.FVBN.INDELS.vcf
-Known SNPs:         mm10.FVBN.SNPs.vcf
-Using framework:    Genome Analysis Toolkit
-Using Method:       BaseRecalibrator
+Script:           BaseRecalibratorSecondPass.sh
+Reference file:   mm10.fa
+Known indels:     mm10.FVBN.INDELS.vcf
+Known SNPs:       mm10.FVBN.SNPs.vcf
+Using framework:  Genome Analysis Toolkit
+Using Method:     BaseRecalibrator
 ````
 
 ###### Third step:
@@ -124,11 +121,11 @@ Using Method:       PrintReads
 ## Variant calling
 In this step, variants are called relative to the reference genome, and then marked if evidence for them is found in the matched normal sample or in the list of known SNPs.
 ```
-Script: 				MuTect.sh
+Script: 			 	    MuTect.sh
 Reference file:			mm10.fa
-SNP file:		    	mm10.FVBN.SNPs.vcf
+SNP file:		    	  mm10.FVBN.SNPs.vcf
 Using framework:		Genome Analysis Toolkit
-Method:		  	  	    MuTect2
+Method:		  	  	  MuTect2
 ````
 * [Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/org_broadinstitute_gatk_tools_walkers_cancer_m2_MuTect2.php)
 
@@ -137,8 +134,8 @@ Method:		  	  	    MuTect2
 #### 1) Annotate variants
 SnpEff annotates the variants found from MuTect. The most important information includes the gene names and effect (i.e. missense, synonymous, etc.)
 ```
-Script:					SnpEff.sh
-Reference:		   	    GRCm38.82
+Script:					    SnpEff.sh
+Reference:		   	  GRCm38.82
 Using framework:		SnpEff
 ````
 * [Documentation](http://snpeff.sourceforge.net/SnpEff_manual.html#run)
@@ -146,7 +143,7 @@ Using framework:		SnpEff
 #### 2) Filter variants for passing MuTect filters
 This step filters the annotated variants for only those passing MuTect's filters.
 ```
-Script:	      		   SnpSiftForPass.sh
+Script:	      		  SnpSiftForPass.sh
 Using framework:		SnpSift (part of SnpEff)
 Using method:		  	filter
 ```
@@ -160,4 +157,3 @@ Using framework:    SnpSift (part of SnpEff)
 Using method:       extractFields
 ```
 *[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
-
