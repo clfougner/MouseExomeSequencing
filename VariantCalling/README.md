@@ -137,23 +137,27 @@ SnpEff annotates the variants found from MuTect. The most important information 
 Script:					    SnpEff.sh
 Reference:		   	  GRCm38.82
 Using framework:		SnpEff
-````
+```
 * [Documentation](http://snpeff.sourceforge.net/SnpEff_manual.html#run)
 
 #### 2) Filter variants for passing MuTect filters
 This step filters the annotated variants for only those passing MuTect's filters.
-```
+
+`````
 Script:	      		  SnpSiftForPass.sh
 Using framework:		SnpSift (part of SnpEff)
 Using method:		  	filter
-```
+`````
+
 *[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
 
 #### 3) Extract variants to text file
 This step extracts the passed filters to a .txt file which is more easily readable and (arguably) better for downstream analyses.
-````
+
+`````
 Script:             SnpSiftExtract.sh
 Using framework:    SnpSift (part of SnpEff)
 Using method:       extractFields
-```
+`````
+
 *[Documentation](http://snpeff.sourceforge.net/SnpSift.html)
