@@ -1,8 +1,8 @@
 # Mouse Exome Sequencing Variant Calling
 
-Note: This pipeline was built in 2016, and has not been actively updated since. Some aspects of the pipeline may therefore be outdated.
-
 This repository documents a pipeline for somatic variant calling from mouse exome sequence data. It is for my own research use, but may act as a guideline for anyone looking to do accomplish the same goal. The pipeline is based on the [Broad Institute's best practices](https://www.broadinstitute.org/gatk/guide/best-practices.php).
+
+**Note**: This pipeline was built in 2016, and has not been actively updated since. Some aspects of the pipeline may therefore be outdated.
 
 This repository is organized as follows:
 ````
